@@ -21,6 +21,9 @@
     <ClCompile Include="my_GL_window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="my_GL_window_moc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="my_GL_window.h">

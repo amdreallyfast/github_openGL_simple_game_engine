@@ -6,7 +6,6 @@
 
 #include "my_GL_window.h"
 
-
 void my_GL_window::initializeGL()
 {
    GLenum err_code = glewInit();
@@ -27,6 +26,9 @@ void my_GL_window::initializeGL()
       sizeof(verts),
       reinterpret_cast<void *>(verts),
       GL_STATIC_DRAW);
+
+   connect(&m_qt_timer, SIGNAL(timeout()), this, SLOT(timer_update()));
+   m_qt_timer.start(500);
 }
 
 
@@ -47,4 +49,13 @@ void my_GL_window::paintGL()
       GL_TRIANGLES,     // drawing mode
       0,                // start drawing with the first vertex in each vertex attribute object 
       3);               // number of vertices to draw
+}
+
+
+#include <iostream>
+using std::cout;
+using std::endl;
+void my_GL_window::timer_update()
+{
+   cout << "hi there!" << endl;
 }
