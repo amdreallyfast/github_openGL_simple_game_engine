@@ -4,6 +4,8 @@
 
 class my_GL_window : public QGLWidget
 {
-public:
+protected:
+   // override the initialization
+   void initializeGL();
 };
 
