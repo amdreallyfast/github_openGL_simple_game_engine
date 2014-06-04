@@ -13,6 +13,9 @@
   <ItemGroup>
     <ClCompile Include="junk_to_make_compiler_happy.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="vector2D.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{04E2A542-BCFE-4A0E-B338-09E40C185E4E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
