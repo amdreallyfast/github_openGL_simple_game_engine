@@ -21,5 +21,8 @@
     <ClCompile Include="..\..\..\..\..\..\..\gtest-1.7.0\src\gtest-all.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="my_temp_test_file.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
