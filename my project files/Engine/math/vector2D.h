@@ -13,7 +13,12 @@ namespace MATH
       // constructor when returning a new object, so the default copy
       // constructor is enough.
 
-      vector2D(float new_x = 0.0f, float new_y = 0.0f) : 
+      // make constructor explicit so that the compiler won't try to implicitly
+      // take two ajacent floats in a "verts" array and make a vector out of 
+      // them
+      // Note: This is normal C++ behavior and can be useful, but make the 
+      // constructor explicit for the sake of forcing readable code.
+      explicit vector2D(float new_x = 0.0f, float new_y = 0.0f) : 
          x(new_x),
          y(new_y)
       { }

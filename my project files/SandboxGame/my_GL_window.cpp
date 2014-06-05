@@ -1,10 +1,25 @@
 // MUST include before Qt's GL libraries
 #include "glew-1.10.0\include\GL\glew.h"
+#include "my_GL_window.h"
 
 // could do assertion or exception (??change to exception??)
 #include <cassert>
 
-#include "my_GL_window.h"
+#include <math\vector2D.h>
+using MATH::vector2D;
+
+static vector2D g_verts[] =
+{
+   // as far as the compiler is concerned, these are adjacent pairs of floats
+   // in memory, so your vertex attribute and buffer data specifications are 
+   // the same as if you only entered float values here
+   vector2D(+0.0f, +0.2f),
+   vector2D(-0.05f, -0.1f),
+   vector2D(+0.05f, -0.1f),
+};
+
+static const unsigned int NUM_VERTS = sizeof(g_verts) / sizeof(*g_verts);
+
 
 void my_GL_window::initializeGL()
 {
@@ -13,19 +28,13 @@ void my_GL_window::initializeGL()
 
    glGenBuffers(1, &m_vertex_buffer_ID);
    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer_ID);
-
-   float verts[] =
-   {
-      +0.0f, +0.1f,
-      -0.1f, -0.1f,
-      +0.1f, -0.1f,
-   };
-
    glBufferData(
       GL_ARRAY_BUFFER,
-      sizeof(verts),
-      reinterpret_cast<void *>(verts),
-      GL_STATIC_DRAW);
+      sizeof(g_verts),
+      NULL,
+      GL_DYNAMIC_DRAW);
+
+   glBindBuffer(GL_ARRAY_BUFFER, 0);
 
    connect(&m_qt_timer, SIGNAL(timeout()), this, SLOT(timer_update()));
    m_qt_timer.start(500);
@@ -35,6 +44,13 @@ void my_GL_window::initializeGL()
 void my_GL_window::paintGL()
 {
    glClear(GL_COLOR_BUFFER_BIT);
+
+   // MUST bind the buffer before specifying attributes because the attribute
+   // data is stored in the buffer object, and the drawing functions access the
+   // buffer object that is bound to the context for both the vertex data and 
+   // the vertex attribute data
+   glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer_ID);
+
    glEnableVertexAttribArray(0);
    glVertexAttribPointer(
       0,             // vertex attribute index
@@ -45,17 +61,28 @@ void my_GL_window::paintGL()
       0              // position values start 0 bytes from the beginning of the vertex array
       );
 
+   vector2D ship_position(0.5f, 0.5f);
+   vector2D translated_verts[NUM_VERTS];
+   for (unsigned int i = 0; i < NUM_VERTS; i++)
+   {
+      translated_verts[i] = g_verts[i] + ship_position;
+   }
+   glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer_ID);
+   glBufferSubData(
+      GL_ARRAY_BUFFER,
+      0,                         // offset from start of data pointer is 0
+      sizeof(translated_verts), 
+      translated_verts);
+
    glDrawArrays(
       GL_TRIANGLES,     // drawing mode
       0,                // start drawing with the first vertex in each vertex attribute object 
       3);               // number of vertices to draw
+
+   glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 
-#include <iostream>
-using std::cout;
-using std::endl;
 void my_GL_window::timer_update()
 {
-   cout << "hi there!" << endl;
 }
