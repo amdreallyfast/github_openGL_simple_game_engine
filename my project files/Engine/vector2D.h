@@ -8,35 +8,25 @@ namespace MATH
       float x;
       float y;
 
-      // ??force to explicit??
+      // let the default copy constructors be made by the compiler
+      // Note: This is a simple structure, and the operators call the copy 
+      // constructor when returning a new object, so the default copy
+      // constructor is enough.
+
       vector2D(float new_x = 0.0f, float new_y = 0.0f) : 
          x(new_x),
          y(new_y)
       { }
 
-
+   private:
    };
 
-   // operator overloading
-   // Note: Do NOT make the return values const.  The user must be able to modify
-   // the vector after it has been computed.
-   //??why doesn't making it const prevent the return value from being modified??
+   inline vector2D operator+(const vector2D& lhs, const vector2D& rhs);
+   inline vector2D operator*(float scalar, const vector2D& vector);
+   inline vector2D operator*(const vector2D& vector, float scalar);
 
-   vector2D operator+(const vector2D& lhs, const vector2D& rhs)
-   {
-      return vector2D();
-   }
-
-   // scalar multiplication (both orders)
-   vector2D operator*(float scalar, const vector2D& rhs)
-   {
-      return vector2D();
-   }
-
-   vector2D operator*(const vector2D& rhs, float scalar)
-   {
-      return vector2D();
-   }
+   // now include the inline definitions
+#include "vector2D.inl"
 }
 
 #endif // ENGINE_VECTOR_2D_H
