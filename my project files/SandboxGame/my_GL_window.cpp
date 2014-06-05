@@ -8,6 +8,8 @@
 #include <math\vector2D.h>
 using MATH::vector2D;
 
+#include <Qt\qdebug.h>
+
 // the unnamed namespace makes everything here private to this file, so we don't
 // have to use the "static" keyword on all these globals
 //??is this even a good idea??
@@ -43,7 +45,7 @@ void my_GL_window::initializeGL()
 
    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-   // make the time go as fast as it can
+   // make the timer go as fast as it can
    connect(&m_qt_timer, SIGNAL(timeout()), this, SLOT(timer_update()));
    m_qt_timer.start(0);
 }
@@ -89,8 +91,19 @@ void my_GL_window::paintGL()
    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
+int debug_int = 1;
 void my_GL_window::timer_update()
 {
+   if (debug_int++ % 20 == 0)
+   {
+      // force a hiccup to show what happens if too much stuff happens between 
+      // frames
+      for (int i = 0; i < 10000; i++)
+      {
+         qDebug() << "hello: " << debug_int;
+      }
+   }
+
    vector2D velocity(0.01f, 0.01f);
    g_ship_position = g_ship_position + velocity;
 
