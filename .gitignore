@@ -4,9 +4,10 @@
 # ignore everything
 *
 
-# keep source files and ReadMe and shader files
+# keep source files (including "inline" files) and ReadMe and shader files
 !*.cpp
 !*.h
+!*.inl
 !*.txt
 !*.glsl
 
