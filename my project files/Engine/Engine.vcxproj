@@ -14,10 +14,10 @@
     <ClCompile Include="junk_to_make_compiler_happy.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="vector2D.h" />
+    <ClInclude Include="math\vector2D.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="vector2D.inl" />
+    <None Include="math\vector2D.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{04E2A542-BCFE-4A0E-B338-09E40C185E4E}</ProjectGuid>

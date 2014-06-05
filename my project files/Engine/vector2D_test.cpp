@@ -3,7 +3,7 @@
 // this is my own vector definition
 // Note: I had to edit the EngineTester project properties and add 
 // "$(ProjectDir)\..\Engine" to my "Additional Include" directories.
-#include <vector2D.h>
+#include <math/vector2D.h>
 using MATH::vector2D;
 
 TEST(Vector2D, Constructor)

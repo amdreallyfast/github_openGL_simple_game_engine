@@ -20,12 +20,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="vector2D.h">
+    <ClInclude Include="math\vector2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="vector2D.inl">
+    <None Include="math\vector2D.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>
