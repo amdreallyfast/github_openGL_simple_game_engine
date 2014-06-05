@@ -8,17 +8,24 @@
 #include <math\vector2D.h>
 using MATH::vector2D;
 
-static vector2D g_verts[] =
+// the unnamed namespace makes everything here private to this file, so we don't
+// have to use the "static" keyword on all these globals
+//??is this even a good idea??
+namespace
 {
-   // as far as the compiler is concerned, these are adjacent pairs of floats
-   // in memory, so your vertex attribute and buffer data specifications are 
-   // the same as if you only entered float values here
-   vector2D(+0.0f, +0.2f),
-   vector2D(-0.05f, -0.1f),
-   vector2D(+0.05f, -0.1f),
-};
+   vector2D g_verts[] =
+   {
+      // as far as the compiler is concerned, these are adjacent pairs of floats
+      // in memory, so your vertex attribute and buffer data specifications are 
+      // the same as if you only entered float values here
+      vector2D(+0.0f, +0.2f),
+      vector2D(-0.05f, -0.1f),
+      vector2D(+0.05f, -0.1f),
+   };
 
-static const unsigned int NUM_VERTS = sizeof(g_verts) / sizeof(*g_verts);
+   const unsigned int NUM_VERTS = sizeof(g_verts) / sizeof(*g_verts);
+   vector2D g_ship_position(0.0f, 0.0f);
+}
 
 
 void my_GL_window::initializeGL()
@@ -36,8 +43,9 @@ void my_GL_window::initializeGL()
 
    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+   // make the time go as fast as it can
    connect(&m_qt_timer, SIGNAL(timeout()), this, SLOT(timer_update()));
-   m_qt_timer.start(500);
+   m_qt_timer.start(0);
 }
 
 
@@ -61,11 +69,10 @@ void my_GL_window::paintGL()
       0              // position values start 0 bytes from the beginning of the vertex array
       );
 
-   vector2D ship_position(0.5f, 0.5f);
    vector2D translated_verts[NUM_VERTS];
    for (unsigned int i = 0; i < NUM_VERTS; i++)
    {
-      translated_verts[i] = g_verts[i] + ship_position;
+      translated_verts[i] = g_verts[i] + g_ship_position;
    }
    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer_ID);
    glBufferSubData(
@@ -82,7 +89,10 @@ void my_GL_window::paintGL()
    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-
 void my_GL_window::timer_update()
 {
+   vector2D velocity(0.01f, 0.01f);
+   g_ship_position = g_ship_position + velocity;
+
+   this->repaint();
 }
