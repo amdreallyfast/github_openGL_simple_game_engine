@@ -79,6 +79,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\..\..\gtest-1.7.0\src\gtest-all.cc" />
     <ClCompile Include="..\Engine\vector2D_test.cpp" />
+    <ClCompile Include="Clock_test.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
