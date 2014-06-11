@@ -34,7 +34,7 @@ namespace
    };
 
    const unsigned int NUM_VERTS = sizeof(g_verts) / sizeof(*g_verts);
-   vector2D g_ship_position(0.0f, 0.0f);
+   vector2D g_ship_position(-1.0f, -1.0f);
 
    Clock g_clock;
 }
@@ -104,6 +104,11 @@ void my_GL_window::paintGL()
 int debug_int = 1;
 void my_GL_window::timer_update()
 {
+   // tell the timer to record its current counter value
+   g_clock.new_frame();
+
+   // begin pre-render calculations
+
    if (debug_int++ % 20 == 0)
    {
       // force a hiccup to show what happens if too much stuff happens between 
@@ -114,8 +119,8 @@ void my_GL_window::timer_update()
       }
    }
 
-   vector2D velocity(0.01f, 0.01f);
-   g_ship_position = g_ship_position + velocity;
+   vector2D velocity(0.5f, 0.5f);
+   g_ship_position = g_ship_position + velocity * g_clock.time_elapsed_last_frame();
 
    this->repaint();
 }

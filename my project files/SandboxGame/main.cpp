@@ -10,21 +10,17 @@ int main(int argc, char **argv)
 {
    // must create the application before the custom QGLWidget
    QApplication app(argc, argv);
-   
+
    // make the custom QGLWidget
    my_GL_window window;
-   window.initialize();
+   if (!window.initialize()){ return -1; }
    window.show();
 
    // run the application
    int app_err_code = app.exec();
 
-   // shut down my custom QGLWidget code
-   if (!window.shutdown())
-   {
-      // put in a non-zero value (a bit hand-wavy here)
-      app_err_code |= 1;
-   }
+   // shut down custom QGLWidget code (put in a non-zero value if it fails)
+   if (!window.shutdown()){ app_err_code |= 1; }
 
    return app_err_code;
 }
