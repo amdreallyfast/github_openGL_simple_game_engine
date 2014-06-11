@@ -1,4 +1,12 @@
+// for the Google test framework
 #include <gtest\gtest.h>
+
+// for the class under stest
+#include <timing\clock.h>
+using Timing::Clock;
+
+// for Qt's "sleep" function
+#include <Qt\qtest.h>
 
 TEST(Clock, Initialize)
 {
@@ -14,7 +22,7 @@ TEST(Clock, Frame_Time_Measuring)
 
    // start timing, wait for one second, get the elapsed time, and check that 
    // the fraction of the second that pased is ~1
-   _sleep(1000);
+   QTest::qSleep(1000);
    clock.new_frame();
    float timed_time = clock.time_elapsed_last_frame();
    EXPECT_TRUE(0.9f < timed_time);
@@ -22,7 +30,7 @@ TEST(Clock, Frame_Time_Measuring)
    
    // do the same for a half second
    clock.new_frame();
-   _sleep(500);
+   QTest::qSleep(500);
    clock.new_frame();
    timed_time = clock.time_elapsed_last_frame();
    EXPECT_TRUE(0.4f < timed_time);
@@ -39,7 +47,7 @@ TEST(Clock, Frame_Time_Measuring)
 
       // reset the timer, sleep, and measure delta time
       clock.new_frame();
-      _sleep(this_test_milliseconds);
+      QTest::qSleep(this_test_milliseconds);
       clock.new_frame();
       float elapsed_seconds = clock.time_elapsed_last_frame();
       EXPECT_TRUE((this_test_seconds - THRESHOLD) < elapsed_seconds);

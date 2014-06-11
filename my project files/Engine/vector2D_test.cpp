@@ -4,7 +4,7 @@
 // Note: I had to edit the EngineTester project properties and add 
 // "$(ProjectDir)\..\Engine" to my "Additional Include" directories.
 #include <math/vector2D.h>
-using MATH::vector2D;
+using Math::vector2D;
 
 TEST(Vector2D, Constructor)
 {

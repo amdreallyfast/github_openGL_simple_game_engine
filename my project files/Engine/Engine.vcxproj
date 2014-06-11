@@ -11,9 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="timing\clock.cpp" />
     <ClCompile Include="junk_to_make_compiler_happy.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="timing\clock.h" />
     <ClInclude Include="math\vector2D.h" />
   </ItemGroup>
   <ItemGroup>

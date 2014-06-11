@@ -6,7 +6,7 @@
 #include <cassert>
 
 #include <math\vector2D.h>
-using MATH::vector2D;
+using Math::vector2D;
 
 #include <Qt\qdebug.h>
 

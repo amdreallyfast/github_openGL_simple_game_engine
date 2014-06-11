@@ -18,9 +18,15 @@
     <ClCompile Include="junk_to_make_compiler_happy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="timing\clock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\vector2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="timing\clock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
