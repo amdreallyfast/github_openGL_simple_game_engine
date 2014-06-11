@@ -8,6 +8,10 @@ using Timing::Clock;
 // for Qt's "sleep" function
 #include <Qt\qtest.h>
 
+#include <iostream>
+using std::cout;
+using std::endl;
+
 TEST(Clock, Initialize)
 {
    Clock clock;
@@ -40,10 +44,15 @@ TEST(Clock, Frame_Time_Measuring)
    // now check various random times
    const int NUM_TESTS = 10 + (rand() % 100);
    const float THRESHOLD = 0.1f;
+   cout << "running '" << NUM_TESTS <<
+      "' tests with threshold = '" << THRESHOLD << "'" << endl;
    for (int count = 0; count < NUM_TESTS; count += 1)
    {
       int this_test_milliseconds = rand() % 10000;
       float this_test_seconds = this_test_milliseconds / 1000.0f;
+
+      cout << "test '" << count << "' of '" << NUM_TESTS << "'; " <<
+         "sleeping for '" << this_test_seconds << "'" << endl;
 
       // reset the timer, sleep, and measure delta time
       clock.new_frame();
