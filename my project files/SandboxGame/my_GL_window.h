@@ -4,10 +4,13 @@
 #include <QtOpenGL\qglwidget>
 #include <QtCore\qtimer>
 
-
 class my_GL_window : public QGLWidget
 {
    Q_OBJECT
+
+public:
+   bool shutdown();
+   bool initialize();
 
 protected:
    // override the initialization

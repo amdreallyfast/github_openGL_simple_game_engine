@@ -5,10 +5,18 @@
 // could do assertion or exception (??change to exception??)
 #include <cassert>
 
+// for my custom vector structure
 #include <math\vector2D.h>
 using Math::vector2D;
 
+// for printing errors to the console; use instead of cout (whim)
 #include <Qt\qdebug.h>
+
+// for our timer that allows for precise control of where things should be 
+// within a frame independent of frame rendering time
+#include <timing\clock.h>
+using Timing::Clock;
+
 
 // the unnamed namespace makes everything here private to this file, so we don't
 // have to use the "static" keyword on all these globals
@@ -27,6 +35,8 @@ namespace
 
    const unsigned int NUM_VERTS = sizeof(g_verts) / sizeof(*g_verts);
    vector2D g_ship_position(0.0f, 0.0f);
+
+   Clock g_clock;
 }
 
 
@@ -80,7 +90,7 @@ void my_GL_window::paintGL()
    glBufferSubData(
       GL_ARRAY_BUFFER,
       0,                         // offset from start of data pointer is 0
-      sizeof(translated_verts), 
+      sizeof(translated_verts),
       translated_verts);
 
    glDrawArrays(
@@ -109,3 +119,27 @@ void my_GL_window::timer_update()
 
    this->repaint();
 }
+
+
+bool my_GL_window::shutdown()
+{
+   bool success;
+
+   success = g_clock.shutdown();
+   if (!success){ return false; }
+
+   return true;
+}
+
+
+// initialize non-Qt and non-openGL code here
+bool my_GL_window::initialize()
+{
+   bool success;
+   
+   success = g_clock.initialize();
+   if (!success){ return false; }
+
+   return true;
+}
+

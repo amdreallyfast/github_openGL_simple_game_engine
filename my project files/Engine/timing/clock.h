@@ -21,9 +21,14 @@ namespace Timing
       float time_elapsed_last_frame() const;
 
    private:
+      // don't worry about using the signed long long (64bit) integer, which
+      // will take a very very long time to overflow
+      // Note: Consider the math (assuming the counter counts in nanoseconds,
+      // so it counts once every 10^-9 seconds):
+      // (2^63 - 1) / 10^9 / 86,400 / 364.25 = 293.07 years before overflow
+
       LARGE_INTEGER m_last_frame_time_counter;
       LARGE_INTEGER m_cpu_timer_frequency;
-      //LARGE_INTEGER m_delta_last_frame;
       float m_delta_time;
    };
 }

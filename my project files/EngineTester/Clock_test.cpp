@@ -63,6 +63,5 @@ TEST(Clock, Frame_Time_Measuring)
       EXPECT_TRUE((this_test_seconds + THRESHOLD) > elapsed_seconds);
    }
 
-
    EXPECT_TRUE(clock.shutdown());
 }
