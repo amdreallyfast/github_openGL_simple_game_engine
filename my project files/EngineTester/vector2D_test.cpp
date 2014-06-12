@@ -23,71 +23,71 @@ TEST(Vector2D, Copy_Constructor)
    EXPECT_FLOAT_EQ(the_copy.y, 1234.5678f);
 }
 
-//TEST(Vector2D, Assignment)
-//{
-//   vector2D first(1, 2);
-//   vector2D result(3, 4);
-//   result = first;
-//
-//   EXPECT_FLOAT_EQ(result.x, 1);
-//   EXPECT_FLOAT_EQ(result.y, 2);
-//}
-//
-//TEST(Vector2D, Vector_Addition)
-//{
-//   vector2D first(1, 2);
-//   vector2D second(3, 4);
-//   vector2D result1 = first + second;
-//   vector2D result2 = second + first;
-//
-//   EXPECT_FLOAT_EQ(result1.x, 4);
-//   EXPECT_FLOAT_EQ(result1.y, 6);
-//   EXPECT_FLOAT_EQ(result2.x, result1.x);
-//   EXPECT_FLOAT_EQ(result2.y, result1.y);
-//}
-//
-//TEST(Vector2D, Vector_Addition_Assignment)
-//{
-//   vector2D first(5, 1234.5678f);
-//   vector2D second(1, 1);
-//   second += first;
-//   
-//   EXPECT_FLOAT_EQ(second.x, 6);
-//   EXPECT_FLOAT_EQ(second.y, 1235.5678f);
-//}
-//
-//TEST(Vector2D, Vector_Subtraction)
-//{
-//   vector2D first(1, 2);
-//   vector2D second(3, 4);
-//   vector2D result1 = first - second;
-//   vector2D result2 = second - first;
-//
-//   EXPECT_FLOAT_EQ(result1.x, -2);
-//   EXPECT_FLOAT_EQ(result1.y, -2);
-//   EXPECT_FLOAT_EQ(result2.x, 2);
-//   EXPECT_FLOAT_EQ(result2.y, 2);
-//}
-//
-//TEST(Vector2D, Vector_Subtraction_Assignment)
-//{
-//   vector2D first(5, 1234.5678f);
-//   vector2D second(1, 1);
-//   second -= first;
-//
-//   EXPECT_FLOAT_EQ(second.x, -4);
-//   EXPECT_FLOAT_EQ(second.y, -1233.5678f);
-//}
-//
-//TEST(Vector2D, Scalar_Multiplication)
-//{
-//   float scalar = 10.0f;
-//   vector2D v(1, 2);
-//   vector2D result1 = scalar * v;
-//   vector2D result2 = v * scalar;
-//
-//   EXPECT_FLOAT_EQ(10, result1.x);
-//   EXPECT_FLOAT_EQ(20, result1.y);
-//   EXPECT_FLOAT_EQ(result2.x, result1.x);
-//   EXPECT_FLOAT_EQ(result2.y, result1.y);
-//}
+TEST(Vector2D, Assignment)
+{
+   vector2D first(1, 2);
+   vector2D result(3, 4);
+   result = first;
+
+   EXPECT_FLOAT_EQ(result.x, 1);
+   EXPECT_FLOAT_EQ(result.y, 2);
+}
+
+TEST(Vector2D, Vector_Addition)
+{
+   vector2D first(1, 2);
+   vector2D second(3, 4);
+   vector2D result1 = first + second;
+   vector2D result2 = second + first;
+
+   EXPECT_FLOAT_EQ(result1.x, 4);
+   EXPECT_FLOAT_EQ(result1.y, 6);
+   EXPECT_FLOAT_EQ(result2.x, result1.x);
+   EXPECT_FLOAT_EQ(result2.y, result1.y);
+}
+
+TEST(Vector2D, Vector_Addition_Assignment)
+{
+   vector2D first(5, 1234.5678f);
+   vector2D second(1, 1);
+   second += first;
+   
+   EXPECT_FLOAT_EQ(second.x, 6);
+   EXPECT_FLOAT_EQ(second.y, 1235.5678f);
+}
+
+TEST(Vector2D, Vector_Subtraction)
+{
+   vector2D first(1, 2);
+   vector2D second(3, 4);
+   vector2D result1 = first - second;
+   vector2D result2 = second - first;
+
+   EXPECT_FLOAT_EQ(result1.x, -2);
+   EXPECT_FLOAT_EQ(result1.y, -2);
+   EXPECT_FLOAT_EQ(result2.x, 2);
+   EXPECT_FLOAT_EQ(result2.y, 2);
+}
+
+TEST(Vector2D, Vector_Subtraction_Assignment)
+{
+   vector2D first(5, 1234.5678f);
+   vector2D second(1, 1);
+   second -= first;
+
+   EXPECT_FLOAT_EQ(second.x, -4);
+   EXPECT_FLOAT_EQ(second.y, -1233.5678f);
+}
+
+TEST(Vector2D, Scalar_Multiplication)
+{
+   float scalar = 10.0f;
+   vector2D v(1, 2);
+   vector2D result1 = scalar * v;
+   vector2D result2 = v * scalar;
+
+   EXPECT_FLOAT_EQ(10, result1.x);
+   EXPECT_FLOAT_EQ(20, result1.y);
+   EXPECT_FLOAT_EQ(result2.x, result1.x);
+   EXPECT_FLOAT_EQ(result2.y, result1.y);
+}

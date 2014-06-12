@@ -24,10 +24,8 @@ namespace Math
       { }
 
       vector2D(const vector2D& source) :
-         //x(source.x),
-         //y(source.y)
-         x(0),
-         y(0)
+         x(source.x),
+         y(source.y)
       { }
 
       // define assignment operators inside the class because argument order
@@ -35,9 +33,12 @@ namespace Math
       // Note: In these operators, one argument gets modified, and the other 
       // does not, so argument order matters, and I do not want to allow 
       // implicit conversion of the left-hand side argument.  
-      inline vector2D operator=(const vector2D& rhs);
-      inline vector2D operator+=(const vector2D& rhs);
-      inline vector2D operator-=(const vector2D& rhs);
+      // Also Note: I also don't want to allow implicit conversion of the left-
+      // hand side because the left-hand side is supposed to be "this".  And 
+      // for that reason, the return value is a reference rather than a copy.
+      inline vector2D& operator=(const vector2D& rhs);
+      inline vector2D& operator+=(const vector2D& rhs);
+      inline vector2D& operator-=(const vector2D& rhs);
 
    private:
    };
@@ -47,6 +48,8 @@ namespace Math
    // subsequently assigned to something else.  The arguments are unaltered, so
    // order does not matter, and I will allow implicit conversion of both 
    // arguments.
+   // Also Note: Because the return value is a new and temporary object, return
+   // it as a copy, not a reference.
    inline vector2D operator+(const vector2D& lhs, const vector2D& rhs);
    inline vector2D operator-(const vector2D& lhs, const vector2D& rhs);
    inline vector2D operator*(float scalar, const vector2D& vector);
