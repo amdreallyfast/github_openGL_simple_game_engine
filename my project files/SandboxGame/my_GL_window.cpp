@@ -32,9 +32,10 @@ namespace
       vector2D(-0.05f, -0.1f),
       vector2D(+0.05f, -0.1f),
    };
-
    const unsigned int NUM_VERTS = sizeof(g_verts) / sizeof(*g_verts);
-   vector2D g_ship_position(-1.0f, -1.0f);
+
+   // use the default values of 0 for the chip position
+   vector2D g_ship_position;
 
    Clock g_clock;
 }
@@ -119,7 +120,8 @@ void my_GL_window::timer_update()
       }
    }
 
-   vector2D velocity(0.5f, 0.5f);
+
+   vector2D velocity;
    g_ship_position = g_ship_position + velocity * g_clock.time_elapsed_last_frame();
 
    this->repaint();
