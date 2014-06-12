@@ -2,15 +2,23 @@
 #include "glew-1.10.0\include\GL\glew.h"
 #include "my_GL_window.h"
 
+// for key presses
+// Note: I am able to declare the class QKeyEvent as a parameter without
+// this include because it is declared somewhere in the Qt include 
+// hierarchy, but it is not fully defined there.  This was to save space
+// and prevent header files from getting bloated.  Bottom line to me though 
+// is that I need to include this file to get the definition of the class.
+#include <QtGui\QKeyEvent>
+
+// for printing errors to the console; use instead of cout (whim)
+#include <Qt\qdebug.h>
+
 // could do assertion or exception (??change to exception??)
 #include <cassert>
 
 // for my custom vector structure
 #include <math\vector2D.h>
 using Math::vector2D;
-
-// for printing errors to the console; use instead of cout (whim)
-#include <Qt\qdebug.h>
 
 // for our timer that allows for precise control of where things should be 
 // within a frame independent of frame rendering time
@@ -110,20 +118,6 @@ void my_GL_window::timer_update()
 
    // begin pre-render calculations
 
-   if (debug_int++ % 20 == 0)
-   {
-      // force a hiccup to show what happens if too much stuff happens between 
-      // frames
-      for (int i = 0; i < 10000; i++)
-      {
-         qDebug() << "hello: " << debug_int;
-      }
-   }
-
-
-   vector2D velocity;
-   g_ship_position = g_ship_position + velocity * g_clock.time_elapsed_last_frame();
-
    this->repaint();
 }
 
@@ -150,3 +144,30 @@ bool my_GL_window::initialize()
    return true;
 }
 
+
+// the "key is pressed" event handler
+void my_GL_window::keyPressEvent(QKeyEvent* e)
+{
+   // Note: Enums do not provide any level of scope except for the latest
+   // version of C++, which Visual Studio 2013 Express does not support at
+   // the time of this coding.  Because of the lack of scope, all the key
+   // enumes are prefixed with "Key_" even though they are already in the
+   // "Key" namespace.
+   const float SHIP_VELOCITY = 0.02f;
+   if (Qt::Key_Up == e->key())
+   {
+      g_ship_position.y += SHIP_VELOCITY;
+   }
+   if (Qt::Key_Down == e->key())
+   {
+      g_ship_position.y -= SHIP_VELOCITY;
+   }
+   if (Qt::Key_Left == e->key())
+   {
+      g_ship_position.x -= SHIP_VELOCITY;
+   }
+   if (Qt::Key_Right == e->key())
+   {
+      g_ship_position.x += SHIP_VELOCITY;
+   }
+}

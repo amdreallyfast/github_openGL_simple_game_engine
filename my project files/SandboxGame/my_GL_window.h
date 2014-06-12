@@ -13,11 +13,10 @@ public:
    bool initialize();
 
 protected:
-   // override the initialization
+   // override QGLWidget functionality here
    void initializeGL();
-
-   // override the "paint things" method
    void paintGL();
+   void keyPressEvent(QKeyEvent*);
    
 private:
    GLuint m_vertex_buffer_ID;
