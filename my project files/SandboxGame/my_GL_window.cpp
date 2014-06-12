@@ -34,8 +34,9 @@ namespace
    };
    const unsigned int NUM_VERTS = sizeof(g_verts) / sizeof(*g_verts);
 
-   // use the default values of 0 for the chip position
+   // use the default values of 0 for the ship position and velocity
    vector2D g_ship_position;
+   vector2D g_ship_velocity;
 
    Clock g_clock;
 }
@@ -64,14 +65,9 @@ void my_GL_window::initializeGL()
 
 void my_GL_window::paintGL()
 {
+   glViewport(0, 0, this->width(), this->height());
    glClear(GL_COLOR_BUFFER_BIT);
-
-   // MUST bind the buffer before specifying attributes because the attribute
-   // data is stored in the buffer object, and the drawing functions access the
-   // buffer object that is bound to the context for both the vertex data and 
-   // the vertex attribute data
    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer_ID);
-
    glEnableVertexAttribArray(0);
    glVertexAttribPointer(
       0,             // vertex attribute index
@@ -110,8 +106,11 @@ void my_GL_window::timer_update()
 
    // do pre-render calculations
    
-   // read keys and perform corresponding actions
-   check_key_state();
+   // update ship velocity and resulting position
+   float delta_time_fractional_second = g_clock.time_elapsed_last_frame();
+   update_velocity(delta_time_fractional_second);
+   g_ship_position = g_ship_position +
+      (g_ship_velocity * delta_time_fractional_second);
 
    this->repaint();
 }
@@ -141,28 +140,25 @@ bool my_GL_window::initialize()
 
 
 // the "key is pressed" event handler
-void my_GL_window::check_key_state()
+void my_GL_window::update_velocity(float delta_time)
 {
-   // using the Windows function, GetAsyncKeyState(...)
-   // http://msdn.microsoft.com/en-us/library/windows/desktop/ms646293(v=vs.85).aspx
-   // Note: Unlike GetKeyState(...), this one checks the physical state of the
-   // requested key, regardless of whether it is mapped to some other 
-   // functionality, such as mapping the keys to another language.
-   const float SHIP_VELOCITY = 0.02f;
+
+   const float ACCELERATION = 0.3f * delta_time;
    if (GetAsyncKeyState(VK_UP))
    {
-      g_ship_position.y += SHIP_VELOCITY;
+      g_ship_velocity.y += ACCELERATION;
    }
    if (GetAsyncKeyState(VK_DOWN))
    {
-      g_ship_position.y -= SHIP_VELOCITY;
+      g_ship_velocity.y -= ACCELERATION;
    }
    if (GetAsyncKeyState(VK_LEFT))
    {
-      g_ship_position.x -= SHIP_VELOCITY;
+      g_ship_velocity.x -= ACCELERATION;
    }
    if (GetAsyncKeyState(VK_RIGHT))
    {
-      g_ship_position.x += SHIP_VELOCITY;
+      g_ship_velocity.x += ACCELERATION;
    }
 }
+

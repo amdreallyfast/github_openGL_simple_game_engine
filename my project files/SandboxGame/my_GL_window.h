@@ -11,7 +11,7 @@ class my_GL_window : public QGLWidget
 public:
    bool shutdown();
    bool initialize();
-   void check_key_state();
+   void update_velocity(float delta_time);
 
 protected:
    // override QGLWidget functionality here

@@ -26,13 +26,13 @@ namespace Timing
    {
       // get the change in time and convert it to a float that represents the
       // franction of a second that has passed
-      LARGE_INTEGER this_time_counter;
-      QueryPerformanceCounter(&this_time_counter);
+      LARGE_INTEGER this_frame_time_counter;
+      QueryPerformanceCounter(&this_frame_time_counter);
       LARGE_INTEGER delta;
-      delta.QuadPart = this_time_counter.QuadPart - m_last_frame_time_counter.QuadPart;
+      delta.QuadPart = this_frame_time_counter.QuadPart - m_last_frame_time_counter.QuadPart;
       m_delta_time = ((float)delta.QuadPart) / m_cpu_timer_frequency.QuadPart;
 
-      m_last_frame_time_counter.QuadPart = this_time_counter.QuadPart;
+      m_last_frame_time_counter.QuadPart = this_frame_time_counter.QuadPart;
    }
 
    float Clock::time_elapsed_last_frame() const
