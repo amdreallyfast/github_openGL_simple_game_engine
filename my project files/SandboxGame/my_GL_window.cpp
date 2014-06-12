@@ -109,8 +109,7 @@ void my_GL_window::timer_update()
    // update ship velocity and resulting position
    float delta_time_fractional_second = g_clock.time_elapsed_last_frame();
    update_velocity(delta_time_fractional_second);
-   g_ship_position = g_ship_position +
-      (g_ship_velocity * delta_time_fractional_second);
+   g_ship_position += (g_ship_velocity * delta_time_fractional_second);
 
    this->repaint();
 }

@@ -23,10 +23,32 @@ namespace Math
          y(new_y)
       { }
 
+      vector2D(const vector2D& source) :
+         //x(source.x),
+         //y(source.y)
+         x(0),
+         y(0)
+      { }
+
+      // define assignment operators inside the class because argument order
+      // does matter
+      // Note: In these operators, one argument gets modified, and the other 
+      // does not, so argument order matters, and I do not want to allow 
+      // implicit conversion of the left-hand side argument.  
+      inline vector2D operator=(const vector2D& rhs);
+      inline vector2D operator+=(const vector2D& rhs);
+      inline vector2D operator-=(const vector2D& rhs);
+
    private:
    };
 
+   // define these outside the class because argument order does not matter
+   // Note: In these operators, the resulting value is temporary and is 
+   // subsequently assigned to something else.  The arguments are unaltered, so
+   // order does not matter, and I will allow implicit conversion of both 
+   // arguments.
    inline vector2D operator+(const vector2D& lhs, const vector2D& rhs);
+   inline vector2D operator-(const vector2D& lhs, const vector2D& rhs);
    inline vector2D operator*(float scalar, const vector2D& vector);
    inline vector2D operator*(const vector2D& vector, float scalar);
 

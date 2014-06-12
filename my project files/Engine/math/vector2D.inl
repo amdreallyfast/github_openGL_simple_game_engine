@@ -12,6 +12,12 @@ vector2D operator+(const vector2D& lhs, const vector2D& rhs)
    return vector2D(lhs.x + rhs.x, lhs.y + rhs.y);
 }
 
+vector2D operator-(const vector2D& lhs, const vector2D& rhs)
+{
+   //return vector2D(lhs.x - rhs.x, lhs.y - rhs.y);
+   return vector2D();
+}
+
 vector2D operator*(float scalar, const vector2D& vector)
 {
    // should break the test
@@ -29,3 +35,19 @@ vector2D operator*(const vector2D& vector, float scalar)
    // should make the test pass
    return vector2D(vector.x * scalar, vector.y * scalar);
 }
+
+vector2D vector2D::operator = (const vector2D& rhs)
+{
+   return vector2D();
+}
+
+vector2D vector2D::operator += (const vector2D& rhs)
+{
+   return vector2D();
+}
+
+vector2D vector2D::operator -= (const vector2D& rhs)
+{
+   return vector2D();
+}
+

@@ -6,12 +6,13 @@
 using Timing::Clock;
 
 // for Qt's "sleep" function
-#include <Qt\qtest.h>
+#include <QtTest\QTest>
 
 #include <iostream>
 using std::cout;
 using std::endl;
 
+#ifdef RUN_CLOCK_TESTS
 TEST(Clock, Initialize)
 {
    Clock clock;
@@ -38,9 +39,10 @@ TEST(Clock, Frame_Time_Measuring)
    clock.new_frame();
    timed_time = clock.time_elapsed_last_frame();
    EXPECT_TRUE(0.4f < timed_time);
-   EXPECT_TRUE(timed_time > 0.6f);
+   EXPECT_TRUE(timed_time < 0.6f);
 
 
+#ifdef DO_LONG_CLOCK_TESTS
    // now check various random times
    const int NUM_TESTS = 10 + (rand() % 100);
    const float THRESHOLD = 0.1f;
@@ -62,6 +64,9 @@ TEST(Clock, Frame_Time_Measuring)
       EXPECT_TRUE((this_test_seconds - THRESHOLD) < elapsed_seconds);
       EXPECT_TRUE((this_test_seconds + THRESHOLD) > elapsed_seconds);
    }
+#endif
 
    EXPECT_TRUE(clock.shutdown());
 }
+
+#endif
