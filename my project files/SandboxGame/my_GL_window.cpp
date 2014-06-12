@@ -3,7 +3,7 @@
 #include "my_GL_window.h"
 
 // for printing errors to the console; use instead of cout (whim)
-#include <Qt\qdebug.h>
+#include <QtCore\QDebug>
 
 // could do assertion or exception (??change to exception??)
 #include <cassert>

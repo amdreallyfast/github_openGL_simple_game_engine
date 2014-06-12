@@ -6,14 +6,19 @@ namespace Timing
    {
       // the "performance frequency only changes on system reset, so it's ok
       // to do it only during initialization
-      bool b = QueryPerformanceFrequency(&m_cpu_timer_frequency);
-      if (!b)
-      {
-         return false;
-      }
+      // Note: If it succeeds, it returns non-zero, not a bool.  I got a 
+      // compiler warning abotu a performance issue in int<-->bool conversion.
+      // http://msdn.microsoft.com/en-us/library/windows/desktop/ms644905(v=vs.85).aspx
+      bool success = (0 != QueryPerformanceFrequency(&m_cpu_timer_frequency));
+      if (!success){ return false; }
 
       // assign the counter it's first value
-      return QueryPerformanceCounter(&m_last_frame_time_counter);
+      // Note: Like "query performance frequency", it returns non-zero if 
+      // successful, not a bool.  
+      success = (1 == QueryPerformanceCounter(&m_last_frame_time_counter));
+      if (!success){ return false; }
+
+      return true;
    }
 
    bool Clock::shutdown()
