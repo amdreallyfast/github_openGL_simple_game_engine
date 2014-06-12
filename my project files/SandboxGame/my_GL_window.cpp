@@ -2,14 +2,6 @@
 #include "glew-1.10.0\include\GL\glew.h"
 #include "my_GL_window.h"
 
-// for key presses
-// Note: I am able to declare the class QKeyEvent as a parameter without
-// this include because it is declared somewhere in the Qt include 
-// hierarchy, but it is not fully defined there.  This was to save space
-// and prevent header files from getting bloated.  Bottom line to me though 
-// is that I need to include this file to get the definition of the class.
-#include <QtGui\QKeyEvent>
-
 // for printing errors to the console; use instead of cout (whim)
 #include <Qt\qdebug.h>
 
@@ -116,7 +108,10 @@ void my_GL_window::timer_update()
    // tell the timer to record its current counter value
    g_clock.new_frame();
 
-   // begin pre-render calculations
+   // do pre-render calculations
+   
+   // read keys and perform corresponding actions
+   check_key_state();
 
    this->repaint();
 }
@@ -146,27 +141,27 @@ bool my_GL_window::initialize()
 
 
 // the "key is pressed" event handler
-void my_GL_window::keyPressEvent(QKeyEvent* e)
+void my_GL_window::check_key_state()
 {
-   // Note: Enums do not provide any level of scope except for the latest
-   // version of C++, which Visual Studio 2013 Express does not support at
-   // the time of this coding.  Because of the lack of scope, all the key
-   // enumes are prefixed with "Key_" even though they are already in the
-   // "Key" namespace.
+   // using the Windows function, GetAsyncKeyState(...)
+   // http://msdn.microsoft.com/en-us/library/windows/desktop/ms646293(v=vs.85).aspx
+   // Note: Unlike GetKeyState(...), this one checks the physical state of the
+   // requested key, regardless of whether it is mapped to some other 
+   // functionality, such as mapping the keys to another language.
    const float SHIP_VELOCITY = 0.02f;
-   if (Qt::Key_Up == e->key())
+   if (GetAsyncKeyState(VK_UP))
    {
       g_ship_position.y += SHIP_VELOCITY;
    }
-   if (Qt::Key_Down == e->key())
+   if (GetAsyncKeyState(VK_DOWN))
    {
       g_ship_position.y -= SHIP_VELOCITY;
    }
-   if (Qt::Key_Left == e->key())
+   if (GetAsyncKeyState(VK_LEFT))
    {
       g_ship_position.x -= SHIP_VELOCITY;
    }
-   if (Qt::Key_Right == e->key())
+   if (GetAsyncKeyState(VK_RIGHT))
    {
       g_ship_position.x += SHIP_VELOCITY;
    }

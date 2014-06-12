@@ -11,12 +11,12 @@ class my_GL_window : public QGLWidget
 public:
    bool shutdown();
    bool initialize();
+   void check_key_state();
 
 protected:
    // override QGLWidget functionality here
    void initializeGL();
    void paintGL();
-   void keyPressEvent(QKeyEvent*);
    
 private:
    GLuint m_vertex_buffer_ID;
