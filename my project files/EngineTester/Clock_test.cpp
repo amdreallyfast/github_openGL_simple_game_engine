@@ -13,6 +13,7 @@ using std::cout;
 using std::endl;
 
 #ifdef RUN_CLOCK_TESTS
+
 TEST(Clock, Initialize)
 {
    Clock clock;

@@ -6,6 +6,8 @@
 #include <math/vector2D.h>
 using Math::vector2D;
 
+#ifdef RUN_VECTOR2D_TESTS
+
 TEST(Vector2D, Constructor)
 {
    vector2D first(1, 2);
@@ -91,3 +93,5 @@ TEST(Vector2D, Scalar_Multiplication)
    EXPECT_FLOAT_EQ(result2.x, result1.x);
    EXPECT_FLOAT_EQ(result2.y, result1.y);
 }
+
+#endif
