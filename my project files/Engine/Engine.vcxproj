@@ -20,6 +20,7 @@
     <ClInclude Include="math\vector2D.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="math\matrix2D.inl" />
     <None Include="math\vector2D.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

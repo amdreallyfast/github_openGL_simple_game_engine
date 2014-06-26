@@ -37,5 +37,8 @@
     <None Include="math\vector2D.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="math\matrix2D.inl">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
