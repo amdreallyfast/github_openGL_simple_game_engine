@@ -29,6 +29,9 @@
     <ClInclude Include="timing\clock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="matrix2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="math\vector2D.inl">
