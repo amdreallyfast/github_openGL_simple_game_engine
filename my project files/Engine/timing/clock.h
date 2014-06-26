@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENGINE_CLOCK_H
+#define ENGINE_CLOCK_H
 
 // this is a big header, but necessary to get access to LARGE_INTEGER
 // Note: We can't just include winnt.h, in which LARGE_INTEGER is defined,
@@ -32,3 +33,5 @@ namespace Timing
       float m_delta_time;
    };
 }
+
+#endif

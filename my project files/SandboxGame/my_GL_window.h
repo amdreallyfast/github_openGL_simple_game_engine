@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SANDBOX_GAME_GL_WINDOW
+#define SANDBOX_GAME_GL_WINDOW
 
 #include <QtCore\qobject>
 #include <QtOpenGL\qglwidget>
@@ -26,3 +27,4 @@ private slots:
    void timer_update();
 };
 
+#endif
