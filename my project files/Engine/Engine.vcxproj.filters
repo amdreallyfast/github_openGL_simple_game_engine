@@ -29,7 +29,7 @@
     <ClInclude Include="timing\clock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="matrix2D.h">
+    <ClInclude Include="math\matrix2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
