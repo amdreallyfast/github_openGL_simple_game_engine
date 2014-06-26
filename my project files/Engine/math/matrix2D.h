@@ -18,13 +18,9 @@ namespace Math
       explicit matrix2D(
          float start_x0 = 1, float start_x1 = 0,
          float start_y0 = 0, float start_y1 = 1);
-
-      // make it a member function to enforce the right-hand-sideness of a vector
-      // when you multiply a matrix by a vector
-      // Note: You can multiply 2x2 matrix by a 1x2 vector, but not the other way
-      // around because of restrictions in matrix mathematics.
-      inline vector2D operator*(const vector2D& rhs);
    };
+
+   inline vector2D operator*(const matrix2D& mat2, const vector2D& vec2);
 
 #include "matrix2D.inl"
 }

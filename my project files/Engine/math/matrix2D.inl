@@ -8,15 +8,13 @@ matrix2D::matrix2D(
 {
 }
 
-// make it a member function to enforce the right-hand-sideness of a vector
-// when you multiply a matrix by a vector
-vector2D matrix2D::operator*(const vector2D& vec)
+inline vector2D operator*(const matrix2D& mat2, const vector2D& vec2)
 {
    // Expected result:
    // matrix.x0 * vector.x + matrix.x1 * vector.y = new vector.x
    // matrix.y0 * vector.x + matrix.y1 * vector.y = new vector.y
 
    return vector2D(
-      this->x0 * vec.x + this->x1 * vec.y,
-      this->y0 * vec.x + this->y1 * vec.y);
+      mat2.x0 * vec2.x + mat2.x1 * vec2.y,
+      mat2.y0 * vec2.x + mat2.y1 * vec2.y);
 }
