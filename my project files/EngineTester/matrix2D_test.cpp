@@ -6,9 +6,6 @@ using Math::matrix2D;
 #include <math\vector2D.h>
 using Math::vector2D;
 
-// for square root and trig functions
-#include <math.h>
-
 #ifdef RUN_MATRIX2D_TESTS
 
 TEST(Matrix2D, Constructor)
@@ -32,6 +29,21 @@ TEST(Matrix2D, Constructor)
 }
 
 
+// checking if the default assignment operator is acceptable
+TEST(Matrix2D, Assignment)
+{
+   matrix2D mat_1(
+      1, 2,
+      3, 4);
+
+   matrix2D result = mat_1;
+   EXPECT_FLOAT_EQ(1, mat_1.x0);
+   EXPECT_FLOAT_EQ(2, mat_1.x1);
+   EXPECT_FLOAT_EQ(3, mat_1.y0);
+   EXPECT_FLOAT_EQ(4, mat_1.y1);
+}
+
+
 TEST(Matrix2D, Matrix_Vector_Multiply)
 {
    matrix2D linear_transform(
@@ -48,18 +60,65 @@ TEST(Matrix2D, Matrix_Vector_Multiply)
    EXPECT_FLOAT_EQ(-37, result.y);
 }
 
+#include <iostream>
+using std::cout;
+using std::endl;
 
+#include <cmath>
 TEST(Matrix2D, Matrix_Rotation)
 {
+   // make a default one
+   // Note: We already confirmed that the assignment operator worked, so use
+   // this as the return value for each rotate(...) call.
+   matrix2D rotation_matrix;
+   vector2D rotated_vector;
+
+   // constants from google:
+   const float my_pi = 3.14159265359f;
+
+   const float my_sqrt2_over_2 = 0.70710678118f;
+   EXPECT_FLOAT_EQ(sqrtf(2) / 2.0f, my_sqrt2_over_2);
+
+   const float my_sqrt3_over_2 = 0.86602540378f;
+   EXPECT_FLOAT_EQ(sqrtf(3) / 2.0f, my_sqrt3_over_2);
+   
+   const float my_1_over_2 = 0.5f;
+
+
+   // +pi/4 (45 degrees)
+   rotation_matrix = matrix2D::rotate(my_pi / 4);
+   EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotation_matrix.x0);
+   EXPECT_FLOAT_EQ((-1) * my_sqrt2_over_2, rotation_matrix.x1);
+   EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotation_matrix.y0);
+   EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotation_matrix.y1);
+
+   // -pi/3 (45 degrees)
+   rotation_matrix = matrix2D::rotate((-1) * my_pi / 3);
+   EXPECT_FLOAT_EQ(my_1_over_2, rotation_matrix.x0);
+   EXPECT_FLOAT_EQ((-1) * (-1) * my_sqrt3_over_2, rotation_matrix.x1);
+   EXPECT_FLOAT_EQ((-1) * my_sqrt3_over_2, rotation_matrix.y0);
+   EXPECT_FLOAT_EQ(my_1_over_2, rotation_matrix.y1);
+
+   
+   // now try rotating some vectors
    vector2D unit_along_x(1, 0);
    vector2D unit_along_y(0, 1);
 
-   // rotate unit vector along x by +45 degrees (pi / 4)
+   // rotate unit vector along x by +pi/4
+   // Expected x: root(2) / 2
+   // Expected y: 1 / 2
+   rotation_matrix = matrix2D::rotate(my_pi / 4);
+   rotated_vector = rotation_matrix * unit_along_x;
+   EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotated_vector.x);
+   EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotated_vector.y);
+
+   // rotate unit vector along y by -60 degrees (- pi/3)
    // Expected x: root(3) / 2
    // Expected y: 1 / 2
-   matrix2D rotation_1 = matrix2D::rotate((1.0f / 4.0f) * 3.14159f);
-   vector2D unit_along_x_rotated = rotation_1 * unit_along_x;
-   EXPECT_FLOAT_EQ(sqrtf()
+   rotation_matrix = matrix2D::rotate((-1) * my_pi / 3);
+   rotated_vector = rotation_matrix * unit_along_y;
+   EXPECT_FLOAT_EQ(my_sqrt3_over_2, rotated_vector.x);
+   EXPECT_FLOAT_EQ(my_1_over_2, rotated_vector.y);
 }
 
 #endif

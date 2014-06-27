@@ -1,8 +1,11 @@
 #ifndef ENGINE_MATRIX_2D
 #define ENGINE_MATRIX_2D
 
+// ??why don't I need to state, "using Math::vector2D"? is it because I am already working in the same namespace??
 #include "vector2D.h"
-//using Math::vector2D;
+
+// for trig functons
+#include <cmath>
 
 namespace Math
 {

@@ -1,7 +1,7 @@
 #ifndef ENGINE_VECTOR_2D_H
 #define ENGINE_VECTOR_2D_H
 
-#include <math.h>
+#include <cmath>
 
 namespace Math
 {

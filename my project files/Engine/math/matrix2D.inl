@@ -21,5 +21,7 @@ inline vector2D operator*(const matrix2D& mat2, const vector2D& vec2)
 
 matrix2D matrix2D::rotate(float angle_in_radians)
 {
-   return matrix2D();
+   return matrix2D(
+      cosf(angle_in_radians), -sinf(angle_in_radians),
+      sinf(angle_in_radians), cosf(angle_in_radians));
 }
