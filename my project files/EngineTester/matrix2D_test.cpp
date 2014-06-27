@@ -60,11 +60,6 @@ TEST(Matrix2D, Matrix_Vector_Multiply)
    EXPECT_FLOAT_EQ(-37, result.y);
 }
 
-#include <iostream>
-using std::cout;
-using std::endl;
-
-#include <cmath>
 TEST(Matrix2D, Matrix_Rotation)
 {
    // make a default one
@@ -74,6 +69,10 @@ TEST(Matrix2D, Matrix_Rotation)
    vector2D rotated_vector;
 
    // constants from google:
+   // Note: To run the tests more quickly, I will use some constants from
+   // a non-cmath source.  I trust the Google calculator.  I will check 
+   // them against the cmath library to make sure that they are both on
+   // the same page.
    const float my_pi = 3.14159265359f;
 
    const float my_sqrt2_over_2 = 0.70710678118f;
