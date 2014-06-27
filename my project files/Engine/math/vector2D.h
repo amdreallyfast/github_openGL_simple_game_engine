@@ -16,19 +16,17 @@ namespace Math
       // constructor is enough.
 
       // make constructor explicit so that the compiler won't try to implicitly
-      // take two ajacent floats in a "verts" array and make a vector out of 
+      // take two adjacent floats in a "verts" array and make a vector out of 
       // them
-      // Note: This is normal C++ behavior and can be useful, but make the 
-      // constructor explicit for the sake of forcing readable code.
-      explicit vector2D(float new_x = 0.0f, float new_y = 0.0f) : 
-         x(new_x),
-         y(new_y)
-      { }
-
-      vector2D(const vector2D& source) :
-         x(source.x),
-         y(source.y)
-      { }
+      // Note: This implicitness is normal C++ behavior and can be useful, but 
+      // make the constructor explicit for the sake of forcing readable code.
+      // Also Note: The constructor must be defined here because it is neither 
+      // inline nor defined in a separate compilation unit.
+      explicit vector2D(float start_x = 0.0f, float start_y = 0.0f) :
+         x(start_x),
+         y(start_y)
+      {
+      }
 
       // calculate the magnitude of this vector
       float inline length();
@@ -37,10 +35,8 @@ namespace Math
       // does matter
       // Note: In these operators, one argument gets modified, and the other 
       // does not, so argument order matters.  
-      // Also Note: I also don't want to allow implicit conversion of the left-
-      // hand side because the left-hand side is supposed to be "this".  And 
-      // for that reason, the return value is a reference rather than a copy.
-      inline vector2D& operator=(const vector2D& rhs);
+      // Also Note: The return value is a reference rather than a copy because
+      // this is an assignment operator, so "this" gets modified.
       inline vector2D& operator+=(const vector2D& rhs);
       inline vector2D& operator-=(const vector2D& rhs);
 
@@ -59,7 +55,7 @@ namespace Math
    inline vector2D operator*(float scalar, const vector2D& vector);
    inline vector2D operator*(const vector2D& vector, float scalar);
 
-   // now include the inline definitions
+   // now include the definitions
 #include "vector2D.inl"
 }
 

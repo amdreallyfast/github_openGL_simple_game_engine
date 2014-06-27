@@ -20,7 +20,11 @@ namespace Math
       // Note: Default matrix is a 2x2 identity matrix.
       explicit matrix2D(
          float start_x0 = 1, float start_x1 = 0,
-         float start_y0 = 0, float start_y1 = 1);
+         float start_y0 = 0, float start_y1 = 1) :
+         x0(start_x0), x1(start_x1),
+         y0(start_y0), y1(start_y1)
+      {
+      }
 
       // the rotation is very specific to the matrix itself, so make it a member,
       // and make it a static factory that will create a matrix that can be

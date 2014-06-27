@@ -29,21 +29,6 @@ TEST(Matrix2D, Constructor)
 }
 
 
-// checking if the default assignment operator is acceptable
-TEST(Matrix2D, Assignment)
-{
-   matrix2D mat_1(
-      1, 2,
-      3, 4);
-
-   matrix2D result = mat_1;
-   EXPECT_FLOAT_EQ(1, mat_1.x0);
-   EXPECT_FLOAT_EQ(2, mat_1.x1);
-   EXPECT_FLOAT_EQ(3, mat_1.y0);
-   EXPECT_FLOAT_EQ(4, mat_1.y1);
-}
-
-
 TEST(Matrix2D, Matrix_Vector_Multiply)
 {
    matrix2D linear_transform(
@@ -59,6 +44,7 @@ TEST(Matrix2D, Matrix_Vector_Multiply)
    EXPECT_FLOAT_EQ(-23, result.x);
    EXPECT_FLOAT_EQ(-37, result.y);
 }
+
 
 TEST(Matrix2D, Matrix_Rotation)
 {

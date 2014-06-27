@@ -1,13 +1,4 @@
 
-matrix2D::matrix2D(
-   float start_x0, float start_x1,
-   float start_y0, float start_y1)
-   :
-   x0(start_x0), x1(start_x1),
-   y0(start_y0), y1(start_y1)
-{
-}
-
 inline vector2D operator*(const matrix2D& mat2, const vector2D& vec2)
 {
    // Expected result:
@@ -21,7 +12,9 @@ inline vector2D operator*(const matrix2D& mat2, const vector2D& vec2)
 
 matrix2D matrix2D::rotate(float angle_in_radians)
 {
+   float cos_result = cosf(angle_in_radians);
+   float sin_result = sinf(angle_in_radians);
    return matrix2D(
-      cosf(angle_in_radians), -sinf(angle_in_radians),
-      sinf(angle_in_radians), cosf(angle_in_radians));
+      cos_result, (-1) * sin_result,
+      sin_result, cos_result);
 }

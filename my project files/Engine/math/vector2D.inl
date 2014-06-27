@@ -1,11 +1,6 @@
 
-
-// the operator definitions here do not require the "inline" keyword because
+// the function definitions here do not require the "inline" keyword because
 // they were already declared as "inline" in their declaration
-
-
-
-// In-class operators
 
 float vector2D::length()
 {
@@ -14,14 +9,7 @@ float vector2D::length()
 }
 
 
-vector2D& vector2D::operator = (const vector2D& rhs)
-{
-   x = rhs.x;
-   y = rhs.y;
-
-   return *this;
-}
-
+// In-class operators
 vector2D& vector2D::operator += (const vector2D& rhs)
 {
    x += rhs.x;

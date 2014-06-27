@@ -18,31 +18,12 @@ TEST(Vector2D, Constructor)
    EXPECT_FLOAT_EQ(2, first.y);
 }
 
-TEST(Vector2D, Copy_Constructor)
-{
-   vector2D source(1, 1234.5678f);
-   vector2D the_copy(source);
-
-   EXPECT_FLOAT_EQ(the_copy.x, 1);
-   EXPECT_FLOAT_EQ(the_copy.y, 1234.5678f);
-}
-
 TEST(Vector2D, Length)
 {
    vector2D v(3, 4);
    float length = v.length();
 
    EXPECT_FLOAT_EQ(length, 5);
-}
-
-TEST(Vector2D, Assignment)
-{
-   vector2D first(1, 2);
-   vector2D result(3, 4);
-   result = first;
-
-   EXPECT_FLOAT_EQ(result.x, 1);
-   EXPECT_FLOAT_EQ(result.y, 2);
 }
 
 TEST(Vector2D, Vector_Addition)
