@@ -13,7 +13,7 @@ public:
    bool shutdown();
    bool initialize();
    void update_velocity(float delta_time);
-   void rotate_ship();
+   void rotate_ship(float delta_time);
 
 protected:
    // override QGLWidget functionality here

@@ -92,7 +92,7 @@ void my_GL_window::paintGL()
    matrix2D rotation_matrix = matrix2D::rotate(g_ship_orientation_radians);
    for (unsigned int i = 0; i < NUM_VERTS; i++)
    {
-      transformed_verts[i] = rotation_matrix * g_verts[i];
+      transformed_verts[i] = (rotation_matrix * g_verts[i]) + g_ship_position;
    }
    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer_ID);
    glBufferSubData(
@@ -118,9 +118,8 @@ void my_GL_window::timer_update()
    // do pre-render calculations
    
    // update ship status
-   rotate_ship();
-
    float delta_time_fractional_second = g_clock.time_elapsed_last_frame();
+   rotate_ship(delta_time_fractional_second);
    update_velocity(delta_time_fractional_second);
    g_ship_position += (g_ship_velocity * delta_time_fractional_second);
 
@@ -154,27 +153,43 @@ bool my_GL_window::initialize()
 // the "key is pressed" event handler
 void my_GL_window::update_velocity(float delta_time)
 {
+   const float LINEAR_ACCEL = 0.2f;
+   static float LINEAR_DELTA_V = LINEAR_ACCEL * delta_time;
 
-   const float ACCELERATION = 0.3f * delta_time;
-   //if (GetAsyncKeyState(VK_UP))
-   //{
-   //   g_ship_velocity.y += ACCELERATION;
-   //}
+   // the sine is negative because the ship orientation is relative to the veritcal
+   // axis, NOT the horizontal axis
+   //vector2D direction_to_accel(
+   //   (-1) * sinf(g_ship_orientation_radians), 
+   //   cosf(g_ship_orientation_radians));
+
+   vector2D forward_for_my_ship(0, 1);
+   matrix2D rotation_mat = matrix2D::rotate(g_ship_orientation_radians);
+   vector2D direction_to_accel = rotation_mat * forward_for_my_ship;
+
+   if (GetAsyncKeyState(VK_UP))
+   {
+      g_ship_velocity += direction_to_accel * LINEAR_DELTA_V;
+   }
 }
 
-void my_GL_window::rotate_ship()
+
+void my_GL_window::rotate_ship(float delta_time)
 {
-   const float ANGLULAR_ACCEL = 0.1f;
+   const float ANGULAR_ACCEL = 2.0f;
+   static float angular_delta_v = 0;
 
    if (GetAsyncKeyState(VK_LEFT))
    {
       // recall that positive rotation is counterclockwise
-      g_ship_orientation_radians += ANGLULAR_ACCEL;
+      angular_delta_v += (ANGULAR_ACCEL * delta_time);
    }
    if (GetAsyncKeyState(VK_RIGHT))
    {
-      g_ship_orientation_radians -= ANGLULAR_ACCEL;
+      angular_delta_v -= (ANGULAR_ACCEL * delta_time);
    }
+
+   float angular_delta_rotation = (angular_delta_v * delta_time);
+   g_ship_orientation_radians += angular_delta_rotation;
 }
 
 
