@@ -6,6 +6,8 @@
 #include <math/vector2D.h>
 using Math::vector2D;
 
+#include <math.h>
+
 #ifdef RUN_VECTOR2D_TESTS
 
 TEST(Vector2D, Constructor)
@@ -23,6 +25,14 @@ TEST(Vector2D, Copy_Constructor)
 
    EXPECT_FLOAT_EQ(the_copy.x, 1);
    EXPECT_FLOAT_EQ(the_copy.y, 1234.5678f);
+}
+
+TEST(Vector2D, Length)
+{
+   vector2D v(3, 4);
+   float length = v.length();
+
+   EXPECT_FLOAT_EQ(length, 5);
 }
 
 TEST(Vector2D, Assignment)

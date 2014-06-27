@@ -18,3 +18,8 @@ inline vector2D operator*(const matrix2D& mat2, const vector2D& vec2)
       mat2.x0 * vec2.x + mat2.x1 * vec2.y,
       mat2.y0 * vec2.x + mat2.y1 * vec2.y);
 }
+
+matrix2D matrix2D::rotate(float angle_in_radians)
+{
+   return matrix2D();
+}

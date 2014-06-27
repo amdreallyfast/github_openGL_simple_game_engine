@@ -1,6 +1,8 @@
 #ifndef ENGINE_VECTOR_2D_H
 #define ENGINE_VECTOR_2D_H
 
+#include <math.h>
+
 namespace Math
 {
    struct vector2D
@@ -28,11 +30,13 @@ namespace Math
          y(source.y)
       { }
 
+      // calculate the magnitude of this vector
+      float inline length();
+
       // define assignment operators inside the class because argument order
       // does matter
       // Note: In these operators, one argument gets modified, and the other 
-      // does not, so argument order matters, and I do not want to allow 
-      // implicit conversion of the left-hand side argument.  
+      // does not, so argument order matters.  
       // Also Note: I also don't want to allow implicit conversion of the left-
       // hand side because the left-hand side is supposed to be "this".  And 
       // for that reason, the return value is a reference rather than a copy.

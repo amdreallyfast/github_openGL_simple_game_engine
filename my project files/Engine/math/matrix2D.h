@@ -18,6 +18,11 @@ namespace Math
       explicit matrix2D(
          float start_x0 = 1, float start_x1 = 0,
          float start_y0 = 0, float start_y1 = 1);
+
+      // the rotation is very specific to the matrix itself, so make it a member,
+      // and make it a static factory that will create a matrix that can be
+      // applied to a vector to rotate it
+      inline static matrix2D rotate(float angle_in_radians);
    };
 
    inline vector2D operator*(const matrix2D& mat2, const vector2D& vec2);

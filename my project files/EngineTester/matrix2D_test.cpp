@@ -45,4 +45,11 @@ TEST(Matrix2D, Matrix_Vector_Multiply)
    EXPECT_FLOAT_EQ(-37, result.y);
 }
 
+
+TEST(Matrix2D, Matrix_Rotation)
+{
+   matrix2D linear_transform = matrix2D::rotate(0);
+   vector2D v(2, 9);
+}
+
 #endif

@@ -4,7 +4,16 @@
 // they were already declared as "inline" in their declaration
 
 
+
 // In-class operators
+
+float vector2D::length()
+{
+   // "math.h" is included in the header file
+   return sqrt(powf(x, 2.0f) + powf(y, 2.0f));
+}
+
+
 vector2D& vector2D::operator = (const vector2D& rhs)
 {
    x = rhs.x;
