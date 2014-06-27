@@ -15,6 +15,7 @@
     <ClCompile Include="junk_to_make_compiler_happy.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="math\constants.h" />
     <ClInclude Include="math\matrix2D.h" />
     <ClInclude Include="timing\clock.h" />
     <ClInclude Include="math\vector2D.h" />

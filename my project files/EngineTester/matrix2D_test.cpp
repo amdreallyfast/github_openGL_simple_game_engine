@@ -1,10 +1,9 @@
 #include <gtest\gtest.h>
 
-#include <math\matrix2D.h>
-using Math::matrix2D;
-
-#include <math\vector2D.h>
-using Math::vector2D;
+#include "math\matrix2D.h"
+#include "math\vector2D.h""
+#include "math\constants.h"
+using namespace Math;
 
 #ifdef RUN_MATRIX2D_TESTS
 
@@ -54,31 +53,20 @@ TEST(Matrix2D, Matrix_Rotation)
    matrix2D rotation_matrix;
    vector2D rotated_vector;
 
-   // constants from google:
-   // Note: To run the tests more quickly, I will use some constants from
-   // a non-cmath source.  I trust the Google calculator.  I will check 
-   // them against the cmath library to make sure that they are both on
-   // the same page.
-   const float my_pi = 3.14159265359f;
-
-   const float my_sqrt2_over_2 = 0.70710678118f;
-   EXPECT_FLOAT_EQ(sqrtf(2) / 2.0f, my_sqrt2_over_2);
-
-   const float my_sqrt3_over_2 = 0.86602540378f;
-   EXPECT_FLOAT_EQ(sqrtf(3) / 2.0f, my_sqrt3_over_2);
-   
+   const float my_sqrt2_over_2 = SQRT_2 / 2.0f;
+   const float my_sqrt3_over_2 = SQRT_3 / 2.0f;
    const float my_1_over_2 = 0.5f;
 
 
    // +pi/4 (45 degrees)
-   rotation_matrix = matrix2D::rotate(my_pi / 4);
+   rotation_matrix = matrix2D::rotate(PI / 4);
    EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotation_matrix.x0);
    EXPECT_FLOAT_EQ((-1) * my_sqrt2_over_2, rotation_matrix.x1);
    EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotation_matrix.y0);
    EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotation_matrix.y1);
 
    // -pi/3 (45 degrees)
-   rotation_matrix = matrix2D::rotate((-1) * my_pi / 3);
+   rotation_matrix = matrix2D::rotate((-1) * PI / 3);
    EXPECT_FLOAT_EQ(my_1_over_2, rotation_matrix.x0);
    EXPECT_FLOAT_EQ((-1) * (-1) * my_sqrt3_over_2, rotation_matrix.x1);
    EXPECT_FLOAT_EQ((-1) * my_sqrt3_over_2, rotation_matrix.y0);
@@ -92,7 +80,7 @@ TEST(Matrix2D, Matrix_Rotation)
    // rotate unit vector along x by +pi/4
    // Expected x: root(2) / 2
    // Expected y: 1 / 2
-   rotation_matrix = matrix2D::rotate(my_pi / 4);
+   rotation_matrix = matrix2D::rotate(PI / 4);
    rotated_vector = rotation_matrix * unit_along_x;
    EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotated_vector.x);
    EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotated_vector.y);
@@ -100,7 +88,7 @@ TEST(Matrix2D, Matrix_Rotation)
    // rotate unit vector along y by -60 degrees (- pi/3)
    // Expected x: root(3) / 2
    // Expected y: 1 / 2
-   rotation_matrix = matrix2D::rotate((-1) * my_pi / 3);
+   rotation_matrix = matrix2D::rotate((-1) * PI / 3);
    rotated_vector = rotation_matrix * unit_along_y;
    EXPECT_FLOAT_EQ(my_sqrt3_over_2, rotated_vector.x);
    EXPECT_FLOAT_EQ(my_1_over_2, rotated_vector.y);
