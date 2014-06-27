@@ -6,6 +6,9 @@ using Math::matrix2D;
 #include <math\vector2D.h>
 using Math::vector2D;
 
+// for square root and trig functions
+#include <math.h>
+
 #ifdef RUN_MATRIX2D_TESTS
 
 TEST(Matrix2D, Constructor)
@@ -48,8 +51,15 @@ TEST(Matrix2D, Matrix_Vector_Multiply)
 
 TEST(Matrix2D, Matrix_Rotation)
 {
-   matrix2D linear_transform = matrix2D::rotate(0);
-   vector2D v(2, 9);
+   vector2D unit_along_x(1, 0);
+   vector2D unit_along_y(0, 1);
+
+   // rotate unit vector along x by +45 degrees (pi / 4)
+   // Expected x: root(3) / 2
+   // Expected y: 1 / 2
+   matrix2D rotation_1 = matrix2D::rotate((1.0f / 4.0f) * 3.14159f);
+   vector2D unit_along_x_rotated = rotation_1 * unit_along_x;
+   EXPECT_FLOAT_EQ(sqrtf()
 }
 
 #endif

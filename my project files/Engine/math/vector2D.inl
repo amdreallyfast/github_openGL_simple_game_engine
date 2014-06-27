@@ -10,7 +10,7 @@
 float vector2D::length()
 {
    // "math.h" is included in the header file
-   return sqrt(powf(x, 2.0f) + powf(y, 2.0f));
+   return sqrtf(powf(x, 2.0f) + powf(y, 2.0f));
 }
 
 

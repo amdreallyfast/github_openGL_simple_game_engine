@@ -25,6 +25,8 @@ namespace Math
       inline static matrix2D rotate(float angle_in_radians);
    };
 
+   // when performthing this multiplication, leave the source vector unchanged and 
+   // return a new vector
    inline vector2D operator*(const matrix2D& mat2, const vector2D& vec2);
 
 #include "matrix2D.inl"
