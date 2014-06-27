@@ -12,6 +12,10 @@
 #include <math\vector2D.h>
 using Math::vector2D;
 
+// for my custom matrix structure
+#include <math\matrix2D.h>
+using Math::matrix2D;
+
 // for our timer that allows for precise control of where things should be 
 // within a frame independent of frame rendering time
 #include <timing\clock.h>
@@ -34,8 +38,9 @@ namespace
    };
    const unsigned int NUM_VERTS = sizeof(g_verts) / sizeof(*g_verts);
 
-   // use the default values of 0 for the ship position and velocity
+   // use the default values of 0 for the vectors
    vector2D g_ship_position;
+   float g_ship_orientation_radians = 0;
    vector2D g_ship_velocity;
 
    Clock g_clock;
@@ -78,17 +83,18 @@ void my_GL_window::paintGL()
       0              // position values start 0 bytes from the beginning of the vertex array
       );
 
-   vector2D translated_verts[NUM_VERTS];
+   vector2D transformed_verts[NUM_VERTS];
+   matrix2D rotation_matrix = matrix2D::rotate(g_ship_orientation_radians);
    for (unsigned int i = 0; i < NUM_VERTS; i++)
    {
-      translated_verts[i] = g_verts[i] + g_ship_position;
+      transformed_verts[i] = rotation_matrix * g_verts[i];
    }
    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer_ID);
    glBufferSubData(
       GL_ARRAY_BUFFER,
       0,                         // offset from start of data pointer is 0
-      sizeof(translated_verts),
-      translated_verts);
+      sizeof(transformed_verts),
+      transformed_verts);
 
    glDrawArrays(
       GL_TRIANGLES,     // drawing mode
@@ -106,7 +112,9 @@ void my_GL_window::timer_update()
 
    // do pre-render calculations
    
-   // update ship velocity and resulting position
+   // update ship status
+   rotate_ship();
+
    float delta_time_fractional_second = g_clock.time_elapsed_last_frame();
    update_velocity(delta_time_fractional_second);
    g_ship_position += (g_ship_velocity * delta_time_fractional_second);
@@ -143,21 +151,25 @@ void my_GL_window::update_velocity(float delta_time)
 {
 
    const float ACCELERATION = 0.3f * delta_time;
-   if (GetAsyncKeyState(VK_UP))
-   {
-      g_ship_velocity.y += ACCELERATION;
-   }
-   if (GetAsyncKeyState(VK_DOWN))
-   {
-      g_ship_velocity.y -= ACCELERATION;
-   }
+   //if (GetAsyncKeyState(VK_UP))
+   //{
+   //   g_ship_velocity.y += ACCELERATION;
+   //}
+}
+
+void my_GL_window::rotate_ship()
+{
+   const float ANGLULAR_ACCEL = 0.1f;
+
    if (GetAsyncKeyState(VK_LEFT))
    {
-      g_ship_velocity.x -= ACCELERATION;
+      // recall that positive rotation is counterclockwise
+      g_ship_orientation_radians += ANGLULAR_ACCEL;
    }
    if (GetAsyncKeyState(VK_RIGHT))
    {
-      g_ship_velocity.x += ACCELERATION;
+      g_ship_orientation_radians -= ANGLULAR_ACCEL;
    }
 }
+
 
