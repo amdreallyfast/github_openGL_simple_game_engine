@@ -13,18 +13,19 @@ namespace Math
 
    struct matrix2D
    {
-      float row0_col0, row0_col1, row0_col2;
-      float row1_col0, row1_col1, row1_col2;
-      float row2_col0, row2_col1, row2_col2;
+      float a00, a01, a02, a03;
+      float a10, a11, a12, a13;
+      float a20, a21, a22, a23;
+      float a30, a31, a32, a33;
 
       // declare constructors explicit so that we do not have any implicit conversions
       // from and argument type like "float" to "matrix2D"
 
       // this constructor makes an identity matrix
       explicit matrix2D() :
-         row0_col0(1), row0_col1(0), row0_col2(0),
-         row1_col0(0), row1_col1(1), row1_col2(0),
-         row2_col0(0), row2_col1(0), row2_col2(1)
+         a00(1), a01(0), a02(0),
+         a10(0), a11(1), a12(0),
+         a20(0), a21(0), a22(1)
       {
       }
 
@@ -34,12 +35,12 @@ namespace Math
       // Note: There are no default values so that it does not conflict with the
       // no-argument constructor.
       explicit matrix2D(
-         float start_row0_col0, float start_row0_col1, float start_row0_col2,
-         float start_row1_col0, float start_row1_col1, float start_row1_col2,
-         float start_row2_col0, float start_row2_col1, float start_row2_col2) :
-         row0_col0(start_row0_col0), row0_col1(start_row0_col1), row0_col2(start_row0_col2),
-         row1_col0(start_row1_col0), row1_col1(start_row1_col1), row1_col2(start_row1_col2),
-         row2_col0(start_row2_col0), row2_col1(start_row2_col1), row2_col2(start_row2_col2)
+         float start_a00, float start_a01, float start_a02,
+         float start_a10, float start_a11, float start_a12,
+         float start_a20, float start_a21, float start_a22) :
+         a00(start_a00), a01(start_a01), a02(start_a02),
+         a10(start_a10), a11(start_a11), a12(start_a12),
+         a20(start_a20), a21(start_a21), a22(start_a22)
       {
       }
 
@@ -61,18 +62,18 @@ namespace Math
       explicit matrix2D(
          float rotate_x0, float rotate_x1,
          float rotate_y0, float rotate_y1) :
-         row0_col0(rotate_x0), row0_col1(rotate_x1), row0_col2(0),
-         row1_col0(rotate_y0), row1_col1(rotate_y1), row1_col2(0),
-         row2_col0(0), row2_col1(0), row2_col2(1)
+         a00(rotate_x0), a01(rotate_x1), a02(0),
+         a10(rotate_y0), a11(rotate_y1), a12(0),
+         a20(0), a21(0), a22(1)
       {
       }
 
       // translate constructor
       // Note: No default arguments.  Everything must be provided.
-      explicit matrix2D(float row0_col2, float row1_col2) :
-         row0_col0(1), row0_col1(0), row0_col2(row0_col2),
-         row1_col0(0), row1_col1(1), row1_col2(row1_col2),
-         row2_col0(0), row2_col1(0), row2_col2(1)
+      explicit matrix2D(float a02, float a12) :
+         a00(1), a01(0), a02(a02),
+         a10(0), a11(1), a12(a12),
+         a20(0), a21(0), a22(1)
       {
       }
    };
