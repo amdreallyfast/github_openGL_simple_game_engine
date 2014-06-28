@@ -12,10 +12,15 @@ using Math::vector2D;
 
 TEST(Vector2D, Constructor)
 {
-   vector2D first(1, 2);
-   
-   EXPECT_FLOAT_EQ(1, first.x);
-   EXPECT_FLOAT_EQ(2, first.y);
+   vector2D default_constructor;
+   EXPECT_FLOAT_EQ(0, default_constructor.x);
+   EXPECT_FLOAT_EQ(0, default_constructor.y);
+   EXPECT_FLOAT_EQ(0, default_constructor.enable_translate);
+
+   vector2D v1(1, 2, 3);
+   EXPECT_FLOAT_EQ(1, v1.x);
+   EXPECT_FLOAT_EQ(2, v1.y);
+   EXPECT_FLOAT_EQ(3, v1.enable_translate);
 }
 
 TEST(Vector2D, Length)
@@ -23,66 +28,80 @@ TEST(Vector2D, Length)
    vector2D v(3, 4);
    float length = v.length();
 
-   EXPECT_FLOAT_EQ(length, 5);
+   EXPECT_FLOAT_EQ(5, length);
 }
 
 TEST(Vector2D, Vector_Addition)
 {
-   vector2D first(1, 2);
-   vector2D second(3, 4);
-   vector2D result1 = first + second;
-   vector2D result2 = second + first;
+   vector2D v1(1, 2, 3);
+   vector2D v2(4, 5, 6);
+   vector2D result;
 
-   EXPECT_FLOAT_EQ(result1.x, 4);
-   EXPECT_FLOAT_EQ(result1.y, 6);
-   EXPECT_FLOAT_EQ(result2.x, result1.x);
-   EXPECT_FLOAT_EQ(result2.y, result1.y);
+   result = v1 + v2;
+   EXPECT_FLOAT_EQ(5, result.x);
+   EXPECT_FLOAT_EQ(7, result.y);
+   EXPECT_FLOAT_EQ(9, result.enable_translate);
+
+   result = v2 + v1;
+   EXPECT_FLOAT_EQ(5, result.x);
+   EXPECT_FLOAT_EQ(7, result.y);
+   EXPECT_FLOAT_EQ(9, result.enable_translate);
 }
 
 TEST(Vector2D, Vector_Addition_Assignment)
 {
-   vector2D first(5, 1234.5678f);
-   vector2D second(1, 1);
-   second += first;
+   vector2D v1(5, 1234.5678f, -15);
+   vector2D v2(1, 1);   // use default "enable_translate" value of 0
+   v2 += v1;
    
-   EXPECT_FLOAT_EQ(second.x, 6);
-   EXPECT_FLOAT_EQ(second.y, 1235.5678f);
+   EXPECT_FLOAT_EQ(6, v2.x);
+   EXPECT_FLOAT_EQ(1235.5678f, v2.y);
+   EXPECT_FLOAT_EQ(-15, v2.enable_translate);
 }
 
 TEST(Vector2D, Vector_Subtraction)
 {
-   vector2D first(1, 2);
-   vector2D second(3, 4);
-   vector2D result1 = first - second;
-   vector2D result2 = second - first;
+   vector2D v1(1, 2, 3);
+   vector2D v2(4, 5, 6);
+   vector2D result;
 
-   EXPECT_FLOAT_EQ(result1.x, -2);
-   EXPECT_FLOAT_EQ(result1.y, -2);
-   EXPECT_FLOAT_EQ(result2.x, 2);
-   EXPECT_FLOAT_EQ(result2.y, 2);
+   result = v1 - v2;
+   EXPECT_FLOAT_EQ(-3, result.x);
+   EXPECT_FLOAT_EQ(-3, result.y);
+   EXPECT_FLOAT_EQ(-3, result.enable_translate);
+
+   result = v2 - v1;
+   EXPECT_FLOAT_EQ(3, result.x);
+   EXPECT_FLOAT_EQ(3, result.y);
+   EXPECT_FLOAT_EQ(3, result.enable_translate);
 }
 
 TEST(Vector2D, Vector_Subtraction_Assignment)
 {
-   vector2D first(5, 1234.5678f);
-   vector2D second(1, 1);
-   second -= first;
+   vector2D v1(5, 1234.5678f, -15);
+   vector2D v2(1, 1);   // use default "enable_translate" value of 0
+   v2 -= v1;
 
-   EXPECT_FLOAT_EQ(second.x, -4);
-   EXPECT_FLOAT_EQ(second.y, -1233.5678f);
+   EXPECT_FLOAT_EQ(-4, v2.x);
+   EXPECT_FLOAT_EQ(-1233.5678f, v2.y);
+   EXPECT_FLOAT_EQ(15, v2.enable_translate);
 }
 
 TEST(Vector2D, Scalar_Multiplication)
 {
    float scalar = 10.0f;
-   vector2D v(1, 2);
-   vector2D result1 = scalar * v;
-   vector2D result2 = v * scalar;
+   vector2D v(1, 2, 3);
+   vector2D result;
+   
+   result = scalar * v;
+   EXPECT_FLOAT_EQ(10, result.x);
+   EXPECT_FLOAT_EQ(20, result.y);
+   EXPECT_FLOAT_EQ(30, result.enable_translate);
 
-   EXPECT_FLOAT_EQ(10, result1.x);
-   EXPECT_FLOAT_EQ(20, result1.y);
-   EXPECT_FLOAT_EQ(result2.x, result1.x);
-   EXPECT_FLOAT_EQ(result2.y, result1.y);
+   result = v * scalar;
+   EXPECT_FLOAT_EQ(10, result.x);
+   EXPECT_FLOAT_EQ(20, result.y);
+   EXPECT_FLOAT_EQ(30, result.enable_translate);
 }
 
 #endif

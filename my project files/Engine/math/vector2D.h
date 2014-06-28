@@ -10,6 +10,11 @@ namespace Math
       float x;
       float y;
 
+      // you don't always want to be able to translate a vector, such as if it
+      // is a vector from the origin to a reference point, like a non-origin 
+      // rotation point
+      float enable_translate;
+
       // let the default copy constructors be made by the compiler
       // Note: This is a simple structure, and the operators call the copy 
       // constructor when returning a new object, so the default copy
@@ -22,9 +27,13 @@ namespace Math
       // make the constructor explicit for the sake of forcing readable code.
       // Also Note: The constructor must be defined here because it is neither 
       // inline nor defined in a separate compilation unit.
-      explicit vector2D(float start_x = 0.0f, float start_y = 0.0f) :
+      explicit vector2D(
+         float start_x = 0, 
+         float start_y = 0,
+         float start_enable_translate = 0) :
          x(start_x),
-         y(start_y)
+         y(start_y),
+         enable_translate(start_enable_translate)
       {
       }
 

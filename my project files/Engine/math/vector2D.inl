@@ -5,6 +5,9 @@
 float vector2D::length()
 {
    // "math.h" is included in the header file
+
+   // the "enable translate" is meant for translation only and is not a 
+   // part of the (x, y) dimension stuff, so don't take it into account
    return sqrtf(powf(x, 2.0f) + powf(y, 2.0f));
 }
 
@@ -14,6 +17,7 @@ vector2D& vector2D::operator += (const vector2D& rhs)
 {
    x += rhs.x;
    y += rhs.y;
+   enable_translate += rhs.enable_translate;
 
    return *this;
 }
@@ -22,6 +26,7 @@ vector2D& vector2D::operator -= (const vector2D& rhs)
 {
    x -= rhs.x;
    y -= rhs.y;
+   enable_translate -= rhs.enable_translate;
 
    return *this;
 }
@@ -34,21 +39,21 @@ vector2D operator+(const vector2D& lhs, const vector2D& rhs)
    //return vector2D();
 
    // should make the test pass
-   return vector2D(lhs.x + rhs.x, lhs.y + rhs.y);
+   return vector2D(lhs.x + rhs.x, lhs.y + rhs.y, lhs.enable_translate + rhs.enable_translate);
 }
 
 vector2D operator-(const vector2D& lhs, const vector2D& rhs)
 {
-   return vector2D(lhs.x - rhs.x, lhs.y - rhs.y);
+   return vector2D(lhs.x - rhs.x, lhs.y - rhs.y, lhs.enable_translate - rhs.enable_translate);
 }
 
 vector2D operator*(float scalar, const vector2D& vector)
 {
-   return vector2D(scalar * vector.x, scalar * vector.y);
+   return vector2D(scalar * vector.x, scalar * vector.y, scalar * vector.enable_translate);
 }
 
 vector2D operator*(const vector2D& vector, float scalar)
 {
-   return vector2D(vector.x * scalar, vector.y * scalar);
+   return vector2D(vector.x * scalar, vector.y * scalar, vector.enable_translate * scalar);
 }
 
