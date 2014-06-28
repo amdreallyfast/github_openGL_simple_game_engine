@@ -13,17 +13,17 @@ namespace Math
 
    struct matrix2D
    {
-      float x0, x1, x_translate;             // row 0
-      float y0, y1, y_translate;             // row 1
-      float row2_col0, row2_col1, row2_col2; // row 2
+      float row0_col0, row0_col1, row0_col2;
+      float row1_col0, row1_col1, row1_col2;
+      float row2_col0, row2_col1, row2_col2;
 
       // declare constructors explicit so that we do not have any implicit conversions
       // from and argument type like "float" to "matrix2D"
 
       // this constructor makes an identity matrix
       explicit matrix2D() :
-         x0(1), x1(0), x_translate(0),
-         y0(0), y1(1), y_translate(0),
+         row0_col0(1), row0_col1(0), row0_col2(0),
+         row1_col0(0), row1_col1(1), row1_col2(0),
          row2_col0(0), row2_col1(0), row2_col2(1)
       {
       }
@@ -34,11 +34,11 @@ namespace Math
       // Note: There are no default values so that it does not conflict with the
       // no-argument constructor.
       explicit matrix2D(
-         float start_x0, float start_x1, float start_x_translate,
-         float start_y0, float start_y1, float start_y_translate,
+         float start_row0_col0, float start_row0_col1, float start_row0_col2,
+         float start_row1_col0, float start_row1_col1, float start_row1_col2,
          float start_row2_col0, float start_row2_col1, float start_row2_col2) :
-         x0(start_x0), x1(start_x1), x_translate(start_x_translate),
-         y0(start_y0), y1(start_y1), y_translate(start_y_translate),
+         row0_col0(start_row0_col0), row0_col1(start_row0_col1), row0_col2(start_row0_col2),
+         row1_col0(start_row1_col0), row1_col1(start_row1_col1), row1_col2(start_row1_col2),
          row2_col0(start_row2_col0), row2_col1(start_row2_col1), row2_col2(start_row2_col2)
       {
       }
@@ -61,17 +61,17 @@ namespace Math
       explicit matrix2D(
          float rotate_x0, float rotate_x1,
          float rotate_y0, float rotate_y1) :
-         x0(rotate_x0), x1(rotate_x1), x_translate(0),
-         y0(rotate_y0), y1(rotate_y1), y_translate(0),
+         row0_col0(rotate_x0), row0_col1(rotate_x1), row0_col2(0),
+         row1_col0(rotate_y0), row1_col1(rotate_y1), row1_col2(0),
          row2_col0(0), row2_col1(0), row2_col2(1)
       {
       }
 
       // translate constructor
       // Note: No default arguments.  Everything must be provided.
-      explicit matrix2D(float x_translate, float y_translate) :
-         x0(1), x1(0), x_translate(x_translate),
-         y0(0), y1(1), y_translate(y_translate),
+      explicit matrix2D(float row0_col2, float row1_col2) :
+         row0_col0(1), row0_col1(0), row0_col2(row0_col2),
+         row1_col0(0), row1_col1(1), row1_col2(row1_col2),
          row2_col0(0), row2_col1(0), row2_col2(1)
       {
       }

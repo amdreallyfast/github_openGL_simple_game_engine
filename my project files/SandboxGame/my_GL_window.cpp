@@ -92,7 +92,7 @@ void my_GL_window::paintGL()
    matrix2D rotation_matrix = matrix2D::rotate(g_ship_orientation_radians);
    for (unsigned int i = 0; i < NUM_VERTS; i++)
    {
-      transformed_verts[i] = (rotation_matrix * g_verts[i]) + g_ship_position;
+      transformed_verts[i] = (rotation_matrix * g_verts[i]);// +g_ship_position;
    }
    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer_ID);
    glBufferSubData(
