@@ -32,9 +32,9 @@ namespace
       // as far as the compiler is concerned, these are adjacent pairs of floats
       // in memory, so your vertex attribute and buffer data specifications are 
       // the same as if you only entered float values here
-      vector2D(+0.0f, +0.1f),
-      vector2D(-0.1f, -0.1f),
-      vector2D(+0.1f, -0.1f),
+      vector2D(+0.0f, +0.1f, 1),
+      vector2D(-0.1f, -0.1f, 1),
+      vector2D(+0.1f, -0.1f, 1),
    };
    const unsigned int NUM_VERTS = sizeof(g_verts) / sizeof(*g_verts);
 
@@ -81,7 +81,7 @@ void my_GL_window::paintGL()
    glEnableVertexAttribArray(0);
    glVertexAttribPointer(
       0,             // vertex attribute index
-      2,             // number of items per vertex
+      3,             // number of items per vertex
       GL_FLOAT,      // type of item (dictates number of bytes per item)
       GL_FALSE,      // no normalization
       0,             // vertex position values are closely packed
@@ -109,7 +109,6 @@ void my_GL_window::paintGL()
    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-int debug_int = 1;
 void my_GL_window::timer_update()
 {
    // tell the timer to record its current counter value
