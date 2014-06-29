@@ -15,25 +15,35 @@ namespace Math
       // rotation point
       float enable_translate;
 
-      // let the default copy constructors be made by the compiler
-      // Note: This is a simple structure, and the operators call the copy 
-      // constructor when returning a new object, so the default copy
-      // constructor is enough.
+      // similarly, you may not want a vector to be allowed to rotate around a
+      // non-origin axis
+      float enable_non_origin_rotation;
+
+      // make the default constructor yourself because the compiler seems unable
+      // to make one
+      // Note: Default values are all 0 (zero).
+      explicit vector2D() :
+         x(0),
+         y(0),
+         enable_translate(0),
+         enable_non_origin_rotation(0)
+      {
+      }
 
       // make constructor explicit so that the compiler won't try to implicitly
       // take two adjacent floats in a "verts" array and make a vector out of 
       // them
-      // Note: This implicitness is normal C++ behavior and can be useful, but 
-      // make the constructor explicit for the sake of forcing readable code.
-      // Also Note: The constructor must be defined here because it is neither 
+      // Note: The constructor must be defined here because it is neither 
       // inline nor defined in a separate compilation unit.
       explicit vector2D(
-         float start_x = 0, 
-         float start_y = 0,
-         float start_enable_translate = 0) :
+         float start_x, 
+         float start_y,
+         bool start_enable_translate = false,
+         bool start_enable_non_origin_rotation = false) :
          x(start_x),
          y(start_y),
-         enable_translate(start_enable_translate)
+         enable_translate(start_enable_translate ? 1.0f : 0.0f),
+         enable_non_origin_rotation(start_enable_non_origin_rotation ? 1.0f : 0.0f)
       {
       }
 
