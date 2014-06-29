@@ -7,7 +7,7 @@ float vector2D::length()
    // "math.h" is included in the header file
 
    // the "enable translate" is meant for translation only and is not a 
-   // part of the (x, y) dimension stuff, so don't take it into account
+   // part of the (x, y) dimension, so don't take it into account
    return sqrtf(powf(x, 2.0f) + powf(y, 2.0f));
 }
 
@@ -17,22 +17,12 @@ float vector2D::length()
 // result vector, and only disable the result vector's flags if both 
 // source vectors' flags are 0.
 
-
 // In-class operators
 vector2D& vector2D::operator += (const vector2D& rhs)
 {
    x += rhs.x;
    y += rhs.y;
-
-   if (1 == rhs.enable_translate || 1 == this->enable_translate)
-   {
-      enable_translate = 1;
-   }
-
-   if (1 == rhs.enable_non_origin_rotation || 1 == this->enable_non_origin_rotation)
-   {
-      enable_non_origin_rotation = 1;
-   }
+   t = (1.0f == t || 1.0f == rhs.t) ? 1.0f : 0.0f;
 
    return *this;
 }
@@ -41,16 +31,7 @@ vector2D& vector2D::operator -= (const vector2D& rhs)
 {
    x -= rhs.x;
    y -= rhs.y;
-
-   if (1 == rhs.enable_translate || 1 == this->enable_translate)
-   {
-      enable_translate = 1;
-   }
-
-   if (1 == rhs.enable_non_origin_rotation || 1 == this->enable_non_origin_rotation)
-   {
-      enable_non_origin_rotation = 1;
-   }
+   t = (1.0f == t || 1.0f == rhs.t) ? 1.0f : 0.0f;
 
    return *this;
 }
@@ -60,10 +41,9 @@ vector2D& vector2D::operator -= (const vector2D& rhs)
 vector2D operator+(const vector2D& lhs, const vector2D& rhs)
 {
    return vector2D(
-      lhs.x + rhs.x, 
+      lhs.x + rhs.x,
       lhs.y + rhs.y,
-      (1 == lhs.enable_translate || 1 == rhs.enable_translate) ? true : false,
-      (1 == lhs.enable_non_origin_rotation || 1 == rhs.enable_non_origin_rotation) ? true : false);
+      (1.0f == lhs.t || 1.0f == rhs.t) ? 1.0f : 0.0f);
 }
 
 vector2D operator-(const vector2D& lhs, const vector2D& rhs)
@@ -71,25 +51,24 @@ vector2D operator-(const vector2D& lhs, const vector2D& rhs)
    return vector2D(
       lhs.x - rhs.x,
       lhs.y - rhs.y,
-      (1 == lhs.enable_translate || 1 == rhs.enable_translate) ? true : false,
-      (1 == lhs.enable_non_origin_rotation || 1 == rhs.enable_non_origin_rotation) ? true : false);
+      (1.0f == lhs.t || 1.0f == rhs.t) ? 1.0f : 0.0f);
 }
 
 vector2D operator*(float scalar, const vector2D& vector)
 {
+   // preserve "enable translate" value
    return vector2D(
-      scalar * vector.x, 
+      scalar * vector.x,
       scalar * vector.y,
-      (1 == vector.enable_translate) ? true : false,
-      (1 == vector.enable_non_origin_rotation) ? true : false);
+      vector.t);
 }
 
 vector2D operator*(const vector2D& vector, float scalar)
 {
+   // preserve "enable translate" value
    return vector2D(
       vector.x * scalar,
       vector.y * scalar,
-      (1 == vector.enable_translate) ? true : false,
-      (1 == vector.enable_non_origin_rotation) ? true : false);
+      vector.t);
 }
 

@@ -12,33 +12,31 @@ using Math::vector2D;
 
 TEST(Vector2D, Constructor)
 {
-   // no arguments
-   vector2D default_constructor;
-   EXPECT_FLOAT_EQ(0, default_constructor.x);
-   EXPECT_FLOAT_EQ(0, default_constructor.y);
-   EXPECT_FLOAT_EQ(0, default_constructor.enable_translate);
-   EXPECT_FLOAT_EQ(0, default_constructor.enable_non_origin_rotation);
+   // check default values
+   vector2D v0;
+   EXPECT_FLOAT_EQ(0, v0.x);
+   EXPECT_FLOAT_EQ(0, v0.y);
+   EXPECT_FLOAT_EQ(1, v0.t);
 
-   // only the numical arguments
-   vector2D v_with_only_numbers(1, 2);
-   EXPECT_FLOAT_EQ(1, v_with_only_numbers.x);
-   EXPECT_FLOAT_EQ(2, v_with_only_numbers.y);
-   EXPECT_FLOAT_EQ(0, v_with_only_numbers.enable_translate);
-   EXPECT_FLOAT_EQ(0, v_with_only_numbers.enable_non_origin_rotation);
-
-   // explicitly enable both translate and non-zero rotation flags
-   vector2D v1(1, 2, true, true);
+   // and check that the last value is 
+   // changed to 0 (it is supposed to only be 0 or 1 and defaults to 0
+   // if it is not between 0.99 and 1.01)
+   vector2D v1(1, 2, 3);
    EXPECT_FLOAT_EQ(1, v1.x);
    EXPECT_FLOAT_EQ(2, v1.y);
-   EXPECT_FLOAT_EQ(1, v1.enable_translate);
-   EXPECT_FLOAT_EQ(1, v1.enable_non_origin_rotation);
+   EXPECT_FLOAT_EQ(0, v1.t);
 
-   // explicitly disable both translate and non-zero rotation flags
-   vector2D v2(1, 2, false, false);
-   EXPECT_FLOAT_EQ(1, v2.x);
-   EXPECT_FLOAT_EQ(2, v2.y);
-   EXPECT_FLOAT_EQ(0, v2.enable_translate);
-   EXPECT_FLOAT_EQ(0, v2.enable_non_origin_rotation);
+   // check that the last argument's 1 remains a 1
+   vector2D v2(3, 4, 1);
+   EXPECT_FLOAT_EQ(3, v2.x);
+   EXPECT_FLOAT_EQ(4, v2.y);
+   EXPECT_FLOAT_EQ(1, v2.t);
+
+   // check that the last argument's 0 remains a 0
+   vector2D v3(5, 6, 0);
+   EXPECT_FLOAT_EQ(5, v3.x);
+   EXPECT_FLOAT_EQ(6, v3.y);
+   EXPECT_FLOAT_EQ(0, v3.t);
 }
 
 
@@ -55,213 +53,221 @@ TEST(Vector2D, Length)
 
 TEST(Vector2D, Vector_Addition)
 {
-   // let one vector have translation and non-origin rotation disabled,
-   // and let the other have them enabled
-   vector2D v1(1, 2, false, false);
-   vector2D v2(5, 6, true, true);
+   // implicitly enable translation
+   vector2D v1(1, 2);
+
+   // explicitly disable translation
+   vector2D v2(3, 4, 0);
+
    vector2D result;
 
-   // add disabled to disabled and check that resulting vector's flags 
-   // are disabled
-   result = v1 + v1;
-   EXPECT_FLOAT_EQ(2, result.x);
-   EXPECT_FLOAT_EQ(4, result.y);
-   EXPECT_FLOAT_EQ(0, result.enable_translate);
-   EXPECT_FLOAT_EQ(0, result.enable_non_origin_rotation);
+   // check numerical results first
+   result = v1 + v2;
+   EXPECT_FLOAT_EQ(4, result.x);
+   EXPECT_FLOAT_EQ(6, result.y);
+
+   result = v2 + v1;
+   EXPECT_FLOAT_EQ(4, result.x);
+   EXPECT_FLOAT_EQ(6, result.y);
+
+
+   // now check the third value, the "enable translate" value
 
    // add enabled to enabled and check that resulting vector's flags
    // are enabled
+   result = v1 + v1;
+   EXPECT_FLOAT_EQ(1, result.t);
+
+   // add disabled to disabled and check that resulting vector's flags 
+   // are disabled
    result = v2 + v2;
-   EXPECT_FLOAT_EQ(10, result.x);
-   EXPECT_FLOAT_EQ(12, result.y);
-   EXPECT_FLOAT_EQ(1, result.enable_translate);
-   EXPECT_FLOAT_EQ(1, result.enable_non_origin_rotation);
+   EXPECT_FLOAT_EQ(0, result.t);
 
    // add enabled to disabled and vice versa and check that resulting 
    // vector's flags are enabled
    result = v1 + v2;
-   EXPECT_FLOAT_EQ(6, result.x);
-   EXPECT_FLOAT_EQ(8, result.y);
-   EXPECT_FLOAT_EQ(1, result.enable_translate);
-   EXPECT_FLOAT_EQ(1, result.enable_non_origin_rotation);
+   EXPECT_FLOAT_EQ(1, result.t);
 
    result = v2 + v1;
-   EXPECT_FLOAT_EQ(6, result.x);
-   EXPECT_FLOAT_EQ(8, result.y);
-   EXPECT_FLOAT_EQ(1, result.enable_translate);
-   EXPECT_FLOAT_EQ(1, result.enable_non_origin_rotation);
+   EXPECT_FLOAT_EQ(1, result.t);
 }
 
 
 TEST(Vector2D, Vector_Addition_Assignment)
 {
-   // let one vector have translation and non-origin rotation disabled,
-   // and let the other have them enabled
-   vector2D v1(1, 2, false, false);
-   vector2D v2(3, 4, true, true);
+   // implicitly enable translation
+   vector2D v1(1, 2);
+
+   // explicitly disable translation
+   vector2D v2(3, 4, 0);
    
-   // add a (disabled, disabled) vector to a (disabled, disabled) vector
-   // Expected result: (disabled, disabled)
-   vector2D result_1(0, 0, false, false);
+   // check numeric results first
+   vector2D result_1(5, 10);
    result_1 += v1;
-   EXPECT_FLOAT_EQ(1, result_1.x);
-   EXPECT_FLOAT_EQ(2, result_1.y);
-   EXPECT_FLOAT_EQ(0, result_1.enable_translate);
-   EXPECT_FLOAT_EQ(0, result_1.enable_non_origin_rotation);
+   EXPECT_FLOAT_EQ(6, result_1.x);
+   EXPECT_FLOAT_EQ(12, result_1.y);
 
-   // add a (disabled, disabled) vector to an (enabled, enabled) vector
-   // Expected result: (enabled, enabled)
-   vector2D result_2(0, 0, false, false);
-   result_2 += v2;
-   EXPECT_FLOAT_EQ(3, result_2.x);
-   EXPECT_FLOAT_EQ(4, result_2.y);
-   EXPECT_FLOAT_EQ(1, result_2.enable_translate);
-   EXPECT_FLOAT_EQ(1, result_2.enable_non_origin_rotation);
+   result_1 += v2;
+   EXPECT_FLOAT_EQ(9, result_1.x);
+   EXPECT_FLOAT_EQ(16, result_1.y);
 
-   // add an (enabled, enabled) vector to a (disabled, disabled) vector
-   // Expected result: (enabled, enabled)
-   vector2D result_3(0, 0, true, true);
-   result_3 += v1;
-   EXPECT_FLOAT_EQ(1, result_3.x);
-   EXPECT_FLOAT_EQ(2, result_3.y);
-   EXPECT_FLOAT_EQ(1, result_3.enable_translate);
-   EXPECT_FLOAT_EQ(1, result_3.enable_non_origin_rotation);
 
-   // add an (enabled, enabled) vector to a (enabled, enabled) vector
-   // Expected result: (enabled, enabled)
-   vector2D result_4(0, 0, true, true);
+   // now check the third value, the "enable translate" value
+
+   // add enabled to enabled and check that resulting vector's flags
+   // are enabled
+   vector2D result_2(0, 0);
+   result_2 += v1;
+   EXPECT_FLOAT_EQ(1, result_2.t);
+
+   // add disabled to disabled and check that resulting vector's flags 
+   // are disabled
+   vector2D result_3(0, 0, 0);
+   result_3 += v2;
+   EXPECT_FLOAT_EQ(0, result_3.t);
+
+   // add enabled to disabled and vice versa and check that resulting 
+   // vector's flags are enabled
+   vector2D result_4(0, 0);
    result_4 += v2;
-   EXPECT_FLOAT_EQ(3, result_4.x);
-   EXPECT_FLOAT_EQ(4, result_4.y);
-   EXPECT_FLOAT_EQ(1, result_4.enable_translate);
-   EXPECT_FLOAT_EQ(1, result_4.enable_non_origin_rotation);
+   EXPECT_FLOAT_EQ(1, result_4.t);
+
+   vector2D result_5(0, 0, 0);
+   result_5 += v1;
+   EXPECT_FLOAT_EQ(1, result_5.t);
 }
 
 
 TEST(Vector2D, Vector_Subtraction)
 {
-   // let one vector have translation and non-origin rotation disabled,
-   // and let the other have them enabled
-   vector2D v1(1, 2, false, false);
-   vector2D v2(5, 6, true, true);
+   // implicitly enable translation
+   vector2D v1(1, 2);
+
+   // explicitly disable translation
+   vector2D v2(3, 4, 0);
+
    vector2D result;
 
-   // subtract disabled from disabled and check that resulting vector's flags 
-   // are disabled
-   result = v1 - v1;
-   EXPECT_FLOAT_EQ(0, result.x);
-   EXPECT_FLOAT_EQ(0, result.y);
-   EXPECT_FLOAT_EQ(0, result.enable_translate);
-   EXPECT_FLOAT_EQ(0, result.enable_non_origin_rotation);
+   // check numerical results first
+   result = v1 - v2;
+   EXPECT_FLOAT_EQ(-2, result.x);
+   EXPECT_FLOAT_EQ(-2, result.y);
+
+   result = v2 - v1;
+   EXPECT_FLOAT_EQ(2, result.x);
+   EXPECT_FLOAT_EQ(2, result.y);
+
+
+   // now check the third value, the "enable translate" value
 
    // subtract enabled from enabled and check that resulting vector's flags
    // are enabled
+   result = v1 - v1;
+   EXPECT_FLOAT_EQ(1, result.t);
+
+   // subtract disabled from disabled and check that resulting vector's flags 
+   // are disabled
    result = v2 - v2;
-   EXPECT_FLOAT_EQ(0, result.x);
-   EXPECT_FLOAT_EQ(0, result.y);
-   EXPECT_FLOAT_EQ(1, result.enable_translate);
-   EXPECT_FLOAT_EQ(1, result.enable_non_origin_rotation);
+   EXPECT_FLOAT_EQ(0, result.t);
 
    // subtract enabled from disabled and vice versa and check that resulting 
    // vector's flags are enabled
    result = v1 - v2;
-   EXPECT_FLOAT_EQ(-4, result.x);
-   EXPECT_FLOAT_EQ(-4, result.y);
-   EXPECT_FLOAT_EQ(1, result.enable_translate);
-   EXPECT_FLOAT_EQ(1, result.enable_non_origin_rotation);
+   EXPECT_FLOAT_EQ(1, result.t);
 
    result = v2 - v1;
-   EXPECT_FLOAT_EQ(4, result.x);
-   EXPECT_FLOAT_EQ(4, result.y);
-   EXPECT_FLOAT_EQ(1, result.enable_translate);
-   EXPECT_FLOAT_EQ(1, result.enable_non_origin_rotation);
+   EXPECT_FLOAT_EQ(1, result.t);
 }
 
 
 TEST(Vector2D, Vector_Subtraction_Assignment)
 {
-   // let one vector have translation and non-origin rotation disabled,
-   // and let the other have them enabled
-   vector2D v1(1, 2, false, false);
-   vector2D v2(3, 4, true, true);
+   // implicitly enable translation
+   vector2D v1(1, 2);
 
-   // subtract a (disabled, disabled) vector from a (disabled, disabled) vector
-   // Expected result: (disabled, disabled)
-   vector2D result_1(0, 0, false, false);
+   // explicitly disable translation
+   vector2D v2(3, 4, 0);
+
+   // check numeric results first
+   vector2D result_1(5, 10);
    result_1 -= v1;
-   EXPECT_FLOAT_EQ(-1, result_1.x);
-   EXPECT_FLOAT_EQ(-2, result_1.y);
-   EXPECT_FLOAT_EQ(0, result_1.enable_translate);
-   EXPECT_FLOAT_EQ(0, result_1.enable_non_origin_rotation);
+   EXPECT_FLOAT_EQ(4, result_1.x);
+   EXPECT_FLOAT_EQ(8, result_1.y);
 
-   // subtract a (disabled, disabled) vector from an (enabled, enabled) vector
-   // Expected result: (enabled, enabled)
-   vector2D result_2(0, 0, false, false);
-   result_2 -= v2;
-   EXPECT_FLOAT_EQ(-3, result_2.x);
-   EXPECT_FLOAT_EQ(-4, result_2.y);
-   EXPECT_FLOAT_EQ(1, result_2.enable_translate);
-   EXPECT_FLOAT_EQ(1, result_2.enable_non_origin_rotation);
+   result_1 -= v2;
+   EXPECT_FLOAT_EQ(1, result_1.x);
+   EXPECT_FLOAT_EQ(4, result_1.y);
 
-   // subtract an (enabled, enabled) vector from a (disabled, disabled) vector
-   // Expected result: (enabled, enabled)
-   vector2D result_3(0, 0, true, true);
-   result_3 -= v1;
-   EXPECT_FLOAT_EQ(-1, result_3.x);
-   EXPECT_FLOAT_EQ(-2, result_3.y);
-   EXPECT_FLOAT_EQ(1, result_3.enable_translate);
-   EXPECT_FLOAT_EQ(1, result_3.enable_non_origin_rotation);
 
-   // subtract an (enabled, enabled) vector from a (enabled, enabled) vector
-   // Expected result: (enabled, enabled)
-   vector2D result_4(0, 0, true, true);
+   // now check the third value, the "enable translate" value
+
+   // subtract enabled from enabled and check that resulting vector's flags
+   // are enabled
+   vector2D result_2(0, 0);
+   result_2 -= v1;
+   EXPECT_FLOAT_EQ(1, result_2.t);
+
+   // subtract disabled from disabled and check that resulting vector's flags 
+   // are disabled
+   vector2D result_3(0, 0, 0);
+   result_3 -= v2;
+   EXPECT_FLOAT_EQ(0, result_3.t);
+
+   // subtract enabled from disabled and vice versa and check that resulting 
+   // vector's flags are enabled
+   vector2D result_4(0, 0);
    result_4 -= v2;
-   EXPECT_FLOAT_EQ(-3, result_4.x);
-   EXPECT_FLOAT_EQ(-4, result_4.y);
-   EXPECT_FLOAT_EQ(1, result_4.enable_translate);
-   EXPECT_FLOAT_EQ(1, result_4.enable_non_origin_rotation);
+   EXPECT_FLOAT_EQ(1, result_4.t);
+
+   vector2D result_5(0, 0, 0);
+   result_5 -= v1;
+   EXPECT_FLOAT_EQ(1, result_5.t);
 }
 
 
 TEST(Vector2D, Scalar_Times_Vector)
 {
    float scalar = 10.0f;
-   vector2D v1(1, 2, false, false);
-   vector2D v2(3, 4, true, true);
+
+   // implicitly enable translation
+   vector2D v1(1, 2);
+
+   // explicitly disable translation
+   vector2D v2(3, 4, 0);
    vector2D result;
    
    result = scalar * v1;
    EXPECT_FLOAT_EQ(10, result.x);
    EXPECT_FLOAT_EQ(20, result.y);
-   EXPECT_FLOAT_EQ(0, result.enable_translate);
-   EXPECT_FLOAT_EQ(0, result.enable_non_origin_rotation);
+   EXPECT_FLOAT_EQ(1, result.t);
 
    result = scalar * v2;
    EXPECT_FLOAT_EQ(30, result.x);
    EXPECT_FLOAT_EQ(40, result.y);
-   EXPECT_FLOAT_EQ(true, result.enable_translate);
-   EXPECT_FLOAT_EQ(true, result.enable_non_origin_rotation);
+   EXPECT_FLOAT_EQ(0, result.t);
 }
 
 
 TEST(Vector2D, Vector_Times_Scalar)
 {
    float scalar = 10.0f;
-   vector2D v1(1, 2, false, false);
-   vector2D v2(3, 4, true, true);
+
+   // implicitly enable translation
+   vector2D v1(1, 2);
+
+   // explicitly disable translation
+   vector2D v2(3, 4, 0);
    vector2D result;
 
    result = v1 * scalar;
    EXPECT_FLOAT_EQ(10, result.x);
    EXPECT_FLOAT_EQ(20, result.y);
-   EXPECT_FLOAT_EQ(0, result.enable_translate);
-   EXPECT_FLOAT_EQ(0, result.enable_non_origin_rotation);
+   EXPECT_FLOAT_EQ(1, result.t);
 
    result = v2 * scalar;
    EXPECT_FLOAT_EQ(30, result.x);
    EXPECT_FLOAT_EQ(40, result.y);
-   EXPECT_FLOAT_EQ(true, result.enable_translate);
-   EXPECT_FLOAT_EQ(true, result.enable_non_origin_rotation);
+   EXPECT_FLOAT_EQ(0, result.t);
 }
 
 

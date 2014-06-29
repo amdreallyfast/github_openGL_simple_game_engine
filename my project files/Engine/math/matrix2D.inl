@@ -3,16 +3,16 @@ matrix2D matrix2D::rotate(float angle_in_radians, float pivot_x, float pivot_y)
 {
    float cos_result = cosf(angle_in_radians);
    float sin_result = sinf(angle_in_radians);
-   vector2D pivot(pivot_x, pivot_y);
+   //vector2D pivot(pivot_x, pivot_y);
 
-   // first construct a matrix to rotate the pivot vector P'
-   // Note: There is 0 displacement for this vector.
-   matrix2D pivot_rotator(
-      cos_result, (-1) * sin_result, 0,
-      sin_result, cos_result, 0);
+   //// first construct a matrix to rotate the pivot vector P'
+   //// Note: There is 0 displacement for this vector.
+   //matrix2D pivot_rotator(
+   //   cos_result, (-1) * sin_result, 0,
+   //   sin_result, cos_result, 0);
 
-   // rotate the pivot vector
-   vector2D pivot_rotated = pivot_rotator * pivot;
+   //// rotate the pivot vector
+   //vector2D pivot_rotated = pivot_rotator * pivot;
 
    // now mirror 
 
@@ -81,11 +81,11 @@ vector2D operator*(const matrix2D& mat2d, const vector2D& vec2d)
    // new vector.enable_non_origin_rotation =
    //    if vector.enable_non_origin_rotation is 0, then new vector.enable_non_origin_rotation is also 0; ditto with 1
 
-   return vector2D(
-      mat2d.a00 * vec2d.x + mat2d.a01 * vec2d.y + mat2d.a02 * vec2d.enable_translate + mat2d.a03 * vec2d.enable_non_origin_rotation,
-      mat2d.a10 * vec2d.x + mat2d.a11 * vec2d.y + mat2d.a12 * vec2d.enable_translate + mat2d.a13 * vec2d.enable_non_origin_rotation,
-      (1 == vec2d.enable_translate) ? true : false,
-      (1 == vec2d.enable_non_origin_rotation) ? true : false);
+   //return vector2D(
+   //   mat2d.a00 * vec2d.x + mat2d.a01 * vec2d.y + mat2d.a02 * vec2d.enable_translate + mat2d.a03 * vec2d.enable_non_origin_rotation,
+   //   mat2d.a10 * vec2d.x + mat2d.a11 * vec2d.y + mat2d.a12 * vec2d.enable_translate + mat2d.a13 * vec2d.enable_non_origin_rotation,
+   //   (1 == vec2d.enable_translate) ? true : false,
+   //   (1 == vec2d.enable_non_origin_rotation) ? true : false);
 
    return vector2D();
 }

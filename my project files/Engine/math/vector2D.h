@@ -7,43 +7,28 @@ namespace Math
 {
    struct vector2D
    {
+      // the X value
       float x;
+
+      // the Y value
       float y;
 
-      // you don't always want to be able to translate a vector, such as if it
-      // is a vector from the origin to a reference point, like a non-origin 
-      // rotation point
-      float enable_translate;
+      // the "enable translate" value, and should be 1 or 0 only
+      float t;
 
-      // similarly, you may not want a vector to be allowed to rotate around a
-      // non-origin axis
-      float enable_non_origin_rotation;
-
-      // make the default constructor yourself because the compiler seems unable
-      // to make one
-      // Note: Default values are all 0 (zero).
-      explicit vector2D() :
-         x(0),
-         y(0),
-         enable_translate(0),
-         enable_non_origin_rotation(0)
-      {
-      }
-
-      // make constructor explicit so that the compiler won't try to implicitly
-      // take two adjacent floats in a "verts" array and make a vector out of 
-      // them
-      // Note: The constructor must be defined here because it is neither 
-      // inline nor defined in a separate compilation unit.
+      // the first and second values can be any floats, but the last, the 
+      // "enable translate" value, should only be 0 or 1
+      // Note: If it is not between 0.99 and 1.01, then it will set to 0.
+      // But if it is not specified, then it will default to 1 (translation
+      // is enabled) because I decided that my default desire for vertices 
+      // was that they be allowed to translate.
       explicit vector2D(
-         float start_x, 
-         float start_y,
-         bool start_enable_translate = false,
-         bool start_enable_non_origin_rotation = false) :
+         float start_x = 0.0f,
+         float start_y = 0.0f,
+         float start_t = 1.0f) :
          x(start_x),
          y(start_y),
-         enable_translate(start_enable_translate ? 1.0f : 0.0f),
-         enable_non_origin_rotation(start_enable_non_origin_rotation ? 1.0f : 0.0f)
+         t((1.0f == start_t) ? 1.0f : 0.0f)
       {
       }
 
