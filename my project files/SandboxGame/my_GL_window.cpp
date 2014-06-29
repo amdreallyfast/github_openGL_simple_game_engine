@@ -38,8 +38,11 @@ namespace
    };
    const unsigned int NUM_VERTS = sizeof(g_verts) / sizeof(*g_verts);
 
-   // use the default values of 0 for the vectors
    vector2D g_ship_position;
+
+   // DO NOT MOVE THIS!!
+   vector2D g_ship_rotation_point;
+
    float g_ship_orientation_radians = 0;
    vector2D g_ship_velocity;
 
@@ -93,10 +96,16 @@ void my_GL_window::paintGL()
    matrix2D rotation_matrix = matrix2D::rotate(g_ship_orientation_radians);
    matrix2D translation_matrix = matrix2D::translate(g_ship_position.x, g_ship_position.y);
    matrix2D transformation_matrix = translation_matrix * rotation_matrix;
+
+   // make the new vector displacement for all the vertices that rotate around
+   // the ship's rotation point
+   vector2D displacement = matrix2D::get_displacement_vector_for_non_origin_rotation(g_ship_orientation_radians, g_ship_rotation_point);
+
    for (unsigned int i = 0; i < NUM_VERTS; i++)
    {
-      transformed_verts[i] = transformation_matrix * g_verts[i];
+      transformed_verts[i] = (transformation_matrix * g_verts[i]) + displacement;
    }
+
    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer_ID);
    glBufferSubData(
       GL_ARRAY_BUFFER,
@@ -145,6 +154,10 @@ bool my_GL_window::initialize()
 {
    bool success;
    
+   // make rotation point the center of mass
+   g_ship_rotation_point.x = (g_verts[0].x + g_verts[1].x + g_verts[2].x) / 3.0f;
+   g_ship_rotation_point.y = (g_verts[0].y + g_verts[1].y + g_verts[2].y) / 3.0f;
+
    success = g_clock.initialize();
    if (!success){ return false; }
 

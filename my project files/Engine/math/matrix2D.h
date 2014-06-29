@@ -35,7 +35,7 @@ namespace Math
       // applied to a vector to rotate it
       inline static matrix2D rotate(float angle_in_radians);
 
-      inline static vector2D get_displacement_vector_for_non_origin_rotation(float angle_in_radians, float pivot_x, float pivot_y);
+      inline static vector2D get_displacement_vector_for_non_origin_rotation(float angle_in_radians, const vector2D& pivot);
 
       // similarly, translation is very specific to the matrix itself, so make it
       // a static member

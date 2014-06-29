@@ -21,7 +21,7 @@ matrix2D matrix2D::rotate(float angle_in_radians)
 }
 
 
-vector2D matrix2D::get_displacement_vector_for_non_origin_rotation(float angle_in_radians, float pivot_x, float pivot_y)
+vector2D matrix2D::get_displacement_vector_for_non_origin_rotation(float angle_in_radians, const vector2D& pivot)
 {
    // herese a brief explanation of how this will go down
    // We want to rotate this pivot point around itself by "angle in radians"
@@ -33,8 +33,11 @@ vector2D matrix2D::get_displacement_vector_for_non_origin_rotation(float angle_i
    // around the pivot specified in this function's arguments.
 
    matrix2D rotator = rotate(angle_in_radians);
-   vector2D pivot(pivot_x, pivot_y, 0.0f);
    vector2D result = (-1) * (rotator * pivot) + pivot;
+
+   // disable translation because this is a displacement vector, so it is a
+   // relative vector and would therefore be inappropriate to move
+   result.t = 0;
 
    // return via copy constructor because there is no way that the result's
    // individual arguments could have been constructed

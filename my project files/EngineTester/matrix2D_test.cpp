@@ -241,9 +241,8 @@ TEST(Matrix2D, Matrix_Rotation_Around_Non_Origin)
    // which I would expect from a displacement vector, which is, by
    // nature, a relative vector and therefore should not be translated
    // Also Note: I did the calculation by hand.
-   float non_origin_rotation_X = 0.0f;
-   float non_origin_rotation_Y = -2.0f;
-   vector2D displacement = matrix2D::get_displacement_vector_for_non_origin_rotation(PI / 4, non_origin_rotation_X, non_origin_rotation_Y);
+   vector2D non_origin_pivot(0.0f, -2.0f);
+   vector2D displacement = matrix2D::get_displacement_vector_for_non_origin_rotation(PI / 4, non_origin_pivot);
    EXPECT_FLOAT_EQ((-1) * SQRT_2, displacement.x);
    EXPECT_FLOAT_EQ(SQRT_2 - 2, displacement.y);
    EXPECT_FLOAT_EQ(0, displacement.t);
