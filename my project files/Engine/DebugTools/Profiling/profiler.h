@@ -2,13 +2,13 @@
 #define DEBUG_PROVILER
 
 
-class profiler
+class __declspec(dllexport) profiler
 {
 public:
    void add_entry(const char* category, float time);
    void new_frame();
    
-   void initialize();
+   void initialize(const char* filename);
    void shutdown();
 };
 
