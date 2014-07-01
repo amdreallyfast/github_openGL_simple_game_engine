@@ -19,7 +19,7 @@ public:
 
 private:
    const char* m_filename;
-   unsigned int m_frame_index;
+   int m_frame_index;
 
    static const unsigned int MAX_FRAME_SAMPLES = 500;
    static const unsigned int MAX_PROFILER_CATEGORIES = 20;

@@ -25,25 +25,33 @@ void profiler::shutdown()
    for (int category_index = 0; category_index < MAX_PROFILER_CATEGORIES; category_index++)
    {
       pc_ptr = m_profiler_categories + category_index;
-      if (0 != pc_ptr->category_name)
+
+      // categories are added sequentially, and there is no method to remove them, 
+      // so if the pointer to the category name is 0, then we have gone through 
+      // all categories
+      if (0 == pc_ptr->category_name)
       {
-         // something exists here, so write it to file
-         out_stream << pc_ptr->category_name << ",";
+         break;
       }
+
+      // category exists here, so write the name to file
+      out_stream << pc_ptr->category_name << ",";
    }
    out_stream << "\n";
 
    // write the time data to the file column by column
-   for (int frame_index = 0; frame_index < MAX_FRAME_SAMPLES; frame_index++)
+   for (int frame_index = 0; frame_index < m_frame_index; frame_index++)
    {
       for (int category_index = 0; category_index < MAX_PROFILER_CATEGORIES; category_index++)
       {
          pc_ptr = m_profiler_categories + category_index;
-         if (0 != pc_ptr->category_name)
+         if (0 == pc_ptr->category_name)
          {
-            // something exists here, so write the sample data to file
-            out_stream << pc_ptr->samples[frame_index] << ",";
+            break;
          }
+
+         // category exists here, so write the sample data to file
+         out_stream << pc_ptr->samples[frame_index] << ",";
       }
 
       // end the row with a new line
