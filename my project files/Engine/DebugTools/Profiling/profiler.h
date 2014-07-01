@@ -26,7 +26,6 @@ private:
    struct m_profile_category
    {
       const char* category_name;
-      int sample_count;
       float samples[MAX_FRAME_SAMPLES];
    } m_profiler_categories[MAX_PROFILER_CATEGORIES];
 };
