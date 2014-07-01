@@ -32,9 +32,9 @@ namespace
       // as far as the compiler is concerned, these are adjacent pairs of floats
       // in memory, so your vertex attribute and buffer data specifications are 
       // the same as if you only entered float values here
-      vector2D(+0.0f, +0.1f),
-      vector2D(-0.1f, -0.1f),
-      vector2D(+0.1f, -0.1f),
+      vector2D(+0.0f, +0.1f, 1.0f),
+      vector2D(-0.1f, -0.1f, 1.0f),
+      vector2D(+0.1f, -0.1f, 1.0f),
    };
    const unsigned int NUM_VERTS = sizeof(g_verts) / sizeof(*g_verts);
 
