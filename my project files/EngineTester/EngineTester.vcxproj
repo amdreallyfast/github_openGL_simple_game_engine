@@ -85,6 +85,7 @@
     <ClCompile Include="Clock_test.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="matrix2D_test.cpp" />
+    <ClCompile Include="profile_test.cpp" />
     <ClCompile Include="vector2D_test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

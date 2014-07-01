@@ -30,5 +30,8 @@
     <ClCompile Include="matrix2D_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="profile_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
