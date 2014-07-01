@@ -22,7 +22,7 @@ vector2D& vector2D::operator += (const vector2D& rhs)
 {
    x += rhs.x;
    y += rhs.y;
-   t = (1.0f == t || 1.0f == rhs.t) ? 1.0f : 0.0f;
+   w += rhs.w;
 
    return *this;
 }
@@ -31,7 +31,7 @@ vector2D& vector2D::operator -= (const vector2D& rhs)
 {
    x -= rhs.x;
    y -= rhs.y;
-   t = (1.0f == t || 1.0f == rhs.t) ? 1.0f : 0.0f;
+   w -= rhs.w;
 
    return *this;
 }
@@ -43,7 +43,7 @@ vector2D operator+(const vector2D& lhs, const vector2D& rhs)
    return vector2D(
       lhs.x + rhs.x,
       lhs.y + rhs.y,
-      (1.0f == lhs.t || 1.0f == rhs.t) ? 1.0f : 0.0f);
+      lhs.w + rhs.w);
 }
 
 vector2D operator-(const vector2D& lhs, const vector2D& rhs)
@@ -51,16 +51,15 @@ vector2D operator-(const vector2D& lhs, const vector2D& rhs)
    return vector2D(
       lhs.x - rhs.x,
       lhs.y - rhs.y,
-      (1.0f == lhs.t || 1.0f == rhs.t) ? 1.0f : 0.0f);
+      lhs.w - rhs.w);
 }
 
 vector2D operator*(float scalar, const vector2D& vector)
 {
-   // preserve "enable translate" value
    return vector2D(
       scalar * vector.x,
       scalar * vector.y,
-      vector.t);
+      scalar * vector.w);
 }
 
 vector2D operator*(const vector2D& vector, float scalar)
@@ -69,6 +68,6 @@ vector2D operator*(const vector2D& vector, float scalar)
    return vector2D(
       vector.x * scalar,
       vector.y * scalar,
-      vector.t);
+      vector.w * scalar);
 }
 

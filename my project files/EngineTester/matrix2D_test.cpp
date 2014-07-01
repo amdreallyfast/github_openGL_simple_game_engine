@@ -65,19 +65,11 @@ TEST(Matrix2D, Matrix_Vector_Multiply)
       4, 5, 6,
       7, 8, 9);
 
-   // implicitly enable translation
-   vector2D v1(1, 1);
-
-   // explicitly disable translation
-   // Note: In effect, this means the first two rows of the third column are 
-   // multiplied by 0 in the addition portion of the multiplication operator.
+   vector2D v1(1, 1, 1);
    vector2D v2(2, 2, 0);
 
    //vector2D result = v1 * linear_transform;  // won't compile, which is good
    vector2D result;
-
-   // multiply the linear transform by vectors that selectively disable and
-   // enable translation and non-orgin rotation
 
    // got my result from an online matrix calculator:
    // http://www.bluebit.gr/matrix-calculator/matrix_multiplication.aspx
@@ -85,12 +77,12 @@ TEST(Matrix2D, Matrix_Vector_Multiply)
    result = linear_transform * v1;
    EXPECT_FLOAT_EQ(6, result.x);
    EXPECT_FLOAT_EQ(15, result.y);
-   EXPECT_FLOAT_EQ(1, result.t);
+   EXPECT_FLOAT_EQ(24, result.w);
 
    result = linear_transform * v2;
    EXPECT_FLOAT_EQ(6, result.x);
    EXPECT_FLOAT_EQ(18, result.y);
-   EXPECT_FLOAT_EQ(0, result.t);
+   EXPECT_FLOAT_EQ(30, result.w);
 
 }
 
@@ -233,7 +225,7 @@ TEST(Matrix2D, Matrix_Rotation_Around_Non_Origin)
    // Note: Don't bother checking the rotation matrix's values because 
    // those were already covered in the "Matrix Rotation Around Origin" test.
    matrix2D rotation_matrix = matrix2D::rotate(PI / 4);
-   vector2D some_vector(3, 3);
+   vector2D some_vector(3, 3, 1);
 
    // make the displacement vector that will result from a non-origin 
    // rotation point
@@ -245,7 +237,7 @@ TEST(Matrix2D, Matrix_Rotation_Around_Non_Origin)
    vector2D displacement = matrix2D::get_displacement_vector_for_non_origin_rotation(PI / 4, non_origin_pivot);
    EXPECT_FLOAT_EQ((-1) * SQRT_2, displacement.x);
    EXPECT_FLOAT_EQ(SQRT_2 - 2, displacement.y);
-   EXPECT_FLOAT_EQ(0, displacement.t);
+   EXPECT_FLOAT_EQ(0, displacement.w);
 
    // rotate the vector, add the displacement, check the values, and check
    // that the "enable translate" value is preserved from "some vector"
@@ -253,7 +245,7 @@ TEST(Matrix2D, Matrix_Rotation_Around_Non_Origin)
    vector2D result = (rotation_matrix * some_vector) + displacement;
    EXPECT_FLOAT_EQ((-1) * SQRT_2, result.x);
    EXPECT_FLOAT_EQ(6 * my_sqrt2_over_2 + (SQRT_2 - 2), result.y);
-   EXPECT_FLOAT_EQ(1, result.t);
+   EXPECT_FLOAT_EQ(1, result.w);
 
 }
 
@@ -306,7 +298,7 @@ TEST(Matrix2D, Matrix_Translation)
 
    // now try translating some vectors
    vector2D v_t_disable(2, 2, 0);     // translation disabled
-   vector2D v_t_enable(2, 2);      // translation enabled
+   vector2D v_t_enable(2, 2, 1);      // translation enabled
    vector2D translated_vector;
 
    delta_x = +4;
@@ -315,13 +307,15 @@ TEST(Matrix2D, Matrix_Translation)
 
    // shouldn't change
    translated_vector = translation_matrix * v_t_disable;
-   EXPECT_FLOAT_EQ(v_t_disable.x, translated_vector.x);
-   EXPECT_FLOAT_EQ(v_t_disable.y, translated_vector.y);
+   EXPECT_FLOAT_EQ(2, translated_vector.x);
+   EXPECT_FLOAT_EQ(2, translated_vector.y);
+   EXPECT_FLOAT_EQ(0, translated_vector.w);
 
    // now it should translate 
    translated_vector = translation_matrix * v_t_enable;
-   EXPECT_FLOAT_EQ(v_t_enable.x + delta_x, translated_vector.x);
-   EXPECT_FLOAT_EQ(v_t_enable.y + delta_y, translated_vector.y);
+   EXPECT_FLOAT_EQ(2 + delta_x, translated_vector.x);
+   EXPECT_FLOAT_EQ(2 + delta_y, translated_vector.y);
+   EXPECT_FLOAT_EQ(1, translated_vector.w);
 }
 
 #endif

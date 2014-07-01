@@ -35,10 +35,6 @@ vector2D matrix2D::get_displacement_vector_for_non_origin_rotation(float angle_i
    matrix2D rotator = rotate(angle_in_radians);
    vector2D result = (-1) * (rotator * pivot) + pivot;
 
-   // disable translation because this is a displacement vector, so it is a
-   // relative vector and would therefore be inappropriate to move
-   result.t = 0;
-
    // return via copy constructor because there is no way that the result's
    // individual arguments could have been constructed
    return result;
@@ -86,8 +82,8 @@ vector2D operator*(const matrix2D& m, const vector2D& v)
    // in the original "t" value anyway, so just carry it over and be done with
    // it
    return vector2D(
-      m.a00 * v.x + m.a01 * v.y + m.a02 * v.t,
-      m.a10 * v.x + m.a11 * v.y + m.a12 * v.t,
-      v.t);
+      m.a00 * v.x + m.a01 * v.y + m.a02 * v.w,
+      m.a10 * v.x + m.a11 * v.y + m.a12 * v.w,
+      m.a20 * v.x + m.a21 * v.y + m.a22 * v.w);
 }
 

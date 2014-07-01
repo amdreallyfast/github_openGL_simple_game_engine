@@ -13,8 +13,19 @@ namespace Math
       // the Y value
       float y;
 
-      // the "enable translate" value, and should be 1 or 0 only
-      float t;
+      // the value that, if non-zero, enables translation 
+      // Note: Called "w" out of tradition.  I would call it "t" because it 
+      // is associated with translation, but graphic programming tradition 
+      // says that it is "w", so I'll go with the flow.
+      // Also Note: It is not required to be exactly 1 or exactly 0, because 
+      // it has some use with other values, particularly in 3D graphics with
+      // the "perspective matrix".  Ordinarily, point vectors are translatable
+      // and have a "w" value of 1, while direction vectors are not translatable
+      // and have a "w" value of 0.  A point will not be added to a point, but
+      // a direction vector may be added to a point, or a direction vector to
+      // another direction vector, so the "w" value should always be exactly 
+      // 1 or exactly 0 except for special circumstances.
+      float w;
 
       // the first and second values can be any floats, but the last, the 
       // "enable translate" value, should only be 0 or 1
@@ -25,10 +36,10 @@ namespace Math
       explicit vector2D(
          float start_x = 0.0f,
          float start_y = 0.0f,
-         float start_t = 1.0f) :
+         float start_w = 0.0f) :
          x(start_x),
          y(start_y),
-         t((1.0f == start_t) ? 1.0f : 0.0f)
+         w(start_w)
       {
       }
 
