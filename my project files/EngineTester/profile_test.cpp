@@ -18,6 +18,4 @@ TEST(Profiler, asdfasdf)
    }
 
    my_profiler.shutdown();
-
-
 }
