@@ -50,9 +50,6 @@ TEST(Profiler, File_Read_Write)
       my_profiler.add_category(category_strings[index]);
    }
 
-   // start the first frame
-   my_profiler.new_frame();
-
    // write whole number float values to the file
    // Note: The "add category time log" function requires a float, but for 
    // simplicity of testing, we want to read a C string and pass it to atoi(...),
@@ -62,13 +59,17 @@ TEST(Profiler, File_Read_Write)
       float_value_counter < NUM_TEST_ENTRIES; 
       float_value_counter += NUM_CATEGORY_STRINGS)
    {
+      my_profiler.new_frame();
       for (int index = 0; index < NUM_CATEGORY_STRINGS; index++)
       {
          my_profiler.add_category_time_log(category_strings[index], float_value_counter + index);
       }
-      
-      my_profiler.new_frame();
    }
+
+   // add one more frame and only add data to some of the categories
+   my_profiler.new_frame();
+   my_profiler.add_category_time_log(category_strings[0], 23);
+   my_profiler.add_category_time_log(category_strings[2], 54);
 
    my_profiler.shutdown();
 
@@ -83,9 +84,17 @@ TEST(Profiler, File_Read_Write)
    // check the values
    for (int value_counter = 0; value_counter < NUM_TEST_ENTRIES; value_counter++)
    {
-      string buf = get_next_token(input).c_str();
+      string buf = get_next_token(input);
       EXPECT_EQ(atoi(buf.c_str()), value_counter);
    }
+
+   // check the last frame
+   string buf = get_next_token(input);
+   EXPECT_EQ(atoi(buf.c_str()), 23);
+   buf = get_next_token(input);
+   EXPECT_EQ(atoi(buf.c_str()), 0);
+   buf = get_next_token(input);
+   EXPECT_EQ(atoi(buf.c_str()), 54);
 
    input.close();
 }

@@ -40,7 +40,11 @@ void profiler::shutdown()
    out_stream << "\n";
 
    // write the time data to the file column by column
-   for (int frame_index = 0; frame_index < m_frame_index; frame_index++)
+   // Note: The end condition is "<=" because time data is written to the current
+   // frame index.  If "new frame" is called, then the frame index will increment, 
+   // and we should record that frame's data regardless of whether or not an entry 
+   // is recorded. 
+   for (int frame_index = 0; frame_index <= m_frame_index; frame_index++)
    {
       for (int category_index = 0; category_index < MAX_PROFILER_CATEGORIES; category_index++)
       {
