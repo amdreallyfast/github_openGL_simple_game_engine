@@ -30,7 +30,6 @@ void profiler::new_frame()
 {
    // move on to the next line
    m_frame_index += 1;
-   assert(m_frame_index < MAX_FRAME_SAMPLES);
 }
 
 void profiler::add_category(const char* new_category)
@@ -69,7 +68,10 @@ void profiler::add_category_time_log(const char* category, float time)
    // did we go through the list without finding one?
    assert(index != MAX_PROFILER_CATEGORIES);
 
-   pc_ptr->samples[m_frame_index] = time;
+   // check that the frame index is valid
+   assert(m_frame_index >= 0);
+
+   pc_ptr->samples[m_frame_index % MAX_FRAME_SAMPLES] = time;
 }
 
 void profiler::flush_to_fresh_file(const char* filename_to_profiler_output)
@@ -97,11 +99,17 @@ void profiler::flush_to_fresh_file(const char* filename_to_profiler_output)
    out_stream << "\n";
 
    // write the time data to the file column by column
-   // Note: The end condition is "<=" because time data is written to the current
-   // frame index.  If "new frame" is called, then the frame index will increment, 
-   // and we should record that frame's data regardless of whether or not an entry 
-   // is recorded. 
-   for (int frame_index = 0; frame_index <= m_frame_index; frame_index++)
+   // Note: If we haven't wrapped around, start at 0 and go to the latest frame 
+   // index.  If we have exceeded the max number of frame indexes (that is, 
+   // wrapped around), then start at 0 and go until the max possible frame index.
+   int max_frame_index = (m_frame_index < MAX_FRAME_SAMPLES) ? m_frame_index : (MAX_FRAME_SAMPLES - 1);
+
+   // about the <= end condition
+   // Note: To make things simple, I will simply record all the data.  The 
+   // tutorial jumped through some hoops in an attempt to not record incomplete 
+   // frames, and there were some particularly nasty hoops for wrap-around 
+   // incomplete frames.  I am skipping that by simply recording all frames.
+   for (int frame_index = 0; frame_index <= max_frame_index; frame_index++)
    {
       for (int category_index = 0; category_index < MAX_PROFILER_CATEGORIES; category_index++)
       {
