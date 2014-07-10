@@ -24,13 +24,13 @@
     <ClCompile Include="Clock_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vector2D_test.cpp">
+    <ClCompile Include="Matrix2D_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="matrix2D_test.cpp">
+    <ClCompile Include="Profiler_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="profile_test.cpp">
+    <ClCompile Include="Vector2D_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

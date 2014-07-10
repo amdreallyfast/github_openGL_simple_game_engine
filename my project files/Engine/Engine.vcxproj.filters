@@ -21,32 +21,32 @@
     <ClCompile Include="timing\clock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DebugTools\Profiling\profiler.cpp">
+    <ClCompile Include="DebugTools\Profiling\Profiler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="math\vector2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="timing\clock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="math\matrix2D.h">
+    <ClInclude Include="DebugTools\Profiling\Profiler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="math\constants.h">
+    <ClInclude Include="math\Constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DebugTools\Profiling\profiler.h">
+    <ClInclude Include="math\Matrix2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vector2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="math\vector2D.inl">
+    <None Include="math\Matrix2D.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="math\matrix2D.inl">
+    <None Include="math\Vector2D.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

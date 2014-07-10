@@ -53,7 +53,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions> PROFILER_ON;RUN_PROFILER_TESTS;WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions> PROFILER_ON;RUN_VECTOR2D_TESTS;RUN_MATRIX2D_TESTS;RUN_PROFILER_TESTS;WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\gtest-1.7.0\include\;C:\gtest-1.7.0\;$(ProjectDir)\..\Engine;C:\Qt\4.8.5\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -84,9 +84,9 @@
     <ClCompile Include="..\..\..\..\..\..\..\gtest-1.7.0\src\gtest-all.cc" />
     <ClCompile Include="Clock_test.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="matrix2D_test.cpp" />
-    <ClCompile Include="profile_test.cpp" />
-    <ClCompile Include="vector2D_test.cpp" />
+    <ClCompile Include="Matrix2D_test.cpp" />
+    <ClCompile Include="Profiler_test.cpp" />
+    <ClCompile Include="Vector2D_test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

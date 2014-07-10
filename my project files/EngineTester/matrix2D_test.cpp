@@ -1,7 +1,7 @@
 #include <gtest\gtest.h>
 
-#include "math\matrix2D.h"
-#include "math\vector2D.h"
+#include "math\Matrix2D.h"
+#include "math\Vector2D.h"
 #include "math\constants.h"
 using namespace Math;
 
@@ -10,7 +10,7 @@ using namespace Math;
 TEST(Matrix2D, Constructor)
 {
    // default constructor
-   matrix2D identity;
+   Matrix2D identity;
 
    // row 0
    EXPECT_FLOAT_EQ(1, identity.a00);
@@ -36,7 +36,7 @@ TEST(Matrix2D, Constructor)
    // remaining diagonals being 1 and everything else 0, but this is a test 
    // for the constructor so that future tests, such as matrix multiply, can
    // build whatever they want, so we will test all the arguments. 
-   matrix2D some_matrix(
+   Matrix2D some_matrix(
       1, 2, 3,
       4, 5, 6,
       7, 8, 9);
@@ -60,16 +60,16 @@ TEST(Matrix2D, Constructor)
 
 TEST(Matrix2D, Matrix_Vector_Multiply)
 {
-   matrix2D linear_transform(
+   Matrix2D linear_transform(
       1, 2, 3,
       4, 5, 6,
       7, 8, 9);
 
-   vector2D v1(1, 1, 1);
-   vector2D v2(2, 2, 0);
+   Vector2D v1(1, 1, 1);
+   Vector2D v2(2, 2, 0);
 
-   //vector2D result = v1 * linear_transform;  // won't compile, which is good
-   vector2D result;
+   //Vector2D result = v1 * linear_transform;  // won't compile, which is good
+   Vector2D result;
 
    // got my result from an online matrix calculator:
    // http://www.bluebit.gr/matrix-calculator/matrix_multiplication.aspx
@@ -93,16 +93,16 @@ TEST(Matrix2D, Matrix_Matrix_Multiply)
    // controlled test, so we will make controlled matrices and check for a known
    // multiplication result
 
-   matrix2D mat1(
+   Matrix2D mat1(
       1, 2, 3,
       4, 5, 6,
       7, 8, 9);
-   matrix2D mat2(
+   Matrix2D mat2(
       9, 8, 7,
       6, 5, 4,
       3, 2, 1);
 
-   matrix2D result;
+   Matrix2D result;
 
    // got my result from an online matrix calculator:
    // http://www.bluebit.gr/matrix-calculator/matrix_multiplication.aspx
@@ -145,7 +145,7 @@ TEST(Matrix2D, Matrix_Matrix_Multiply)
 
 TEST(Matrix2D, Matrix_Rotation_Around_Origin)
 {
-   matrix2D rotation_matrix;
+   Matrix2D rotation_matrix;
 
    const float my_sqrt2_over_2 = SQRT_2 / 2.0f;
    const float my_sqrt3_over_2 = SQRT_3 / 2.0f;
@@ -153,7 +153,7 @@ TEST(Matrix2D, Matrix_Rotation_Around_Origin)
 
 
    // +pi/4 (45 degrees)
-   rotation_matrix = matrix2D::rotate(PI / 4);
+   rotation_matrix = Matrix2D::rotate(PI / 4);
    
    // row 0
    EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotation_matrix.a00);
@@ -172,7 +172,7 @@ TEST(Matrix2D, Matrix_Rotation_Around_Origin)
 
 
    // -pi/3 (45 degrees)
-   rotation_matrix = matrix2D::rotate((-1) * PI / 3);
+   rotation_matrix = Matrix2D::rotate((-1) * PI / 3);
    
    // row 0
    EXPECT_FLOAT_EQ(my_1_over_2, rotation_matrix.a00);
@@ -193,14 +193,14 @@ TEST(Matrix2D, Matrix_Rotation_Around_Origin)
    // now try rotating some vectors
    // Note: There is another test for multiplying matrix by vector, so don't 
    // bother checking "enable translate".
-   vector2D unit_along_x(1, 0);
-   vector2D unit_along_y(0, 1);
-   vector2D rotated_vector;
+   Vector2D unit_along_x(1, 0);
+   Vector2D unit_along_y(0, 1);
+   Vector2D rotated_vector;
 
    // rotate unit vector along x by +pi/4
    // Expected x: root(2) / 2
    // Expected y: 1 / 2
-   rotation_matrix = matrix2D::rotate(PI / 4);
+   rotation_matrix = Matrix2D::rotate(PI / 4);
    rotated_vector = rotation_matrix * unit_along_x;
    EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotated_vector.x);
    EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotated_vector.y);
@@ -208,7 +208,7 @@ TEST(Matrix2D, Matrix_Rotation_Around_Origin)
    // rotate unit vector along y by -60 degrees (- pi/3)
    // Expected x: root(3) / 2
    // Expected y: 1 / 2
-   rotation_matrix = matrix2D::rotate((-1) * PI / 3);
+   rotation_matrix = Matrix2D::rotate((-1) * PI / 3);
    rotated_vector = rotation_matrix * unit_along_y;
    EXPECT_FLOAT_EQ(my_sqrt3_over_2, rotated_vector.x);
    EXPECT_FLOAT_EQ(my_1_over_2, rotated_vector.y);
@@ -224,8 +224,8 @@ TEST(Matrix2D, Matrix_Rotation_Around_Non_Origin)
    // make a rotation matrix and a vector, and rotate the vector
    // Note: Don't bother checking the rotation matrix's values because 
    // those were already covered in the "Matrix Rotation Around Origin" test.
-   matrix2D rotation_matrix = matrix2D::rotate(PI / 4);
-   vector2D some_vector(3, 3, 1);
+   Matrix2D rotation_matrix = Matrix2D::rotate(PI / 4);
+   Vector2D some_vector(3, 3, 1);
 
    // make the displacement vector that will result from a non-origin 
    // rotation point
@@ -233,8 +233,8 @@ TEST(Matrix2D, Matrix_Rotation_Around_Non_Origin)
    // which I would expect from a displacement vector, which is, by
    // nature, a relative vector and therefore should not be translated
    // Also Note: I did the calculation by hand.
-   vector2D non_origin_pivot(0.0f, -2.0f);
-   vector2D displacement = matrix2D::get_displacement_vector_for_non_origin_rotation(PI / 4, non_origin_pivot);
+   Vector2D non_origin_pivot(0.0f, -2.0f);
+   Vector2D displacement = Matrix2D::get_displacement_vector_for_non_origin_rotation(PI / 4, non_origin_pivot);
    EXPECT_FLOAT_EQ((-1) * SQRT_2, displacement.x);
    EXPECT_FLOAT_EQ(SQRT_2 - 2, displacement.y);
    EXPECT_FLOAT_EQ(0, displacement.w);
@@ -242,7 +242,7 @@ TEST(Matrix2D, Matrix_Rotation_Around_Non_Origin)
    // rotate the vector, add the displacement, check the values, and check
    // that the "enable translate" value is preserved from "some vector"
    // Note: I did the calculation by hand.
-   vector2D result = (rotation_matrix * some_vector) + displacement;
+   Vector2D result = (rotation_matrix * some_vector) + displacement;
    EXPECT_FLOAT_EQ((-1) * SQRT_2, result.x);
    EXPECT_FLOAT_EQ(6 * my_sqrt2_over_2 + (SQRT_2 - 2), result.y);
    EXPECT_FLOAT_EQ(1, result.w);
@@ -251,14 +251,14 @@ TEST(Matrix2D, Matrix_Rotation_Around_Non_Origin)
 
 TEST(Matrix2D, Matrix_Translation)
 {
-   matrix2D translation_matrix;
+   Matrix2D translation_matrix;
    float delta_x;
    float delta_y;
 
 
    delta_x = -3;
    delta_y = +3;
-   translation_matrix = matrix2D::translate(delta_x, delta_y);
+   translation_matrix = Matrix2D::translate(delta_x, delta_y);
 
    // row 0
    EXPECT_FLOAT_EQ(1, translation_matrix.a00);
@@ -278,7 +278,7 @@ TEST(Matrix2D, Matrix_Translation)
 
    delta_x = +2;
    delta_y = -19;
-   translation_matrix = matrix2D::translate(delta_x, delta_y);
+   translation_matrix = Matrix2D::translate(delta_x, delta_y);
 
    // row 0
    EXPECT_FLOAT_EQ(1, translation_matrix.a00);
@@ -297,13 +297,13 @@ TEST(Matrix2D, Matrix_Translation)
 
 
    // now try translating some vectors
-   vector2D v_t_disable(2, 2, 0);     // translation disabled
-   vector2D v_t_enable(2, 2, 1);      // translation enabled
-   vector2D translated_vector;
+   Vector2D v_t_disable(2, 2, 0);     // translation disabled
+   Vector2D v_t_enable(2, 2, 1);      // translation enabled
+   Vector2D translated_vector;
 
    delta_x = +4;
    delta_y = -5;
-   translation_matrix = matrix2D::translate(delta_x, delta_y);
+   translation_matrix = Matrix2D::translate(delta_x, delta_y);
 
    // shouldn't change
    translated_vector = translation_matrix * v_t_disable;

@@ -1,6 +1,7 @@
 #include <gtest\gtest.h>
 
 #include "DebugTools\Profiling\profiler.h"
+using Profiling::Profiler;
 
 #include <iostream>
 #include <fstream>
@@ -25,9 +26,9 @@ namespace
 
    // this calculation is useful only if all strings are the same lengths
    const int g_NUM_CATEGORY_STRINGS = sizeof(g_category_strings) / sizeof(*g_category_strings);
-   const int g_FULL_SAMPLE_COUNT = g_NUM_CATEGORY_STRINGS * profiler::MAX_FRAME_SAMPLES;
+   const int g_FULL_SAMPLE_COUNT = g_NUM_CATEGORY_STRINGS * Profiler::MAX_FRAME_SAMPLES;
 
-   profiler& g_profiler_for_all_tests = profiler::get_instance();
+   Profiler& g_profiler_for_all_tests = Profiler::get_instance();
 }
 
 string get_next_token(ifstream& the_file)
@@ -182,7 +183,7 @@ TEST(Profiler, Large_Sample_Count_Boundaries)
 {
    // go right up to a before edge of the 
    // sample limit
-   int num_samples_to_use = g_NUM_CATEGORY_STRINGS * profiler::MAX_FRAME_SAMPLES;
+   int num_samples_to_use = g_NUM_CATEGORY_STRINGS * Profiler::MAX_FRAME_SAMPLES;
 
    // check just before the boundary of a full sample set
    write_samples(num_samples_to_use - 1);
@@ -200,8 +201,8 @@ TEST(Profiler, Large_Sample_Count_Boundaries)
 TEST(Profiler, Large_Sample_Count_Circulating_Once_Plus_Some)
 {
    // go past the edge of the sample limit and go a bit beyond
-   int num_samples_to_use = g_NUM_CATEGORY_STRINGS * profiler::MAX_FRAME_SAMPLES;
-   num_samples_to_use += (g_NUM_CATEGORY_STRINGS * profiler::MAX_FRAME_SAMPLES) / 2;
+   int num_samples_to_use = g_NUM_CATEGORY_STRINGS * Profiler::MAX_FRAME_SAMPLES;
+   num_samples_to_use += (g_NUM_CATEGORY_STRINGS * Profiler::MAX_FRAME_SAMPLES) / 2;
 
    write_samples(num_samples_to_use);
    check_samples(num_samples_to_use);
@@ -210,12 +211,11 @@ TEST(Profiler, Large_Sample_Count_Circulating_Once_Plus_Some)
 TEST(Profiler, Large_Sample_Count_Go_Around_Several_Times)
 {
    // go around the sample limit more than once
-   int num_samples_to_use = 3 * g_NUM_CATEGORY_STRINGS * profiler::MAX_FRAME_SAMPLES;
+   int num_samples_to_use = 3 * g_NUM_CATEGORY_STRINGS * Profiler::MAX_FRAME_SAMPLES;
 
    write_samples(num_samples_to_use + 1);
    check_samples(num_samples_to_use + 1);
 }
-
 
 
 #endif

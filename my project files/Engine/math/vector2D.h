@@ -5,7 +5,7 @@
 
 namespace Math
 {
-   struct vector2D
+   struct Vector2D
    {
       // the X value
       float x;
@@ -33,7 +33,7 @@ namespace Math
       // But if it is not specified, then it will default to 1 (translation
       // is enabled) because I decided that my default desire for vertices 
       // was that they be allowed to translate.
-      explicit vector2D(
+      explicit Vector2D(
          float start_x = 0.0f,
          float start_y = 0.0f,
          float start_w = 0.0f) :
@@ -52,8 +52,8 @@ namespace Math
       // does not, so argument order matters.  
       // Also Note: The return value is a reference rather than a copy because
       // this is an assignment operator, so "this" gets modified.
-      inline vector2D& operator+=(const vector2D& rhs);
-      inline vector2D& operator-=(const vector2D& rhs);
+      inline Vector2D& operator+=(const Vector2D& rhs);
+      inline Vector2D& operator-=(const Vector2D& rhs);
 
    private:
    };
@@ -65,13 +65,13 @@ namespace Math
    // arguments.
    // Also Note: Because the return value is a new and temporary object, return
    // it as a copy, not a reference.
-   inline vector2D operator+(const vector2D& lhs, const vector2D& rhs);
-   inline vector2D operator-(const vector2D& lhs, const vector2D& rhs);
-   inline vector2D operator*(float scalar, const vector2D& vector);
-   inline vector2D operator*(const vector2D& vector, float scalar);
+   inline Vector2D operator+(const Vector2D& lhs, const Vector2D& rhs);
+   inline Vector2D operator-(const Vector2D& lhs, const Vector2D& rhs);
+   inline Vector2D operator*(float scalar, const Vector2D& vector);
+   inline Vector2D operator*(const Vector2D& vector, float scalar);
 
    // now include the definitions
-#include "vector2D.inl"
+#include "Vector2D.inl"
 }
 
 #endif // ENGINE_VECTOR_2D_H

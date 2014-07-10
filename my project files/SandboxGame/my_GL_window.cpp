@@ -9,12 +9,12 @@
 #include <cassert>
 
 // for my custom vector structure
-#include <math\vector2D.h>
-using Math::vector2D;
+#include <math\Vector2D.h>
+using Math::Vector2D;
 
 // for my custom matrix structure
-#include <math\matrix2D.h>
-using Math::matrix2D;
+#include <math\Matrix2D.h>
+using Math::Matrix2D;
 
 // for our timer that allows for precise control of where things should be 
 // within a frame independent of frame rendering time
@@ -27,24 +27,24 @@ using Timing::Clock;
 //??is this even a good idea??
 namespace
 {
-   vector2D g_verts[] =
+   Vector2D g_verts[] =
    {
       // as far as the compiler is concerned, these are adjacent pairs of floats
       // in memory, so your vertex attribute and buffer data specifications are 
       // the same as if you only entered float values here
-      vector2D(+0.0f, +0.1f, 1.0f),
-      vector2D(-0.1f, -0.1f, 1.0f),
-      vector2D(+0.1f, -0.1f, 1.0f),
+      Vector2D(+0.0f, +0.1f, 1.0f),
+      Vector2D(-0.1f, -0.1f, 1.0f),
+      Vector2D(+0.1f, -0.1f, 1.0f),
    };
    const unsigned int NUM_VERTS = sizeof(g_verts) / sizeof(*g_verts);
 
-   vector2D g_ship_position;
+   Vector2D g_ship_position;
 
    // DO NOT MOVE THIS!!
-   vector2D g_ship_rotation_point;
+   Vector2D g_ship_rotation_point;
 
    float g_ship_orientation_radians = 0;
-   vector2D g_ship_velocity;
+   Vector2D g_ship_velocity;
 
    Clock g_clock;
 }
@@ -75,7 +75,7 @@ void my_GL_window::paintGL()
 {
    int min_window_size = min(width(), height());
 
-   vector2D viewport_location(
+   Vector2D viewport_location(
       (width() / 2) - (min_window_size / 2),
       (height() / 2) - (min_window_size / 2));
    glViewport(viewport_location.x, viewport_location.y, min_window_size, min_window_size);
@@ -92,14 +92,14 @@ void my_GL_window::paintGL()
       0              // position values start 0 bytes from the beginning of the vertex array
       );
 
-   vector2D transformed_verts[NUM_VERTS];
-   matrix2D rotation_matrix = matrix2D::rotate(g_ship_orientation_radians);
-   matrix2D translation_matrix = matrix2D::translate(g_ship_position.x, g_ship_position.y);
-   matrix2D transformation_matrix = translation_matrix * rotation_matrix;
+   Vector2D transformed_verts[NUM_VERTS];
+   Matrix2D rotation_matrix = Matrix2D::rotate(g_ship_orientation_radians);
+   Matrix2D translation_matrix = Matrix2D::translate(g_ship_position.x, g_ship_position.y);
+   Matrix2D transformation_matrix = translation_matrix * rotation_matrix;
 
    // make the new vector displacement for all the vertices that rotate around
    // the ship's rotation point
-   vector2D displacement = matrix2D::get_displacement_vector_for_non_origin_rotation(g_ship_orientation_radians, g_ship_rotation_point);
+   Vector2D displacement = Matrix2D::get_displacement_vector_for_non_origin_rotation(g_ship_orientation_radians, g_ship_rotation_point);
 
    for (unsigned int i = 0; i < NUM_VERTS; i++)
    {
@@ -173,13 +173,13 @@ void my_GL_window::update_velocity(float delta_time)
 
    // the sine is negative because the ship orientation is relative to the veritcal
    // axis, NOT the horizontal axis
-   //vector2D direction_to_accel(
+   //Vector2D direction_to_accel(
    //   (-1) * sinf(g_ship_orientation_radians), 
    //   cosf(g_ship_orientation_radians));
 
-   vector2D forward_for_my_ship(0, 1);
-   matrix2D rotation_mat = matrix2D::rotate(g_ship_orientation_radians);
-   vector2D direction_to_accel = rotation_mat * forward_for_my_ship;
+   Vector2D forward_for_my_ship(0, 1);
+   Matrix2D rotation_mat = Matrix2D::rotate(g_ship_orientation_radians);
+   Vector2D direction_to_accel = rotation_mat * forward_for_my_ship;
 
    if (GetAsyncKeyState(VK_UP))
    {
