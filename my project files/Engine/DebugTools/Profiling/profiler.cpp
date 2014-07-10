@@ -1,66 +1,29 @@
 #include "profiler.h"
 
+// this is where the static class member exists
+profiler profiler::m_the_instance;
+
+profiler::profiler()
+{
+   reset();
+}
+
+profiler& profiler::get_instance()
+{
+   return m_the_instance;
+}
+
+#ifdef PROFILER_ON
 #include <cassert>
 
 #include <fstream>
 using std::ofstream;
 using std::ios;
 
-profiler::profiler(const char* filename_to_profiler_output) :
-   m_filename(filename_to_profiler_output),
-
-   // start this out at -1 so that the first "new frame" call will set it to 0
-   m_frame_index(-1)
+void profiler::reset()
 {
+   m_frame_index = -1;
    memset(m_profiler_categories, 0, sizeof(m_profiler_categories));
-}
-
-void profiler::shutdown()
-{
-   // open the file, and empty it out if it already exists
-   ofstream out_stream(m_filename, ios::trunc);
-   m_profile_category* pc_ptr = 0;
-
-   // write the category names to the top of the file
-   for (int category_index = 0; category_index < MAX_PROFILER_CATEGORIES; category_index++)
-   {
-      pc_ptr = m_profiler_categories + category_index;
-
-      // categories are added sequentially, and there is no method to remove them, 
-      // so if the pointer to the category name is 0, then we have gone through 
-      // all categories
-      if (0 == pc_ptr->category_name)
-      {
-         break;
-      }
-
-      // category exists here, so write the name to file
-      out_stream << pc_ptr->category_name << ",";
-   }
-   out_stream << "\n";
-
-   // write the time data to the file column by column
-   // Note: The end condition is "<=" because time data is written to the current
-   // frame index.  If "new frame" is called, then the frame index will increment, 
-   // and we should record that frame's data regardless of whether or not an entry 
-   // is recorded. 
-   for (int frame_index = 0; frame_index <= m_frame_index; frame_index++)
-   {
-      for (int category_index = 0; category_index < MAX_PROFILER_CATEGORIES; category_index++)
-      {
-         pc_ptr = m_profiler_categories + category_index;
-         if (0 == pc_ptr->category_name)
-         {
-            break;
-         }
-
-         // category exists here, so write the sample data to file
-         out_stream << pc_ptr->samples[frame_index] << ",";
-      }
-
-      // end the row with a new line
-      out_stream << "\n";
-   }
 }
 
 void profiler::new_frame()
@@ -109,3 +72,55 @@ void profiler::add_category_time_log(const char* category, float time)
    pc_ptr->samples[m_frame_index] = time;
 }
 
+void profiler::flush_to_fresh_file(const char* filename_to_profiler_output)
+{
+   // open the file, and empty it out if it already exists
+   ofstream out_stream(filename_to_profiler_output, ios::trunc);
+   m_profile_category* pc_ptr = 0;
+
+   // write the category names to the top of the file
+   for (int category_index = 0; category_index < MAX_PROFILER_CATEGORIES; category_index++)
+   {
+      pc_ptr = m_profiler_categories + category_index;
+
+      // categories are added sequentially, and there is no method to remove them, 
+      // so if the pointer to the category name is 0, then we have gone through 
+      // all categories
+      if (0 == pc_ptr->category_name)
+      {
+         break;
+      }
+
+      // category exists here, so write the name to file
+      out_stream << pc_ptr->category_name << ",";
+   }
+   out_stream << "\n";
+
+   // write the time data to the file column by column
+   // Note: The end condition is "<=" because time data is written to the current
+   // frame index.  If "new frame" is called, then the frame index will increment, 
+   // and we should record that frame's data regardless of whether or not an entry 
+   // is recorded. 
+   for (int frame_index = 0; frame_index <= m_frame_index; frame_index++)
+   {
+      for (int category_index = 0; category_index < MAX_PROFILER_CATEGORIES; category_index++)
+      {
+         pc_ptr = m_profiler_categories + category_index;
+         if (0 == pc_ptr->category_name)
+         {
+            break;
+         }
+
+         // category exists here, so write the sample data to file
+         out_stream << pc_ptr->samples[frame_index] << ",";
+      }
+
+      // end the row with a new line
+      out_stream << "\n";
+   }
+
+   // close the file 
+   out_stream.close();
+}
+
+#endif

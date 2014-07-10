@@ -25,8 +25,9 @@ namespace
 
    // this calculation is useful only if all strings are the same lengths
    const int g_NUM_CATEGORY_STRINGS = sizeof(g_category_strings) / sizeof(*g_category_strings);
-
    const int g_NUM_NORMAL_ENTRIES = 15;
+
+   profiler& g_profiler_for_all_tests = profiler::get_instance();
 }
 
 string get_next_token(ifstream& the_file)
@@ -48,94 +49,132 @@ string get_next_token(ifstream& the_file)
    return return_val;
 }
 
-// called "write nice profile data" because it doesn't cover any corner 
-// cases, which I would call "not nice" cases, so this is a nice and 
-// clean function to write basic data for my tests
-void write_nice_profile_data(profiler& my_profiler)
+
+// writes sequential data to the profiler for all categories up to the number
+// of requested samples
+void write_samples(int num_samples)
 {
-   // add the categories to the profiler
-   for (int index = 0; index < g_NUM_CATEGORY_STRINGS; index++)
-   {
-      my_profiler.add_category(g_category_strings[index]);
-   }
+   g_profiler_for_all_tests.reset();
 
    // write whole number float values to the file
    // Note: The "add category time log" function requires a float, but for 
    // simplicity of testing, we want to read a C string and pass it to atoi(...),
    // so only write whole numbers.
-   for (float float_value_counter = 0;
-      float_value_counter < g_NUM_NORMAL_ENTRIES;
-      float_value_counter += g_NUM_CATEGORY_STRINGS)
+   float value_counter = 0.0;
+   int category_index = 0;
+
+   // add the categories to the profiler
+   for (category_index = 0; category_index < g_NUM_CATEGORY_STRINGS; category_index++)
    {
-      my_profiler.new_frame();
-      for (int index = 0; index < g_NUM_CATEGORY_STRINGS; index++)
-      {
-         my_profiler.add_category_time_log(g_category_strings[index], float_value_counter + index);
-      }
+      g_profiler_for_all_tests.add_category(g_category_strings[category_index]);
    }
+
+   // add a new value to every category up until the number of requested samples
+   for (value_counter = 0, category_index = 0;
+      value_counter < num_samples;
+      value_counter++, category_index++)
+   {
+      if (0 == (category_index % g_NUM_CATEGORY_STRINGS))
+      {
+         g_profiler_for_all_tests.new_frame();
+      }
+
+      g_profiler_for_all_tests.add_category_time_log(
+         g_category_strings[category_index % g_NUM_CATEGORY_STRINGS],
+         value_counter);
+   }
+
+   // write the data to file
+   g_profiler_for_all_tests.flush_to_fresh_file(g_profiler_filename);
 }
 
 
-TEST(Profiler, Profile_Samples_Nice_Data)
+// check for sequential data in the file for all categories up to the number
+// of requested samples
+// Note: The in-file-stream must be at the beginning of the file, or else 
+// this check won't work
+void check_samples(int num_samples)
 {
-   profiler my_profiler(g_profiler_filename);
-   write_nice_profile_data(my_profiler);
-   
-   // write the data to file
-   my_profiler.shutdown();
-
-   // open the output file and check the data
-   ifstream input(g_profiler_filename);
+   ifstream in_file_stream(g_profiler_filename);
 
    // check the titles
    for (int index = 0; index < g_NUM_CATEGORY_STRINGS; index++)
    {
-      EXPECT_EQ(get_next_token(input), g_category_strings[index]);
+      EXPECT_EQ(get_next_token(in_file_stream), g_category_strings[index]);
    }
 
    // check the values
-   for (int value_counter = 0; value_counter < g_NUM_NORMAL_ENTRIES; value_counter++)
+   for (int value_counter = 0; value_counter < num_samples; value_counter++)
    {
-      string buf = get_next_token(input);
+      string buf = get_next_token(in_file_stream);
       EXPECT_EQ(atoi(buf.c_str()), value_counter);
    }
 
-   input.close();
+   in_file_stream.close();
 }
 
 
-TEST(Profiler, Profile_Incomplete_Samples)
+TEST(Profiler, Small_Sample_Count_Nice_Data)
 {
-   profiler my_profiler(g_profiler_filename);
-   write_nice_profile_data(my_profiler);
+   // test samples such that they are evenly divisible by the number of
+   // categories (that is, all completed frames)
+   int num_samples_to_use = g_NUM_CATEGORY_STRINGS * 5;
 
-   // add one more frame and only add data to some of the categories
-   my_profiler.new_frame();
-   my_profiler.add_category_time_log(g_category_strings[0], 23);
-   my_profiler.add_category_time_log(g_category_strings[2], 54);
-
-   // write the data to file
-   my_profiler.shutdown();
-
-   // all the other data was checked in the "nice samples" test, so fast
-   // forward to the end and check the extra data
-   ifstream input(g_profiler_filename);
-   for (int token_counter = 0; 
-      token_counter < g_NUM_CATEGORY_STRINGS + g_NUM_NORMAL_ENTRIES; 
-      token_counter++)
-   {
-      string temp = get_next_token(input);
-   }
-
-   // check the last frame
-   string buf = get_next_token(input);
-   EXPECT_EQ(atoi(buf.c_str()), 23);
-   buf = get_next_token(input);
-   EXPECT_EQ(atoi(buf.c_str()), 0);
-   buf = get_next_token(input);
-   EXPECT_EQ(atoi(buf.c_str()), 54);
-
+   write_samples(num_samples_to_use);
+   check_samples(num_samples_to_use);
 }
+
+
+TEST(Profiler, Incomplete_Frame)
+{
+   // test samples that is 1 more than the number of categories so
+   // that you will have an incomplete frame
+   int num_samples_to_use = g_NUM_CATEGORY_STRINGS * 5;
+   num_samples_to_use += 1;
+
+   write_samples(num_samples_to_use);
+   check_samples(num_samples_to_use);
+}
+
+
+TEST(Profiler, Large_Sample_Count_Boundaries)
+{
+   // go right up to a before edge of the 
+   // sample limit
+   int num_samples_to_use = g_NUM_CATEGORY_STRINGS * profiler::MAX_FRAME_SAMPLES;
+
+   // check just before the boundary of a full sample set
+   write_samples(num_samples_to_use - 1);
+   check_samples(num_samples_to_use - 1);
+
+   // check the exact boundary for a full sample set
+   write_samples(num_samples_to_use);
+   check_samples(num_samples_to_use);
+
+   // the just beyond the boundary
+   write_samples(num_samples_to_use + 1);
+   check_samples(num_samples_to_use + 1);
+}
+
+//TEST(Profiler, Large_Sample_Count_Circulating_Once_Plus_Some)
+//{
+//   // go past the edge of the sample limit and go a bit beyond
+//   int num_samples_to_use = g_NUM_CATEGORY_STRINGS * profiler::MAX_FRAME_SAMPLES;
+//   num_samples_to_use += (g_NUM_CATEGORY_STRINGS * profiler::MAX_FRAME_SAMPLES) / 2;
+//
+//   write_samples(num_samples_to_use);
+//   check_samples(num_samples_to_use);
+//}
+//
+//TEST(Profiler, Large_Sample_Count_Go_Around_Several_Times)
+//{
+//   // go around the sample limit more than once
+//   int num_samples_to_use = 3 * g_NUM_CATEGORY_STRINGS * profiler::MAX_FRAME_SAMPLES;
+//
+//   write_samples(num_samples_to_use + 1);
+//   check_samples(num_samples_to_use + 1);
+//}
+
 
 
 #endif
