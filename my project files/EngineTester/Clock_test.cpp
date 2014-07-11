@@ -70,4 +70,49 @@ TEST(Clock, Frame_Time_Measuring)
    EXPECT_TRUE(clock.shutdown());
 }
 
+
+TEST(Clock, Stopwatch)
+{
+   Clock clock;
+   EXPECT_TRUE(clock.initialize());
+
+   clock.stopwatch_start();
+   QTest::qSleep(1000);
+   float stopwatch_delta_time = clock.stopwatch_stop_and_return_delta_time();
+   EXPECT_TRUE(0.9f < stopwatch_delta_time);
+   EXPECT_TRUE(stopwatch_delta_time < 1.1f);
+}
+
+TEST(Clock, Frame_Time_and_Stopwatch_Together)
+{
+   // this is a test to make sure that the frame time measuring and the 
+   // stopwatch do not interfere with each other
+   Clock clock;
+
+   // this starts a new frame
+   EXPECT_TRUE(clock.initialize());
+
+   // test the stopwatch for 1 second
+   clock.stopwatch_start();
+   QTest::qSleep(1000);
+
+   float stopwatch_delta_time = clock.stopwatch_stop_and_return_delta_time();
+   EXPECT_TRUE(0.9f < stopwatch_delta_time);
+   EXPECT_TRUE(stopwatch_delta_time < 1.1f);
+
+   // test the stopwatch again, this time for 0.5 seconds
+   clock.stopwatch_start();
+   QTest::qSleep(500);
+
+   stopwatch_delta_time = clock.stopwatch_stop_and_return_delta_time();
+   EXPECT_TRUE(0.4f < stopwatch_delta_time);
+   EXPECT_TRUE(stopwatch_delta_time < 0.6f);
+
+   // finally check the elpased frame time
+   clock.new_frame();
+   float frame_time = clock.time_elapsed_last_frame();
+   EXPECT_TRUE(1.4f < frame_time);
+   EXPECT_TRUE(frame_time < 1.6f);
+}
+
 #endif

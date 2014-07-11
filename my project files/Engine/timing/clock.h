@@ -18,8 +18,16 @@ namespace Timing
    public:
       bool initialize();
       bool shutdown();
+
       void new_frame();
+
+      // elapsed time is in seconds
       float time_elapsed_last_frame() const;
+
+      void stopwatch_start();
+
+      // delta time is in seconds
+      float stopwatch_stop_and_return_delta_time() const;
 
    private:
       // don't worry about using the signed long long (64bit) integer, which
@@ -31,6 +39,8 @@ namespace Timing
       LARGE_INTEGER m_last_frame_time_counter;
       LARGE_INTEGER m_cpu_timer_frequency;
       float m_delta_time;
+
+      LARGE_INTEGER m_stopwatch_start_time;
    };
 }
 

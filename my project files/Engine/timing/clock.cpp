@@ -30,18 +30,37 @@ namespace Timing
    void Clock::new_frame()
    {
       // get the change in time and convert it to a float that represents the
-      // franction of a second that has passed
-      LARGE_INTEGER this_frame_time_counter;
-      QueryPerformanceCounter(&this_frame_time_counter);
+      // fraction of a second that has passed
+      LARGE_INTEGER now;
+      QueryPerformanceCounter(&now);
+
       LARGE_INTEGER delta;
-      delta.QuadPart = this_frame_time_counter.QuadPart - m_last_frame_time_counter.QuadPart;
+      delta.QuadPart = now.QuadPart - m_last_frame_time_counter.QuadPart;
       m_delta_time = ((float)delta.QuadPart) / m_cpu_timer_frequency.QuadPart;
 
-      m_last_frame_time_counter.QuadPart = this_frame_time_counter.QuadPart;
+      m_last_frame_time_counter.QuadPart = now.QuadPart;
    }
 
    float Clock::time_elapsed_last_frame() const
    {
       return m_delta_time;
+   }
+
+   void Clock::stopwatch_start()
+   {
+      QueryPerformanceCounter(&m_stopwatch_start_time);
+   }
+
+   float Clock::stopwatch_stop_and_return_delta_time() const
+   {
+      LARGE_INTEGER now;
+      QueryPerformanceCounter(&now);
+
+      LARGE_INTEGER delta;
+      delta.QuadPart = now.QuadPart - m_stopwatch_start_time.QuadPart;
+
+      float fractional_second = ((float)delta.QuadPart) / m_cpu_timer_frequency.QuadPart;
+
+      return fractional_second;
    }
 }
