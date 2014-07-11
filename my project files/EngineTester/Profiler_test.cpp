@@ -86,7 +86,7 @@ void write_samples(int num_samples)
    }
 
    // write the data to file
-   g_profiler_for_all_tests.flush_to_fresh_file(g_profiler_filename);
+   g_profiler_for_all_tests.flush_to_file(g_profiler_filename);
 }
 
 

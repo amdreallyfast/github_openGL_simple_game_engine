@@ -17,7 +17,7 @@ namespace Profiling
       void new_frame();
       void add_category(const char* new_category);
       void add_category_time_log(const char* category, float time);
-      void flush_to_fresh_file(const char* filename_to_profiler_output);
+      void flush_to_file(const char* filename_to_profiler_output);
 #else
       // if the flag is off, make these functions empty so that the compiler
       // will ignore any calls to these functions, saving the program from 
@@ -26,7 +26,7 @@ namespace Profiling
       void new_frame() {}
       void add_category(const char* new_category) {}
       void add_category_time_log(const char* category, float time) {}
-      void flush_to_fresh_file(const char* filename_to_profiler_output) {}
+      void flush_to_file(const char* filename_to_profiler_output) {}
 #endif
 
       static const unsigned int MAX_FRAME_SAMPLES = 500;

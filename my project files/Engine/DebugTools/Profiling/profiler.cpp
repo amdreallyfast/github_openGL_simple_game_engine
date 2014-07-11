@@ -83,7 +83,7 @@ namespace Profiling
       pc_ptr->samples[m_frame_index % MAX_FRAME_SAMPLES] = time;
    }
 
-   void Profiler::flush_to_fresh_file(const char* filename_to_profiler_output)
+   void Profiler::flush_to_file(const char* filename_to_profiler_output)
    {
       // open the file, and empty it out if it already exists
       ofstream out_stream(filename_to_profiler_output, ios::trunc);

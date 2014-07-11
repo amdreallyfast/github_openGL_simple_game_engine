@@ -174,7 +174,7 @@ bool my_GL_window::shutdown()
    success = g_clock.shutdown();
    if (!success){ return false; }
 
-   g_profiler.flush_to_fresh_file("profiler_log.csv");
+   g_profiler.flush_to_file("profiler_log.csv");
 
    return true;
 }
