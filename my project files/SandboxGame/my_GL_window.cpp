@@ -18,8 +18,12 @@ using Math::Matrix2D;
 
 // for our timer that allows for precise control of where things should be 
 // within a frame independent of frame rendering time
-#include <timing\clock.h>
+#include "timing\clock.h"
 using Timing::Clock;
+
+// for our profiler
+#include "DebugTools\Profiling\profiler.h"
+using Profiling::Profiler;
 
 
 // the unnamed namespace makes everything here private to this file, so we don't
@@ -40,13 +44,15 @@ namespace
 
    Vector2D g_ship_position;
 
-   // DO NOT MOVE THIS!!
+   // DO NOT TRANSLATE THIS!!
    Vector2D g_ship_rotation_point;
 
    float g_ship_orientation_radians = 0;
    Vector2D g_ship_velocity;
 
    Clock g_clock;
+
+   Profiler& g_profiler = Profiler::get_instance();
 }
 
 
@@ -66,6 +72,7 @@ void my_GL_window::initializeGL()
    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
    // make the timer go as fast as it can
+   // Note: Argument values to the qt timer are in milliseconds.
    connect(&m_qt_timer, SIGNAL(timeout()), this, SLOT(timer_update()));
    m_qt_timer.start(0);
 }
@@ -73,6 +80,11 @@ void my_GL_window::initializeGL()
 
 void my_GL_window::paintGL()
 {
+   if (!m_ok_to_draw)
+   {
+      return;
+   }
+
    int min_window_size = min(width(), height());
 
    Vector2D viewport_location(
@@ -92,6 +104,8 @@ void my_GL_window::paintGL()
       0              // position values start 0 bytes from the beginning of the vertex array
       );
 
+   g_clock.stopwatch_start();
+
    Vector2D transformed_verts[NUM_VERTS];
    Matrix2D rotation_matrix = Matrix2D::rotate(g_ship_orientation_radians);
    Matrix2D translation_matrix = Matrix2D::translate(g_ship_position.x, g_ship_position.y);
@@ -106,6 +120,11 @@ void my_GL_window::paintGL()
       transformed_verts[i] = (transformation_matrix * g_verts[i]) + displacement;
    }
 
+   float vertex_transformation_time = g_clock.stopwatch_stop_and_return_delta_time();
+   g_profiler.add_category_time_log("Vertex Transformation", vertex_transformation_time);
+
+
+   g_clock.stopwatch_start();
    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer_ID);
    glBufferSubData(
       GL_ARRAY_BUFFER,
@@ -119,12 +138,21 @@ void my_GL_window::paintGL()
       3);               // number of vertices to draw
 
    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+   float draw_time = g_clock.stopwatch_stop_and_return_delta_time();
+   g_profiler.add_category_time_log("Drawing", draw_time);
+
+   // don't draw again until the next timer update
+   m_ok_to_draw = false;
 }
 
 void my_GL_window::timer_update()
 {
    // tell the timer to record its current counter value
    g_clock.new_frame();
+
+   // tell the profiler that it's next data will be for a new frame
+   g_profiler.new_frame();
 
    // do pre-render calculations
    
@@ -134,6 +162,7 @@ void my_GL_window::timer_update()
    update_velocity(delta_time_fractional_second);
    g_ship_position += (g_ship_velocity * delta_time_fractional_second);
 
+   m_ok_to_draw = true;
    this->repaint();
 }
 
@@ -144,6 +173,8 @@ bool my_GL_window::shutdown()
 
    success = g_clock.shutdown();
    if (!success){ return false; }
+
+   g_profiler.flush_to_fresh_file("profiler_log.csv");
 
    return true;
 }
@@ -160,6 +191,12 @@ bool my_GL_window::initialize()
 
    success = g_clock.initialize();
    if (!success){ return false; }
+
+   g_profiler.add_category("Vertex Transformation");
+   g_profiler.add_category("Drawing");
+   g_profiler.new_frame();
+
+   m_ok_to_draw = false;
 
    return true;
 }
