@@ -21,6 +21,35 @@ Matrix2D Matrix2D::rotate(float angle_in_radians)
 }
 
 
+Matrix2D Matrix2D::translate(float x_delta, float y_delta)
+{
+   // resulting matrix will look like this:
+   //    | 1  0  x_delta |
+   //    | 0  1  y_delta |
+   //    | 0  0     1    |
+
+   // only fill in as much of the constructor as you need, then leave the 
+   // rest default
+   return Matrix2D(
+      1.0f, 0.0f, x_delta,
+      0.0f, 1.0f, y_delta);
+}
+
+
+Matrix2D Matrix2D::scale(float scale_x, float scale_y)
+{
+   // resulting matrix will look like this
+   //    | scale_x    0      0 |
+   //    |   0      scale_y  0 |
+   //    |   0        0      1 |
+
+   // fill in what you need, then leave the rest default
+   return Matrix2D(
+      scale_x, 0.0f, 0.0f,
+      0.0f, scale_y);
+}
+
+
 Vector2D Matrix2D::get_displacement_vector_for_non_origin_rotation(float angle_in_radians, const Vector2D& pivot)
 {
    // herese a brief explanation of how this will go down
@@ -40,20 +69,6 @@ Vector2D Matrix2D::get_displacement_vector_for_non_origin_rotation(float angle_i
    return result;
 }
 
-
-Matrix2D Matrix2D::translate(float x_delta, float y_delta)
-{
-   // resulting matrix will look like this:
-   //    | 1  0  x_delta |
-   //    | 0  1  y_delta |
-   //    | 0  0     1    |
-
-   // only fill in as much of the constructor as you need, then leave the 
-   // rest default
-   return Matrix2D(
-      1.0f, 0.0f, x_delta,
-      0.0f, 1.0f, y_delta);
-}
 
 Matrix2D operator*(const Matrix2D& left, const Matrix2D& right)
 {

@@ -30,16 +30,15 @@ namespace Math
       {
       }
 
-      // the rotation is very specific to the matrix itself, so make it a member,
-      // and make it a static factory that will create a matrix that can be
-      // applied to a vector to rotate it
+      // make the matrix factories member functions
       inline static Matrix2D rotate(float angle_in_radians);
+      inline static Matrix2D translate(float x_delta, float y_delta);
+      inline static Matrix2D scale(float scale_x, float scale_y);
 
       inline static Vector2D get_displacement_vector_for_non_origin_rotation(float angle_in_radians, const Vector2D& pivot);
 
-      // similarly, translation is very specific to the matrix itself, so make it
-      // a static member
-      inline static Matrix2D translate(float x_delta, float y_delta);
+
+
    };
 
    // when performthing this multiplication, leave the source matrix and vector 

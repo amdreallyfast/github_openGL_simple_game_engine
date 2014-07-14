@@ -53,7 +53,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions> RUN_CLOCK_TESTS;PROFILER_ON;RUN_VECTOR2D_TESTS;RUN_MATRIX2D_TESTS;RUN_PROFILER_TESTS;WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions> RUN_CLOCK_TESTS_no;PROFILER_ON;RUN_VECTOR2D_TESTS;RUN_MATRIX2D_TESTS;RUN_PROFILER_TESTS;WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\gtest-1.7.0\include\;C:\gtest-1.7.0\;$(ProjectDir)\..\Engine;C:\Qt\4.8.5\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>

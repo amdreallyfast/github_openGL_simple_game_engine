@@ -318,4 +318,40 @@ TEST(Matrix2D, Matrix_Translation)
    EXPECT_FLOAT_EQ(1, translated_vector.w);
 }
 
+
+TEST(Matrix2D, Matrix_Scaling)
+{
+   Matrix2D scale_matrix;
+   float scale_x = -(1.0f / 3.0f);
+   float scale_y = +3.14f;
+
+   scale_matrix = Matrix2D::scale(scale_x, scale_y);
+
+   // row 0
+   EXPECT_FLOAT_EQ(scale_x, scale_matrix.a00);
+   EXPECT_FLOAT_EQ(0, scale_matrix.a01);
+   EXPECT_FLOAT_EQ(0, scale_matrix.a02);
+
+   // row 1
+   EXPECT_FLOAT_EQ(0, scale_matrix.a10);
+   EXPECT_FLOAT_EQ(scale_y, scale_matrix.a11);
+   EXPECT_FLOAT_EQ(0, scale_matrix.a12);
+
+   // row 2
+   EXPECT_FLOAT_EQ(0, scale_matrix.a20);
+   EXPECT_FLOAT_EQ(0, scale_matrix.a21);
+   EXPECT_FLOAT_EQ(1, scale_matrix.a22);
+
+
+   // now make a vector and scale it
+   float v_x = 2.0f;
+   float v_y = -1.0f;
+   Vector2D v(v_x, v_y);
+   Vector2D result = scale_matrix * v;
+
+   EXPECT_FLOAT_EQ(v_x * scale_x, result.x);
+   EXPECT_FLOAT_EQ(v_y * scale_y, result.y);
+   EXPECT_FLOAT_EQ(0, result.w);
+}
+
 #endif
