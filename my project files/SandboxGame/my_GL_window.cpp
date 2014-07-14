@@ -174,6 +174,31 @@ void my_GL_window::timer_update()
    rotate_ship(delta_time_fractional_second);
    update_velocity(delta_time_fractional_second);
    g_ship_position += (g_ship_velocity * delta_time_fractional_second);
+   if (g_ship_position.y > +1.0f)
+   {
+      // went off top of screen
+      //g_ship_position.y = -1.0f;
+      g_ship_velocity.y *= -1;
+   }
+   else if (g_ship_position.y < -1.0f)
+   {
+      // went off bottom of screen
+      //g_ship_position.y = +1.0f;
+      g_ship_velocity.y *= -1;
+   }
+
+   if (g_ship_position.x > +1.0f)
+   {
+      // went off right side of screen
+      //g_ship_position.x = -1.0f;
+      g_ship_velocity.x *= -1;
+   }
+   else if (g_ship_position.x < -1.0f)
+   {
+      // went off left side of screen
+      //g_ship_position.x = +1.0f;
+      g_ship_velocity.x *= -1;
+   }
 
    m_ok_to_draw = true;
    this->repaint();
