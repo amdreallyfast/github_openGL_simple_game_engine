@@ -87,10 +87,11 @@ void my_GL_window::paintGL()
 
    int min_window_size = min(width(), height());
 
-   Vector2D viewport_location(
-      (width() / 2) - (min_window_size / 2),
-      (height() / 2) - (min_window_size / 2));
-   glViewport(viewport_location.x, viewport_location.y, min_window_size, min_window_size);
+   //Vector2D viewport_location(
+   //   (width() / 2) - (min_window_size / 2),
+   //   (height() / 2) - (min_window_size / 2));
+   //glViewport(viewport_location.x, viewport_location.y, min_window_size, min_window_size);
+   glViewport(0, 0, width(), height());
    glClear(GL_COLOR_BUFFER_BIT);
 
    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer_ID);
@@ -109,7 +110,19 @@ void my_GL_window::paintGL()
    Vector2D transformed_verts[NUM_VERTS];
    Matrix2D rotation_matrix = Matrix2D::rotate(g_ship_orientation_radians);
    Matrix2D translation_matrix = Matrix2D::translate(g_ship_position.x, g_ship_position.y);
-   Matrix2D transformation_matrix = translation_matrix * rotation_matrix;
+
+   float aspect_ratio = static_cast<float>(width()) / height();
+   Matrix2D scale_matrix;
+   if (aspect_ratio > 1.0f)
+   {
+      scale_matrix = Matrix2D::scale(1 / aspect_ratio, 1);
+   }
+   else
+   {
+      scale_matrix = Matrix2D::scale(1, aspect_ratio);
+   }
+
+   Matrix2D transformation_matrix = translation_matrix * scale_matrix * rotation_matrix;
 
    // make the new vector displacement for all the vertices that rotate around
    // the ship's rotation point
