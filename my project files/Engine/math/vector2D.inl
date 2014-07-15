@@ -18,40 +18,40 @@ float Vector2D::length()
 // source vectors' flags are 0.
 
 // In-class operators
-Vector2D& Vector2D::operator += (const Vector2D& rhs)
+Vector2D& Vector2D::operator += (const Vector2D& right)
 {
-   x += rhs.x;
-   y += rhs.y;
-   w += rhs.w;
+   x += right.x;
+   y += right.y;
+   w += right.w;
 
    return *this;
 }
 
-Vector2D& Vector2D::operator -= (const Vector2D& rhs)
+Vector2D& Vector2D::operator -= (const Vector2D& right)
 {
-   x -= rhs.x;
-   y -= rhs.y;
-   w -= rhs.w;
+   x -= right.x;
+   y -= right.y;
+   w -= right.w;
 
    return *this;
 }
 
 
 // Out-of-class operators
-Vector2D operator+(const Vector2D& lhs, const Vector2D& rhs)
+Vector2D operator+(const Vector2D& left, const Vector2D& right)
 {
    return Vector2D(
-      lhs.x + rhs.x,
-      lhs.y + rhs.y,
-      lhs.w + rhs.w);
+      left.x + right.x,
+      left.y + right.y,
+      left.w + right.w);
 }
 
-Vector2D operator-(const Vector2D& lhs, const Vector2D& rhs)
+Vector2D operator-(const Vector2D& left, const Vector2D& right)
 {
    return Vector2D(
-      lhs.x - rhs.x,
-      lhs.y - rhs.y,
-      lhs.w - rhs.w);
+      left.x - right.x,
+      left.y - right.y,
+      left.w - right.w);
 }
 
 Vector2D operator*(float scalar, const Vector2D& vector)

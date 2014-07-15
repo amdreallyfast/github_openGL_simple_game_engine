@@ -52,8 +52,8 @@ namespace Math
       // does not, so argument order matters.  
       // Also Note: The return value is a reference rather than a copy because
       // this is an assignment operator, so "this" gets modified.
-      inline Vector2D& operator+=(const Vector2D& rhs);
-      inline Vector2D& operator-=(const Vector2D& rhs);
+      inline Vector2D& operator+=(const Vector2D& right);
+      inline Vector2D& operator-=(const Vector2D& right);
 
    private:
    };
@@ -65,8 +65,8 @@ namespace Math
    // arguments.
    // Also Note: Because the return value is a new and temporary object, return
    // it as a copy, not a reference.
-   inline Vector2D operator+(const Vector2D& lhs, const Vector2D& rhs);
-   inline Vector2D operator-(const Vector2D& lhs, const Vector2D& rhs);
+   inline Vector2D operator+(const Vector2D& left, const Vector2D& right);
+   inline Vector2D operator-(const Vector2D& left, const Vector2D& right);
    inline Vector2D operator*(float scalar, const Vector2D& vector);
    inline Vector2D operator*(const Vector2D& vector, float scalar);
 
