@@ -144,11 +144,10 @@ void my_GL_window::paintGL()
    }
 
    float vertex_transformation_time = g_clock.stopwatch_stop_and_return_delta_time();
-   g_profiler.add_category_time_log("Vertex Transformation", vertex_transformation_time);
+   g_profiler.add_category_time_log("Ship Vertex Transformation", vertex_transformation_time);
 
 
    g_clock.stopwatch_start();
-   glBindBuffer(GL_ARRAY_BUFFER, g_ship_vertex_buffer_ID);
    glBufferSubData(
       GL_ARRAY_BUFFER,
       0,                         // offset from start of data pointer is 0
@@ -160,7 +159,11 @@ void my_GL_window::paintGL()
       0,                // start drawing with the first vertex in each vertex attribute object 
       g_NUM_SHIP_VERTS);// number of vertices to draw
 
+   float ship_draw_time = g_clock.stopwatch_stop_and_return_delta_time();
+   g_profiler.add_category_time_log("Ship Drawing", ship_draw_time);
 
+
+   g_clock.stopwatch_start();
    glBindBuffer(GL_ARRAY_BUFFER, g_border_vertex_buffer_ID);
    glEnableVertexAttribArray(0);
    glVertexAttribPointer(
@@ -172,9 +175,9 @@ void my_GL_window::paintGL()
       0              // position values start 0 bytes from the beginning of the vertex array
       );
    glDrawArrays(GL_LINE_LOOP, 0, g_NUM_BORDER_VERTS);
+   float border_draw_time = g_clock.stopwatch_stop_and_return_delta_time();
+   g_profiler.add_category_time_log("Border Drawing", ship_draw_time);
 
-   float draw_time = g_clock.stopwatch_stop_and_return_delta_time();
-   g_profiler.add_category_time_log("Drawing", draw_time);
 
    // don't draw again until the next timer update
    m_ok_to_draw = false;
@@ -251,8 +254,9 @@ bool my_GL_window::initialize()
    success = g_clock.initialize();
    if (!success){ return false; }
 
-   g_profiler.add_category("Vertex Transformation");
-   g_profiler.add_category("Drawing");
+   g_profiler.add_category("Ship Vertex Transformation");
+   g_profiler.add_category("Ship Drawing");
+   g_profiler.add_category("Border Drawing");
    g_profiler.new_frame();
 
    m_ok_to_draw = false;
