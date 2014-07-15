@@ -153,4 +153,29 @@ TEST(Vector2D, Vector_Times_Scalar)
 }
 
 
+TEST(Vector2D, Perpendicularity)
+{
+   Vector2D v(4, 2);
+   
+   Vector2D result = v.get_cw_perpendicular_vector();
+   EXPECT_FLOAT_EQ(result.x, 2);
+   EXPECT_FLOAT_EQ(result.y, -4);
+   
+   result = v.get_ccw_perpendicular_vector();
+   EXPECT_FLOAT_EQ(result.x, -2);
+   EXPECT_FLOAT_EQ(result.y, 4);
+}
+
+
+TEST(Vector2D, Dot_Product)
+{
+   Vector2D first(1, 2, 3);
+   Vector2D second(4, 5, 6);
+
+   // Note: Resultes were computed by hand
+   float result = first.dot(second);
+   EXPECT_FLOAT_EQ(32, result);
+}
+
+
 #endif

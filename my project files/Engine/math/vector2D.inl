@@ -11,6 +11,21 @@ float Vector2D::length()
    return sqrtf(powf(x, 2.0f) + powf(y, 2.0f));
 }
 
+Vector2D Vector2D::get_cw_perpendicular_vector()
+{
+   return Vector2D(y, -x);
+}
+
+Vector2D Vector2D::get_ccw_perpendicular_vector()
+{
+   return Vector2D(-y, x);
+}
+
+float Vector2D::dot(const Vector2D v)
+{
+   return ((x * v.x) + (y * v.y) + (w * v.w));
+}
+
 
 // Concerning Operators:
 // If either of the source vectors have a flag enabled, enable it for the 
