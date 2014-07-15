@@ -22,7 +22,6 @@ protected:
    
 private:
    bool m_ok_to_draw;
-   GLuint m_vertex_buffer_ID;
    QTimer m_qt_timer;
 
 private slots:

@@ -31,7 +31,7 @@ using Profiling::Profiler;
 //??is this even a good idea??
 namespace
 {
-   Vector2D g_verts[] =
+   Vector2D g_ship_verts[] =
    {
       // as far as the compiler is concerned, these are adjacent pairs of floats
       // in memory, so your vertex attribute and buffer data specifications are 
@@ -40,15 +40,25 @@ namespace
       Vector2D(-0.1f, -0.1f, 1.0f),
       Vector2D(+0.1f, -0.1f, 1.0f),
    };
-   const unsigned int NUM_VERTS = sizeof(g_verts) / sizeof(*g_verts);
+   const unsigned int g_NUM_SHIP_VERTS = sizeof(g_ship_verts) / sizeof(*g_ship_verts);
+   GLuint g_ship_vertex_buffer_ID;
 
    Vector2D g_ship_position;
-
-   // DO NOT TRANSLATE THIS!!
-   Vector2D g_ship_rotation_point;
-
    float g_ship_orientation_radians = 0;
+   Vector2D g_ship_rotation_point;     // DO NOT TRANSLATE THIS!!
    Vector2D g_ship_velocity;
+
+
+   Vector2D g_border_verts[] = 
+   {
+      // build a diamond shape
+      Vector2D(+0.0f, +1.0f, 1.0f),    // center of top
+      Vector2D(+1.0f, +0.0f, 1.0f),    // center of right
+      Vector2D(+0.0f, -1.0f, 1.0f),    // center of bottom
+      Vector2D(-1.0f, -0.0f, 1.0f),    // center of left
+   };
+   const unsigned int g_NUM_BORDER_VERTS = sizeof(g_border_verts) / sizeof(*g_border_verts);
+   GLuint g_border_vertex_buffer_ID;
 
    Clock g_clock;
 
@@ -61,13 +71,13 @@ void my_GL_window::initializeGL()
    GLenum err_code = glewInit();
    assert(err_code == 0);
 
-   glGenBuffers(1, &m_vertex_buffer_ID);
-   glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer_ID);
-   glBufferData(
-      GL_ARRAY_BUFFER,
-      sizeof(g_verts),
-      NULL,
-      GL_DYNAMIC_DRAW);
+   glGenBuffers(1, &g_ship_vertex_buffer_ID);
+   glBindBuffer(GL_ARRAY_BUFFER, g_ship_vertex_buffer_ID);
+   glBufferData(GL_ARRAY_BUFFER, sizeof(g_ship_verts), NULL, GL_DYNAMIC_DRAW);
+
+   glGenBuffers(1, &g_border_vertex_buffer_ID);
+   glBindBuffer(GL_ARRAY_BUFFER, g_border_vertex_buffer_ID);
+   glBufferData(GL_ARRAY_BUFFER, sizeof(g_border_verts), g_border_verts, GL_STATIC_DRAW);
 
    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -94,7 +104,7 @@ void my_GL_window::paintGL()
    glViewport(0, 0, width(), height());
    glClear(GL_COLOR_BUFFER_BIT);
 
-   glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer_ID);
+   glBindBuffer(GL_ARRAY_BUFFER, g_ship_vertex_buffer_ID);
    glEnableVertexAttribArray(0);
    glVertexAttribPointer(
       0,             // vertex attribute index
@@ -107,7 +117,7 @@ void my_GL_window::paintGL()
 
    g_clock.stopwatch_start();
 
-   Vector2D transformed_verts[NUM_VERTS];
+   Vector2D transformed_verts[g_NUM_SHIP_VERTS];
    Matrix2D rotation_matrix = Matrix2D::rotate(g_ship_orientation_radians);
    Matrix2D translation_matrix = Matrix2D::translate(g_ship_position.x, g_ship_position.y);
 
@@ -128,9 +138,9 @@ void my_GL_window::paintGL()
    // the ship's rotation point
    Vector2D displacement = Matrix2D::get_displacement_vector_for_non_origin_rotation(g_ship_orientation_radians, g_ship_rotation_point);
 
-   for (unsigned int i = 0; i < NUM_VERTS; i++)
+   for (unsigned int i = 0; i < g_NUM_SHIP_VERTS; i++)
    {
-      transformed_verts[i] = (transformation_matrix * g_verts[i]) + displacement;
+      transformed_verts[i] = (transformation_matrix * g_ship_verts[i]) + displacement;
    }
 
    float vertex_transformation_time = g_clock.stopwatch_stop_and_return_delta_time();
@@ -138,7 +148,7 @@ void my_GL_window::paintGL()
 
 
    g_clock.stopwatch_start();
-   glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer_ID);
+   glBindBuffer(GL_ARRAY_BUFFER, g_ship_vertex_buffer_ID);
    glBufferSubData(
       GL_ARRAY_BUFFER,
       0,                         // offset from start of data pointer is 0
@@ -148,9 +158,20 @@ void my_GL_window::paintGL()
    glDrawArrays(
       GL_TRIANGLES,     // drawing mode
       0,                // start drawing with the first vertex in each vertex attribute object 
-      3);               // number of vertices to draw
+      g_NUM_SHIP_VERTS);// number of vertices to draw
 
-   glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+   glBindBuffer(GL_ARRAY_BUFFER, g_border_vertex_buffer_ID);
+   glEnableVertexAttribArray(0);
+   glVertexAttribPointer(
+      0,             // vertex attribute index
+      3,             // number of items per vertex
+      GL_FLOAT,      // type of item (dictates number of bytes per item)
+      GL_FALSE,      // no normalization
+      0,             // vertex position values are closely packed
+      0              // position values start 0 bytes from the beginning of the vertex array
+      );
+   glDrawArrays(GL_LINE_LOOP, 0, g_NUM_BORDER_VERTS);
 
    float draw_time = g_clock.stopwatch_stop_and_return_delta_time();
    g_profiler.add_category_time_log("Drawing", draw_time);
@@ -224,8 +245,8 @@ bool my_GL_window::initialize()
    bool success;
    
    // make rotation point the center of mass
-   g_ship_rotation_point.x = (g_verts[0].x + g_verts[1].x + g_verts[2].x) / 3.0f;
-   g_ship_rotation_point.y = (g_verts[0].y + g_verts[1].y + g_verts[2].y) / 3.0f;
+   g_ship_rotation_point.x = (g_ship_verts[0].x + g_ship_verts[1].x + g_ship_verts[2].x) / 3.0f;
+   g_ship_rotation_point.y = (g_ship_verts[0].y + g_ship_verts[1].y + g_ship_verts[2].y) / 3.0f;
 
    success = g_clock.initialize();
    if (!success){ return false; }
