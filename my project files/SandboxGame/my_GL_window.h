@@ -12,6 +12,7 @@ class my_GL_window : public QGLWidget
 public:
    bool shutdown();
    bool initialize();
+   void handle_borders();
    void update_velocity(float delta_time);
    void rotate_ship(float delta_time);
 

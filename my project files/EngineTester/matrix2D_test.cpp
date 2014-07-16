@@ -13,19 +13,19 @@ TEST(Matrix2D, Constructor)
    Matrix2D identity;
 
    // row 0
-   EXPECT_FLOAT_EQ(1, identity.a00);
-   EXPECT_FLOAT_EQ(0, identity.a01);
-   EXPECT_FLOAT_EQ(0, identity.a02);
+   EXPECT_FLOAT_EQ(1, identity.x0);
+   EXPECT_FLOAT_EQ(0, identity.x1);
+   EXPECT_FLOAT_EQ(0, identity.x2);
 
    // row 1
-   EXPECT_FLOAT_EQ(0, identity.a10);
-   EXPECT_FLOAT_EQ(1, identity.a11);
-   EXPECT_FLOAT_EQ(0, identity.a12);
+   EXPECT_FLOAT_EQ(0, identity.y0);
+   EXPECT_FLOAT_EQ(1, identity.y1);
+   EXPECT_FLOAT_EQ(0, identity.y2);
 
    // row 2
-   EXPECT_FLOAT_EQ(0, identity.a20);
-   EXPECT_FLOAT_EQ(0, identity.a21);
-   EXPECT_FLOAT_EQ(1, identity.a22);
+   EXPECT_FLOAT_EQ(0, identity.w0);
+   EXPECT_FLOAT_EQ(0, identity.w1);
+   EXPECT_FLOAT_EQ(1, identity.w2);
 
 
 
@@ -42,19 +42,19 @@ TEST(Matrix2D, Constructor)
       7, 8, 9);
 
    // row 0
-   EXPECT_FLOAT_EQ(1, some_matrix.a00);
-   EXPECT_FLOAT_EQ(2, some_matrix.a01);
-   EXPECT_FLOAT_EQ(3, some_matrix.a02);
+   EXPECT_FLOAT_EQ(1, some_matrix.x0);
+   EXPECT_FLOAT_EQ(2, some_matrix.x1);
+   EXPECT_FLOAT_EQ(3, some_matrix.x2);
 
    // row 1
-   EXPECT_FLOAT_EQ(4, some_matrix.a10);
-   EXPECT_FLOAT_EQ(5, some_matrix.a11);
-   EXPECT_FLOAT_EQ(6, some_matrix.a12);
+   EXPECT_FLOAT_EQ(4, some_matrix.y0);
+   EXPECT_FLOAT_EQ(5, some_matrix.y1);
+   EXPECT_FLOAT_EQ(6, some_matrix.y2);
 
    // row 2
-   EXPECT_FLOAT_EQ(7, some_matrix.a20);
-   EXPECT_FLOAT_EQ(8, some_matrix.a21);
-   EXPECT_FLOAT_EQ(9, some_matrix.a22);
+   EXPECT_FLOAT_EQ(7, some_matrix.w0);
+   EXPECT_FLOAT_EQ(8, some_matrix.w1);
+   EXPECT_FLOAT_EQ(9, some_matrix.w2);
 }
 
 
@@ -109,37 +109,37 @@ TEST(Matrix2D, Matrix_Matrix_Multiply)
    result = mat1 * mat2;
    
    // row 0
-   EXPECT_FLOAT_EQ(30, result.a00);
-   EXPECT_FLOAT_EQ(24, result.a01);
-   EXPECT_FLOAT_EQ(18, result.a02);
+   EXPECT_FLOAT_EQ(30, result.x0);
+   EXPECT_FLOAT_EQ(24, result.x1);
+   EXPECT_FLOAT_EQ(18, result.x2);
 
    // row 1
-   EXPECT_FLOAT_EQ(84, result.a10);
-   EXPECT_FLOAT_EQ(69, result.a11);
-   EXPECT_FLOAT_EQ(54, result.a12);
+   EXPECT_FLOAT_EQ(84, result.y0);
+   EXPECT_FLOAT_EQ(69, result.y1);
+   EXPECT_FLOAT_EQ(54, result.y2);
 
    // row 2
-   EXPECT_FLOAT_EQ(138, result.a20);
-   EXPECT_FLOAT_EQ(114, result.a21);
-   EXPECT_FLOAT_EQ(90, result.a22);
+   EXPECT_FLOAT_EQ(138, result.w0);
+   EXPECT_FLOAT_EQ(114, result.w1);
+   EXPECT_FLOAT_EQ(90, result.w2);
 
 
    // now multiply in the reverse order
    result = mat2 * mat1;
 
-   EXPECT_FLOAT_EQ(90, result.a00);
-   EXPECT_FLOAT_EQ(114, result.a01);
-   EXPECT_FLOAT_EQ(138, result.a02);
+   EXPECT_FLOAT_EQ(90, result.x0);
+   EXPECT_FLOAT_EQ(114, result.x1);
+   EXPECT_FLOAT_EQ(138, result.x2);
 
    // row 1
-   EXPECT_FLOAT_EQ(54, result.a10);
-   EXPECT_FLOAT_EQ(69, result.a11);
-   EXPECT_FLOAT_EQ(84, result.a12);
+   EXPECT_FLOAT_EQ(54, result.y0);
+   EXPECT_FLOAT_EQ(69, result.y1);
+   EXPECT_FLOAT_EQ(84, result.y2);
 
    // row 2
-   EXPECT_FLOAT_EQ(18, result.a20);
-   EXPECT_FLOAT_EQ(24, result.a21);
-   EXPECT_FLOAT_EQ(30, result.a22);
+   EXPECT_FLOAT_EQ(18, result.w0);
+   EXPECT_FLOAT_EQ(24, result.w1);
+   EXPECT_FLOAT_EQ(30, result.w2);
 }
 
 
@@ -156,38 +156,38 @@ TEST(Matrix2D, Matrix_Rotation_Around_Origin)
    rotation_matrix = Matrix2D::rotate(PI / 4);
    
    // row 0
-   EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotation_matrix.a00);
-   EXPECT_FLOAT_EQ((-1) * my_sqrt2_over_2, rotation_matrix.a01);
-   EXPECT_FLOAT_EQ(0, rotation_matrix.a02);
+   EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotation_matrix.x0);
+   EXPECT_FLOAT_EQ((-1) * my_sqrt2_over_2, rotation_matrix.x1);
+   EXPECT_FLOAT_EQ(0, rotation_matrix.x2);
 
    // row 1
-   EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotation_matrix.a10);
-   EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotation_matrix.a11);
-   EXPECT_FLOAT_EQ(0, rotation_matrix.a12);
+   EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotation_matrix.y0);
+   EXPECT_FLOAT_EQ(my_sqrt2_over_2, rotation_matrix.y1);
+   EXPECT_FLOAT_EQ(0, rotation_matrix.y2);
 
    // row 2
-   EXPECT_FLOAT_EQ(0, rotation_matrix.a20);
-   EXPECT_FLOAT_EQ(0, rotation_matrix.a21);
-   EXPECT_FLOAT_EQ(1, rotation_matrix.a22);
+   EXPECT_FLOAT_EQ(0, rotation_matrix.w0);
+   EXPECT_FLOAT_EQ(0, rotation_matrix.w1);
+   EXPECT_FLOAT_EQ(1, rotation_matrix.w2);
 
 
    // -pi/3 (45 degrees)
    rotation_matrix = Matrix2D::rotate((-1) * PI / 3);
    
    // row 0
-   EXPECT_FLOAT_EQ(my_1_over_2, rotation_matrix.a00);
-   EXPECT_FLOAT_EQ((-1) * (-1) * my_sqrt3_over_2, rotation_matrix.a01);
-   EXPECT_FLOAT_EQ(0, rotation_matrix.a02);
+   EXPECT_FLOAT_EQ(my_1_over_2, rotation_matrix.x0);
+   EXPECT_FLOAT_EQ((-1) * (-1) * my_sqrt3_over_2, rotation_matrix.x1);
+   EXPECT_FLOAT_EQ(0, rotation_matrix.x2);
 
    // row 1
-   EXPECT_FLOAT_EQ((-1) * my_sqrt3_over_2, rotation_matrix.a10);
-   EXPECT_FLOAT_EQ(my_1_over_2, rotation_matrix.a11);
-   EXPECT_FLOAT_EQ(0, rotation_matrix.a12);
+   EXPECT_FLOAT_EQ((-1) * my_sqrt3_over_2, rotation_matrix.y0);
+   EXPECT_FLOAT_EQ(my_1_over_2, rotation_matrix.y1);
+   EXPECT_FLOAT_EQ(0, rotation_matrix.y2);
 
    // row 2
-   EXPECT_FLOAT_EQ(0, rotation_matrix.a20);
-   EXPECT_FLOAT_EQ(0, rotation_matrix.a21);
-   EXPECT_FLOAT_EQ(1, rotation_matrix.a22);
+   EXPECT_FLOAT_EQ(0, rotation_matrix.w0);
+   EXPECT_FLOAT_EQ(0, rotation_matrix.w1);
+   EXPECT_FLOAT_EQ(1, rotation_matrix.w2);
 
    
    // now try rotating some vectors
@@ -261,19 +261,19 @@ TEST(Matrix2D, Matrix_Translation)
    translation_matrix = Matrix2D::translate(delta_x, delta_y);
 
    // row 0
-   EXPECT_FLOAT_EQ(1, translation_matrix.a00);
-   EXPECT_FLOAT_EQ(0, translation_matrix.a01);
-   EXPECT_FLOAT_EQ(delta_x, translation_matrix.a02);
+   EXPECT_FLOAT_EQ(1, translation_matrix.x0);
+   EXPECT_FLOAT_EQ(0, translation_matrix.x1);
+   EXPECT_FLOAT_EQ(delta_x, translation_matrix.x2);
 
    // row 1
-   EXPECT_FLOAT_EQ(0, translation_matrix.a10);
-   EXPECT_FLOAT_EQ(1, translation_matrix.a11);
-   EXPECT_FLOAT_EQ(delta_y, translation_matrix.a12);
+   EXPECT_FLOAT_EQ(0, translation_matrix.y0);
+   EXPECT_FLOAT_EQ(1, translation_matrix.y1);
+   EXPECT_FLOAT_EQ(delta_y, translation_matrix.y2);
 
    // row 2
-   EXPECT_FLOAT_EQ(0, translation_matrix.a20);
-   EXPECT_FLOAT_EQ(0, translation_matrix.a21);
-   EXPECT_FLOAT_EQ(1, translation_matrix.a22);
+   EXPECT_FLOAT_EQ(0, translation_matrix.w0);
+   EXPECT_FLOAT_EQ(0, translation_matrix.w1);
+   EXPECT_FLOAT_EQ(1, translation_matrix.w2);
 
 
    delta_x = +2;
@@ -281,19 +281,19 @@ TEST(Matrix2D, Matrix_Translation)
    translation_matrix = Matrix2D::translate(delta_x, delta_y);
 
    // row 0
-   EXPECT_FLOAT_EQ(1, translation_matrix.a00);
-   EXPECT_FLOAT_EQ(0, translation_matrix.a01);
-   EXPECT_FLOAT_EQ(delta_x, translation_matrix.a02);
+   EXPECT_FLOAT_EQ(1, translation_matrix.x0);
+   EXPECT_FLOAT_EQ(0, translation_matrix.x1);
+   EXPECT_FLOAT_EQ(delta_x, translation_matrix.x2);
 
    // row 1
-   EXPECT_FLOAT_EQ(0, translation_matrix.a10);
-   EXPECT_FLOAT_EQ(1, translation_matrix.a11);
-   EXPECT_FLOAT_EQ(delta_y, translation_matrix.a12);
+   EXPECT_FLOAT_EQ(0, translation_matrix.y0);
+   EXPECT_FLOAT_EQ(1, translation_matrix.y1);
+   EXPECT_FLOAT_EQ(delta_y, translation_matrix.y2);
 
    // row 2
-   EXPECT_FLOAT_EQ(0, translation_matrix.a20);
-   EXPECT_FLOAT_EQ(0, translation_matrix.a21);
-   EXPECT_FLOAT_EQ(1, translation_matrix.a22);
+   EXPECT_FLOAT_EQ(0, translation_matrix.w0);
+   EXPECT_FLOAT_EQ(0, translation_matrix.w1);
+   EXPECT_FLOAT_EQ(1, translation_matrix.w2);
 
 
    // now try translating some vectors
@@ -328,19 +328,19 @@ TEST(Matrix2D, Matrix_Scaling)
    scale_matrix = Matrix2D::scale(scale_x, scale_y);
 
    // row 0
-   EXPECT_FLOAT_EQ(scale_x, scale_matrix.a00);
-   EXPECT_FLOAT_EQ(0, scale_matrix.a01);
-   EXPECT_FLOAT_EQ(0, scale_matrix.a02);
+   EXPECT_FLOAT_EQ(scale_x, scale_matrix.x0);
+   EXPECT_FLOAT_EQ(0, scale_matrix.x1);
+   EXPECT_FLOAT_EQ(0, scale_matrix.x2);
 
    // row 1
-   EXPECT_FLOAT_EQ(0, scale_matrix.a10);
-   EXPECT_FLOAT_EQ(scale_y, scale_matrix.a11);
-   EXPECT_FLOAT_EQ(0, scale_matrix.a12);
+   EXPECT_FLOAT_EQ(0, scale_matrix.y0);
+   EXPECT_FLOAT_EQ(scale_y, scale_matrix.y1);
+   EXPECT_FLOAT_EQ(0, scale_matrix.y2);
 
    // row 2
-   EXPECT_FLOAT_EQ(0, scale_matrix.a20);
-   EXPECT_FLOAT_EQ(0, scale_matrix.a21);
-   EXPECT_FLOAT_EQ(1, scale_matrix.a22);
+   EXPECT_FLOAT_EQ(0, scale_matrix.w0);
+   EXPECT_FLOAT_EQ(0, scale_matrix.w1);
+   EXPECT_FLOAT_EQ(1, scale_matrix.w2);
 
 
    // now make a vector and scale it

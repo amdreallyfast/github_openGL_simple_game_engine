@@ -72,22 +72,22 @@ Vector2D Matrix2D::get_displacement_vector_for_non_origin_rotation(float angle_i
 
 Matrix2D operator*(const Matrix2D& left, const Matrix2D& right)
 {
-   float new_a00 = left.a00 * right.a00 + left.a01*right.a10 + left.a02*right.a20;
-   float new_a01 = left.a00 * right.a01 + left.a01*right.a11 + left.a02*right.a21;
-   float new_a02 = left.a00 * right.a02 + left.a01*right.a12 + left.a02*right.a22;
+   float new_x0 = left.x0 * right.x0 + left.x1*right.y0 + left.x2*right.w0;
+   float new_x1 = left.x0 * right.x1 + left.x1*right.y1 + left.x2*right.w1;
+   float new_x2 = left.x0 * right.x2 + left.x1*right.y2 + left.x2*right.w2;
 
-   float new_a10 = left.a10 * right.a00 + left.a11*right.a10 + left.a12*right.a20;
-   float new_a11 = left.a10 * right.a01 + left.a11*right.a11 + left.a12*right.a21;
-   float new_a12 = left.a10 * right.a02 + left.a11*right.a12 + left.a12*right.a22;
+   float new_y0 = left.y0 * right.x0 + left.y1*right.y0 + left.y2*right.w0;
+   float new_y1 = left.y0 * right.x1 + left.y1*right.y1 + left.y2*right.w1;
+   float new_y2 = left.y0 * right.x2 + left.y1*right.y2 + left.y2*right.w2;
 
-   float new_a20 = left.a20 * right.a00 + left.a21*right.a10 + left.a22*right.a20;
-   float new_a21 = left.a20 * right.a01 + left.a21*right.a11 + left.a22*right.a21;
-   float new_a22 = left.a20 * right.a02 + left.a21*right.a12 + left.a22*right.a22;
+   float new_w0 = left.w0 * right.x0 + left.w1*right.y0 + left.w2*right.w0;
+   float new_w1 = left.w0 * right.x1 + left.w1*right.y1 + left.w2*right.w1;
+   float new_w2 = left.w0 * right.x2 + left.w1*right.y2 + left.w2*right.w2;
 
    return Matrix2D(
-      new_a00, new_a01, new_a02,
-      new_a10, new_a11, new_a12,
-      new_a20, new_a21, new_a22);
+      new_x0, new_x1, new_x2,
+      new_y0, new_y1, new_y2,
+      new_w0, new_w1, new_w2);
 }
 
 Vector2D operator*(const Matrix2D& m, const Vector2D& v)
@@ -97,8 +97,8 @@ Vector2D operator*(const Matrix2D& m, const Vector2D& v)
    // in the original "t" value anyway, so just carry it over and be done with
    // it
    return Vector2D(
-      m.a00 * v.x + m.a01 * v.y + m.a02 * v.w,
-      m.a10 * v.x + m.a11 * v.y + m.a12 * v.w,
-      m.a20 * v.x + m.a21 * v.y + m.a22 * v.w);
+      m.x0 * v.x + m.x1 * v.y + m.x2 * v.w,
+      m.y0 * v.x + m.y1 * v.y + m.y2 * v.w,
+      m.w0 * v.x + m.w1 * v.y + m.w2 * v.w);
 }
 

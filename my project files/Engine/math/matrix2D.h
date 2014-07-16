@@ -13,20 +13,20 @@ namespace Math
 
    struct Matrix2D
    {
-      float a00, a01, a02;
-      float a10, a11, a12;
-      float a20, a21, a22;
+      float x0, x1, x2;
+      float y0, y1, y2;
+      float w0, w1, w2;
 
       // declare constructors explicit so that we do not have any implicit conversions
       // from and argument type like "float" to "Matrix2D"
 
       explicit Matrix2D(
-         float start_a00 = 1.0f, float start_a01 = 0.0f, float start_a02 = 0.0f,
-         float start_a10 = 0.0f, float start_a11 = 1.0f, float start_a12 = 0.0f,
-         float start_a20 = 0.0f, float start_a21 = 0.0f, float start_a22 = 1.0f) :
-         a00(start_a00), a01(start_a01), a02(start_a02),
-         a10(start_a10), a11(start_a11), a12(start_a12),
-         a20(start_a20), a21(start_a21), a22(start_a22)
+         float start_x0 = 1.0f, float start_x1 = 0.0f, float start_x2 = 0.0f,
+         float start_y0 = 0.0f, float start_y1 = 1.0f, float start_y2 = 0.0f,
+         float start_w0 = 0.0f, float start_w1 = 0.0f, float start_w2 = 1.0f) :
+         x0(start_x0), x1(start_x1), x2(start_x2),
+         y0(start_y0), y1(start_y1), y2(start_y2),
+         w0(start_w0), w1(start_w1), w2(start_w2)
       {
       }
 

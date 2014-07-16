@@ -53,9 +53,9 @@ namespace
    {
       // build a diamond shape
       Vector2D(+0.0f, +1.0f, 1.0f),    // center of top
-      Vector2D(+1.0f, +0.0f, 1.0f),    // center of right
-      Vector2D(+0.0f, -1.0f, 1.0f),    // center of bottom
       Vector2D(-1.0f, -0.0f, 1.0f),    // center of left
+      Vector2D(+0.0f, -1.0f, 1.0f),    // center of bottom
+      Vector2D(+1.0f, +0.0f, 1.0f),    // center of right
    };
    const unsigned int g_NUM_BORDER_VERTS = sizeof(g_border_verts) / sizeof(*g_border_verts);
    GLuint g_border_vertex_buffer_ID;
@@ -198,31 +198,10 @@ void my_GL_window::timer_update()
    rotate_ship(delta_time_fractional_second);
    update_velocity(delta_time_fractional_second);
    g_ship_position += (g_ship_velocity * delta_time_fractional_second);
-   if (g_ship_position.y > +1.0f)
-   {
-      // went off top of screen
-      //g_ship_position.y = -1.0f;
-      g_ship_velocity.y *= -1;
-   }
-   else if (g_ship_position.y < -1.0f)
-   {
-      // went off bottom of screen
-      //g_ship_position.y = +1.0f;
-      g_ship_velocity.y *= -1;
-   }
-
-   if (g_ship_position.x > +1.0f)
-   {
-      // went off right side of screen
-      //g_ship_position.x = -1.0f;
-      g_ship_velocity.x *= -1;
-   }
-   else if (g_ship_position.x < -1.0f)
-   {
-      // went off left side of screen
-      //g_ship_position.x = +1.0f;
-      g_ship_velocity.x *= -1;
-   }
+   
+   // do borders after the velocity update due to time because the borders may
+   // reverse of arrest the velocity
+   handle_borders();
 
    m_ok_to_draw = true;
    this->repaint();
@@ -265,7 +244,53 @@ bool my_GL_window::initialize()
 }
 
 
-// the "key is pressed" event handler
+void my_GL_window::handle_borders()
+{
+   // get the vector for the top left wall
+
+
+   bool any_wall_collision = false;
+   for (int index = 0; index < g_NUM_BORDER_VERTS; index++)
+   {
+      const Vector2D& first = g_border_verts[index];
+      const Vector2D& second = g_border_verts[(index + 1) % g_NUM_BORDER_VERTS];
+      Vector2D wall = second - first;
+      Vector2D wall_normal = wall.get_ccw_perpendicular_vector();
+      Vector2D respective_ship_position = g_ship_position - first;
+      float dot_result = wall_normal.dot(respective_ship_position);
+
+      any_wall_collision |= (dot_result < 0);
+   }
+
+   qDebug() << any_wall_collision;
+   //if (g_ship_position.y > +1.0f)
+   //{
+   //   // went off top of screen
+   //   //g_ship_position.y = -1.0f;
+   //   g_ship_velocity.y *= -1;
+   //}
+   //else if (g_ship_position.y < -1.0f)
+   //{
+   //   // went off bottom of screen
+   //   //g_ship_position.y = +1.0f;
+   //   g_ship_velocity.y *= -1;
+   //}
+
+   //if (g_ship_position.x > +1.0f)
+   //{
+   //   // went off right side of screen
+   //   //g_ship_position.x = -1.0f;
+   //   g_ship_velocity.x *= -1;
+   //}
+   //else if (g_ship_position.x < -1.0f)
+   //{
+   //   // went off left side of screen
+   //   //g_ship_position.x = +1.0f;
+   //   g_ship_velocity.x *= -1;
+   //}
+}
+
+
 void my_GL_window::update_velocity(float delta_time)
 {
    const float LINEAR_ACCEL = 0.2f;
