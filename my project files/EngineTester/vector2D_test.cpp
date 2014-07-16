@@ -6,8 +6,6 @@
 #include <math/Vector2D.h>
 using Math::Vector2D;
 
-#include <math.h>
-
 #ifdef RUN_VECTOR2D_TESTS
 
 TEST(Vector2D, Constructor)
