@@ -249,45 +249,21 @@ void my_GL_window::handle_borders()
    // get the vector for the top left wall
 
 
-   bool any_wall_collision = false;
    for (int index = 0; index < g_NUM_BORDER_VERTS; index++)
    {
       const Vector2D& first = g_border_verts[index];
       const Vector2D& second = g_border_verts[(index + 1) % g_NUM_BORDER_VERTS];
-      Vector2D wall = second - first;
-      Vector2D wall_normal = wall.get_ccw_perpendicular_vector();
+      Vector2D border = second - first;
+      Vector2D normalized_border_normal = border.get_ccw_perpendicular_vector().normalize();
       Vector2D respective_ship_position = g_ship_position - first;
-      float dot_result = wall_normal.dot(respective_ship_position);
+      float dot_result = normalized_border_normal.dot(respective_ship_position);
 
-      any_wall_collision |= (dot_result < 0);
+      if (dot_result < 0)
+      {
+         g_ship_velocity += 
+            (-2) * g_ship_velocity.dot(normalized_border_normal) * normalized_border_normal;
+      }
    }
-
-   qDebug() << any_wall_collision;
-   //if (g_ship_position.y > +1.0f)
-   //{
-   //   // went off top of screen
-   //   //g_ship_position.y = -1.0f;
-   //   g_ship_velocity.y *= -1;
-   //}
-   //else if (g_ship_position.y < -1.0f)
-   //{
-   //   // went off bottom of screen
-   //   //g_ship_position.y = +1.0f;
-   //   g_ship_velocity.y *= -1;
-   //}
-
-   //if (g_ship_position.x > +1.0f)
-   //{
-   //   // went off right side of screen
-   //   //g_ship_position.x = -1.0f;
-   //   g_ship_velocity.x *= -1;
-   //}
-   //else if (g_ship_position.x < -1.0f)
-   //{
-   //   // went off left side of screen
-   //   //g_ship_position.x = +1.0f;
-   //   g_ship_velocity.x *= -1;
-   //}
 }
 
 
@@ -315,7 +291,7 @@ void my_GL_window::update_velocity(float delta_time)
 
 void my_GL_window::rotate_ship(float delta_time)
 {
-   const float ANGULAR_ACCEL = 2.0f;
+   const float ANGULAR_ACCEL = 3.0f;
    static float angular_delta_v = 0;
 
    if (GetAsyncKeyState(VK_LEFT))
