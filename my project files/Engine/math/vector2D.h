@@ -44,14 +44,17 @@ namespace Math
       }
 
       // calculate the magnitude of this vector
-      inline float length();
+      inline float length() const;
+
+      // construct a unit vector out of 
+      inline Vector2D normalize() const;
 
       // calculate a vector that is perpendicular to this one
-      inline Vector2D get_cw_perpendicular_vector();
-      inline Vector2D get_ccw_perpendicular_vector();
+      inline Vector2D get_cw_perpendicular_vector() const;
+      inline Vector2D get_ccw_perpendicular_vector() const;
 
       // calculate the dot product of this with another vector
-      inline float dot(const Vector2D v);
+      inline float dot(const Vector2D v) const;
 
       // define assignment operators inside the class because argument order
       // does matter

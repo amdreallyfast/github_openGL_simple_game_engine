@@ -2,26 +2,36 @@
 // the function definitions here do not require the "inline" keyword because
 // they were already declared as "inline" in their declaration
 
-float Vector2D::length()
+float Vector2D::length() const
 {
-   // "math.h" is included in the header file
+   // the standard library math header is included in the .h file
 
-   // the "enable translate" is meant for translation only and is not a 
-   // part of the (x, y) dimension, so don't take it into account
-   return sqrtf(powf(x, 2.0f) + powf(y, 2.0f));
+   // take the square root of the sum of all the squares, not just X and Y
+   // Note: Do this because it looks like what you expect out of a Vector with
+   // three components.  Also, the only time when w will be non-zero is when 
+   // it is a point to be translated, and points are not directional vectors,
+   // so it makes no sense to normalize them.  Directional vectors have a w
+   // term of 0, w^2 will also be 0 in this case, and all is good.
+   return sqrtf((x * x) + (y * y) + (w * w));
 }
 
-Vector2D Vector2D::get_cw_perpendicular_vector()
+Vector2D Vector2D::normalize() const
+{
+   float L = length();
+   return Vector2D((x / L), (y / L), (w / L));
+}
+
+Vector2D Vector2D::get_cw_perpendicular_vector() const
 {
    return Vector2D(y, -x);
 }
 
-Vector2D Vector2D::get_ccw_perpendicular_vector()
+Vector2D Vector2D::get_ccw_perpendicular_vector() const
 {
    return Vector2D(-y, x);
 }
 
-float Vector2D::dot(const Vector2D v)
+float Vector2D::dot(const Vector2D v) const
 {
    return ((x * v.x) + (y * v.y) + (w * v.w));
 }

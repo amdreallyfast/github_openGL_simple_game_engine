@@ -35,6 +35,21 @@ TEST(Vector2D, Length)
 }
 
 
+TEST(Vector2D, Normalization)
+{
+   Vector2D v(2, 3, 4);
+   float original_length = v.length();
+
+   Vector2D result = v.normalize();
+   float normalized_length = result.length();
+
+   EXPECT_FLOAT_EQ(1.0f, normalized_length);
+   EXPECT_FLOAT_EQ(2.0f / original_length, result.x);
+   EXPECT_FLOAT_EQ(3.0f / original_length, result.y);
+   EXPECT_FLOAT_EQ(4.0f / original_length, result.w);
+}
+
+
 TEST(Vector2D, Vector_Addition)
 {
    Vector2D v1(1, 2, 0);
