@@ -24,24 +24,34 @@ TEST(Vector2D, Constructor)
 }
 
 
-TEST(Vector2D, Length)
+TEST(Vector2D, Magnitude)
 {
    // for a 2D vector, the only things that are important to vector length
    // are the X and Y values, and anything else should be ignored
-   Vector2D v(3, 4);
-   float length = v.length();
+   Vector2D v(3, 4, 5);
+   float mag = v.magnitude();
 
-   EXPECT_FLOAT_EQ(5, length);
+   // equals sqrt(50); value from google calculator
+   EXPECT_FLOAT_EQ(7.07106781187f, mag);
+}
+
+
+TEST(Vector2D, Magnitude_Squared)
+{
+   Vector2D v(3, 4, 5);
+   float mag_sq = v.magnitude_squared();
+
+   EXPECT_FLOAT_EQ(50, mag_sq);
 }
 
 
 TEST(Vector2D, Normalization)
 {
    Vector2D v(2, 3, 4);
-   float original_length = v.length();
+   float original_length = v.magnitude();
 
    Vector2D result = v.normalize();
-   float normalized_length = result.length();
+   float normalized_length = result.magnitude();
 
    EXPECT_FLOAT_EQ(1.0f, normalized_length);
    EXPECT_FLOAT_EQ(2.0f / original_length, result.x);

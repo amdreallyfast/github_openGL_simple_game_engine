@@ -2,7 +2,7 @@
 // the function definitions here do not require the "inline" keyword because
 // they were already declared as "inline" in their declaration
 
-float Vector2D::length() const
+float Vector2D::magnitude() const
 {
    // the standard library math header is included in the .h file
 
@@ -15,9 +15,16 @@ float Vector2D::length() const
    return sqrtf((x * x) + (y * y) + (w * w));
 }
 
+float Vector2D::magnitude_squared() const
+{
+   // this function is useful as a computationally cheap way of comparing the
+   // magnitudes of two vectors to see which is greater
+   return ((x * x) + (y * y) + (w * w));
+}
+
 Vector2D Vector2D::normalize() const
 {
-   float L = length();
+   float L = magnitude();
    return Vector2D((x / L), (y / L), (w / L));
 }
 

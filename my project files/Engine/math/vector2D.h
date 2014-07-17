@@ -44,7 +44,8 @@ namespace Math
       }
 
       // calculate the magnitude of this vector
-      inline float length() const;
+      inline float magnitude() const;
+      inline float magnitude_squared() const;
 
       // construct a unit vector out of 
       inline Vector2D normalize() const;
