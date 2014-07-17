@@ -60,6 +60,54 @@ TEST(Vector2D, Normalization)
 }
 
 
+
+void projection_test(
+   const Vector2D& source, 
+   const Vector2D& target)
+{
+   // the "normalized" projection approach, which we know works
+   Vector2D target_normalized = target.normalize();
+   Vector2D old_result = source.dot(target_normalized) * target_normalized;
+
+   // the "no normalization" approach, which we are testing
+   Vector2D new_result = source.project_onto(target);
+
+   EXPECT_FLOAT_EQ(old_result.x, new_result.x);
+   EXPECT_FLOAT_EQ(old_result.y, new_result.y);
+   EXPECT_FLOAT_EQ(old_result.w, new_result.w);
+}
+
+TEST(Vector2D, Project_Onto)
+{
+   // simple case first
+   Vector2D source(2, 4);
+   Vector2D target(1, 0);
+   Vector2D result = source.project_onto(target);
+   EXPECT_FLOAT_EQ(2.0f, result.x);
+   EXPECT_FLOAT_EQ(0.0f, result.y);
+   EXPECT_FLOAT_EQ(0.0f, result.w);
+
+   // more involved results
+   // Note: It's okay that we're using the third value.  The math will be the
+   // same as with only using x and y.
+   Vector2D test_vectors[] = 
+   {
+      Vector2D(1.0f, 2.0f, 3.0f),
+      Vector2D(4.8f, 9.3f, 2.6f),
+      Vector2D(-0.2f, -5.9f, -2.3f),
+      Vector2D(0.0f, -1.0f, 0.0f),
+      Vector2D(-2.4f, +5.1f, -7.5f),
+   };
+   const int NUM_TEST_VECTORS = sizeof(test_vectors) / sizeof(*test_vectors);
+
+   for (int index = 0; index < (NUM_TEST_VECTORS - 1); index++)
+   {
+      projection_test(test_vectors[index], test_vectors[index + 1]);
+      projection_test(test_vectors[index + 1], test_vectors[index]);
+   }
+}
+
+
 TEST(Vector2D, Vector_Addition)
 {
    Vector2D v1(1, 2, 0);
@@ -199,6 +247,8 @@ TEST(Vector2D, Dot_Product)
    float result = first.dot(second);
    EXPECT_FLOAT_EQ(32, result);
 }
+
+
 
 
 #endif
