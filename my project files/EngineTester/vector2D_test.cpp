@@ -258,6 +258,25 @@ TEST(Vector2D, Perpendicularity)
 }
 
 
+TEST(Vector2D, LERP)
+{
+   Vector2D source(1.2f, 3.4f, 5.6f);
+   Vector2D target(7.8f, 9.0f, 14.8f);
+   Vector2D diff = target - source;
+
+   float alpha = 0.0f;
+   while (alpha <= 1.0f)
+   {
+      Vector2D lerp_result_1 = lerp(source, target, alpha);
+      Vector2D lerp_result_2 = source + (alpha * diff);
+
+      EXPECT_FLOAT_EQ(lerp_result_1.x, lerp_result_2.x);
+      EXPECT_FLOAT_EQ(lerp_result_1.y, lerp_result_2.y);
+      EXPECT_FLOAT_EQ(lerp_result_1.w, lerp_result_2.w);
+
+      alpha += 0.01f;
+   }
+}
 
 
 #endif
