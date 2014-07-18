@@ -19,7 +19,8 @@ float Vector2D::magnitude_squared() const
 {
    // this function is useful as a computationally cheap way of comparing the
    // magnitudes of two vectors to see which is greater
-   return this->dot(*this);
+   float f = this->dot(*this);
+   return f;
 }
 
 float Vector2D::dot(const Vector2D v) const
@@ -37,7 +38,7 @@ Vector2D Vector2D::normalize() const
 
 Vector2D Vector2D::project_onto(const Vector2D& target) const
 {
-   return target * ((this->dot(target)) / target.magnitude_squared());
+   return (this->dot(target) / target.magnitude_squared()) * target;
 }
 
 Vector2D Vector2D::get_cw_perpendicular_vector() const

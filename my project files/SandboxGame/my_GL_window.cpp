@@ -236,8 +236,6 @@ bool my_GL_window::initialize()
    g_profiler.add_category("Ship Vertex Transformation");
    g_profiler.add_category("Ship Drawing");
    g_profiler.add_category("Border Drawing");
-   g_profiler.add_category("Projection With Normalization");
-   g_profiler.add_category("Projection Without Normalization");
    g_profiler.new_frame();
 
    m_ok_to_draw = false;
@@ -248,50 +246,19 @@ bool my_GL_window::initialize()
 
 void my_GL_window::handle_borders()
 {
-   // get the vector for the top left wall
-
-
    for (int index = 0; index < g_NUM_BORDER_VERTS; index++)
    {
-
       const Vector2D& first = g_border_verts[index];
       const Vector2D& second = g_border_verts[(index + 1) % g_NUM_BORDER_VERTS];
       Vector2D border = second - first;
       Vector2D respective_ship_position = g_ship_position - first;
 
-      g_clock.stopwatch_start();
-      for (int count = 0; count < 10000; count++)
+      Vector2D border_normal = border.get_ccw_perpendicular_vector();
+      float dot_result = border_normal.dot(respective_ship_position);
+      if (dot_result < 0)
       {
-         Vector2D normalized_border_normal = border.get_ccw_perpendicular_vector().normalize();
-         float dot_result = normalized_border_normal.dot(respective_ship_position);
-         if (dot_result < 0)
-         {
-            Vector2D dud_ship_velocity = (-2) * g_ship_velocity.dot(normalized_border_normal) * normalized_border_normal;
-         }
+         g_ship_velocity += (-2) * g_ship_velocity.project_onto(border_normal);
       }
-      float delta_time = g_clock.stopwatch_stop_and_return_delta_time();
-      g_profiler.add_category_time_log("Projection With Normalization", delta_time);
-
-      g_clock.stopwatch_start();
-      for (int count = 0; count < 10000; count++)
-      {
-         Vector2D border_normal = border.get_ccw_perpendicular_vector();
-         float dot_result = border_normal.dot(respective_ship_position);
-         if (dot_result < 0)
-         {
-            Vector2D dud_ship_velocity = (-2) * g_ship_velocity.project_onto(border_normal);
-         }
-      }
-      delta_time = g_clock.stopwatch_stop_and_return_delta_time();
-      g_profiler.add_category_time_log("Projection Without Normalization", delta_time);
-
-      //float dot_result = normalized_border_normal.dot(respective_ship_position);
-      //if (dot_result < 0)
-      //{
-      //   g_ship_velocity +=
-      //      (-2) * g_ship_velocity.dot(normalized_border_normal) * normalized_border_normal;
-      //}
-
    }
 }
 
