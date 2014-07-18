@@ -13,6 +13,7 @@ public:
    bool shutdown();
    bool initialize();
    void handle_borders();
+   void lerp_the_lerper();
    void update_velocity(float delta_time);
    void rotate_ship(float delta_time);
 

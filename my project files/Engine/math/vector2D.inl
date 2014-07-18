@@ -111,9 +111,9 @@ Vector2D operator*(const Vector2D& vector, float scalar)
       vector.w * scalar);
 }
 
-Vector2D lerp(const Vector2D& source, const Vector2D& target, float alpha)
+Vector2D lerp(const Vector2D& source, const Vector2D& dest, float alpha)
 {
-   return (1.0f - alpha) * source + (alpha * target);
+   return (1.0f - alpha) * source + (alpha * dest);
 }
 
 

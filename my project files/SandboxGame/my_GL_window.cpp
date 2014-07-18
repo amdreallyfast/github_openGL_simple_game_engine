@@ -52,13 +52,23 @@ namespace
    Vector2D g_border_verts[] = 
    {
       // build a diamond shape
-      Vector2D(+0.0f, +1.0f, 1.0f),    // center of top
-      Vector2D(-1.0f, -0.0f, 1.0f),    // center of left
-      Vector2D(+0.0f, -1.0f, 1.0f),    // center of bottom
-      Vector2D(+1.0f, +0.0f, 1.0f),    // center of right
+      Vector2D(+0.0f, +1.0f),    // center of top
+      Vector2D(-1.0f, -0.0f),    // center of left
+      Vector2D(+0.0f, -1.0f),    // center of bottom
+      Vector2D(+1.0f, +0.0f),    // center of right
    };
    const unsigned int g_NUM_BORDER_VERTS = sizeof(g_border_verts) / sizeof(*g_border_verts);
    GLuint g_border_vertex_buffer_ID;
+
+   Vector2D g_lerp_verts[] =
+   {
+      Vector2D(+0.5f, +0.5f),
+      Vector2D(-0.5f, +0.5f),
+      Vector2D(-0.5f, -0.5f),
+      Vector2D(+0.5f, -0.5f),
+   };
+   const unsigned int g_NUM_LERP_POINTS = sizeof(g_lerp_verts) / sizeof(*g_lerp_verts);
+
 
    Clock g_clock;
 
@@ -203,6 +213,8 @@ void my_GL_window::timer_update()
    // reverse of arrest the velocity
    handle_borders();
 
+   lerp_the_lerper();
+
    m_ok_to_draw = true;
    this->repaint();
 }
@@ -260,6 +272,27 @@ void my_GL_window::handle_borders()
          g_ship_velocity += (-2) * g_ship_velocity.project_onto(border_normal);
       }
    }
+}
+
+
+void my_GL_window::lerp_the_lerper()
+{
+   static int source_lerp_index = 0;
+   static int dest_lerp_index = 1;
+   static float alpha = 0;
+
+   alpha += g_clock.time_elapsed_last_frame();
+   if (alpha >= 1.0f)
+   {
+      alpha = 0.0f;
+      source_lerp_index = dest_lerp_index;
+      dest_lerp_index = (dest_lerp_index + 1) % g_NUM_LERP_POINTS;
+   }
+
+   const Vector2D& source = g_lerp_verts[source_lerp_index];
+   const Vector2D& dest = g_lerp_verts[dest_lerp_index];
+   Vector2D current_lerp_position = lerp(source, dest, alpha);
+   g_ship_position = current_lerp_position;
 }
 
 

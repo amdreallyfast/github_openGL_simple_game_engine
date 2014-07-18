@@ -84,7 +84,7 @@ namespace Math
    inline Vector2D operator*(float scalar, const Vector2D& vector);
    inline Vector2D operator*(const Vector2D& vector, float scalar);
 
-   inline Vector2D lerp(const Vector2D& source, const Vector2D& target, float alpha);
+   inline Vector2D lerp(const Vector2D& source, const Vector2D& dest, float alpha);
 
    // now include the definitions
 #include "Vector2D.inl"
