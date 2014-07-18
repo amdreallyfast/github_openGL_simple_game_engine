@@ -6,6 +6,8 @@
 #include <math/Vector2D.h>
 using Math::Vector2D;
 
+#include "math\constants.h"
+
 #ifdef RUN_VECTOR2D_TESTS
 
 TEST(Vector2D, Constructor)
@@ -42,6 +44,24 @@ TEST(Vector2D, Magnitude_Squared)
    float mag_sq = v.magnitude_squared();
 
    EXPECT_FLOAT_EQ(50, mag_sq);
+}
+
+
+TEST(Vector2D, Dot_Product)
+{
+   Vector2D first(1, 2, 3);
+   Vector2D second(4, 5, 6);
+
+   // Note: Resultes were computed by hand
+   float result = first.dot(second);
+   EXPECT_FLOAT_EQ(32, result);
+
+   // check that the dot product of two normalized vectors from the unit
+   // circle is the cosine of the angle between them
+   Vector2D a(0.5f, Math::SQRT_3 / 2.0f);
+   Vector2D b(Math::SQRT_3 / 2.0f, 0.5f);
+   result = a.dot(b);
+   EXPECT_FLOAT_EQ(cos(Math::PI / 6.0f), result);
 }
 
 
@@ -235,17 +255,6 @@ TEST(Vector2D, Perpendicularity)
    result = v.get_ccw_perpendicular_vector();
    EXPECT_FLOAT_EQ(result.x, -2);
    EXPECT_FLOAT_EQ(result.y, 4);
-}
-
-
-TEST(Vector2D, Dot_Product)
-{
-   Vector2D first(1, 2, 3);
-   Vector2D second(4, 5, 6);
-
-   // Note: Resultes were computed by hand
-   float result = first.dot(second);
-   EXPECT_FLOAT_EQ(32, result);
 }
 
 
