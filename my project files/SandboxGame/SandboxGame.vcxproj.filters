@@ -24,9 +24,15 @@
     <ClCompile Include="my_GL_window_moc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="My_Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="my_GL_window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="My_Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

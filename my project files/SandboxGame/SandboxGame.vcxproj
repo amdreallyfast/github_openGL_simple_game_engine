@@ -82,10 +82,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="My_Game.cpp" />
     <ClCompile Include="my_GL_window.cpp" />
     <ClCompile Include="my_GL_window_moc.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="My_Game.h" />
     <ClInclude Include="my_GL_window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

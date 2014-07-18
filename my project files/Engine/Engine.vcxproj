@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DebugTools\Profiling\Profiler.cpp" />
+    <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="timing\clock.cpp" />
     <ClCompile Include="junk_to_make_compiler_happy.cpp" />
   </ItemGroup>
@@ -19,7 +20,11 @@
     <ClInclude Include="DebugTools\Profiling\Profiler.h" />
     <ClInclude Include="math\Constants.h" />
     <ClInclude Include="math\Matrix2D.h" />
+    <ClInclude Include="Misc\Typedefs.h" />
     <ClInclude Include="math\Vector2D.h" />
+    <ClInclude Include="Renderer\Renderer.h" />
+    <ClInclude Include="Renderer\Geometry.h" />
+    <ClInclude Include="Renderer\Renderable.h" />
     <ClInclude Include="timing\clock.h" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +75,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>PROFILER_ON;WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
