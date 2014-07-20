@@ -213,7 +213,7 @@ void my_GL_window::timer_update()
    // reverse of arrest the velocity
    handle_borders();
 
-   lerp_the_lerper();
+   //lerp_the_lerper();
 
    m_ok_to_draw = true;
    this->repaint();
