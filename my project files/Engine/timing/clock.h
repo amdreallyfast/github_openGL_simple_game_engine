@@ -13,6 +13,10 @@ namespace Timing
    // the "__declspec(dllexport)" is Microsoft's way of modifying the class
    // declaration so that it will be exported into a library that is external to
    // this dll project
+   // Note: The specifier is only required if there is at least one 
+   // non-constructor function that is not "inline".  The Vector and Matrix
+   // classes are all inline (except the constructor), so it doesn't need the
+   // "__declspec(dllexport)" specifier.  Confirmed by experiement.
    class __declspec(dllexport) Clock
    {
    public:

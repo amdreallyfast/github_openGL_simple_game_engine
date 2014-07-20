@@ -83,6 +83,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="My_Game.cpp" />
+    <ClCompile Include="My_Game_moc.cpp" />
     <ClCompile Include="my_GL_window.cpp" />
     <ClCompile Include="my_GL_window_moc.cpp" />
   </ItemGroup>
