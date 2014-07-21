@@ -12,12 +12,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DebugTools\Profiling\Profiler.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Rendering\Renderer.cpp" />
     <ClCompile Include="timing\clock.cpp" />
     <ClCompile Include="junk_to_make_compiler_happy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DebugTools\Profiling\Profiler.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="math\Constants.h" />
     <ClInclude Include="math\Matrix2D.h" />
     <ClInclude Include="Misc\Typedefs.h" />
