@@ -46,7 +46,8 @@ bool My_Game::initialize()
       m_ship_indices, m_NUM_SHIP_INDICES);
 
    m_ship_instance = m_renderer.add_renderable(ship_geometry);
-   //m_lerp_instance = m_renderer.add_renderable(ship_geometry);
+
+   m_ship.add_component()
 
    return true;
 }

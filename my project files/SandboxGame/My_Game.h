@@ -16,6 +16,8 @@ namespace Rendering { class Renderable; }
 // need the vector class so the compiler can know how big the vector is
 #include "Math\Vector2D.h"
 
+// need a "ship" entity
+#include "Entities\Entity.h"
 
 class My_Game : public QObject
 {
@@ -43,10 +45,10 @@ private:
    Rendering::Renderable* m_ship_instance;
    Rendering::Renderable* m_lerp_instance;
 
+   Entities::Entity m_ship;
    static const uint m_NUM_SHIP_VERTS = 3;
-   Math::Vector2D m_ship_verts[m_NUM_SHIP_VERTS];
-
    static const uint m_NUM_SHIP_INDICES = 3;
+   Math::Vector2D m_ship_verts[m_NUM_SHIP_VERTS];
    ushort m_ship_indices[m_NUM_SHIP_INDICES];
 
 private slots:
