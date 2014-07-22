@@ -47,6 +47,9 @@ bool My_Game::initialize()
 
    m_ship_renderable = m_renderer.add_renderable(ship_geometry);
    m_ship_renderer.set_data(m_ship_renderable);
+
+   // must initialize before adding the renderer component
+   m_ship.initialize();
    m_ship.add_component(&m_ship_renderer);
 
    return true;
