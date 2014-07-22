@@ -11,7 +11,11 @@ namespace Entities
    class __declspec(dllexport) Entity
    {
    public:
-      // creates Entity startup condition
+      // for initializing non-static-const members values
+      Entity();
+
+      // initalizes all components, or resets them if it is called sometime 
+      // after it has already been called
       bool initialize();
 
       // for consistency, we also require a shutdown

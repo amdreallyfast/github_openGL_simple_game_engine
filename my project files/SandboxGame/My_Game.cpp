@@ -44,13 +44,14 @@ bool My_Game::initialize()
    Geometry* ship_geometry = m_renderer.add_geometry(
       m_ship_verts, m_NUM_SHIP_VERTS,
       m_ship_indices, m_NUM_SHIP_INDICES);
-
    m_ship_renderable = m_renderer.add_renderable(ship_geometry);
    m_ship_renderer.set_data(m_ship_renderable);
 
-   // must initialize before adding the renderer component
-   m_ship.initialize();
+   // must initialize before adding the components
+   if (!m_ship.initialize()) { return false; }
    m_ship.add_component(&m_ship_renderer);
+   m_ship_physics.velocity.x = 0.01f;
+   m_ship.add_component(&m_ship_physics);
 
    return true;
 }

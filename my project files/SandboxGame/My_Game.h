@@ -16,11 +16,10 @@ namespace Rendering { class Renderable; }
 // need the vector class so the compiler can know how big the vector is
 #include "Math\Vector2D.h"
 
-// need a "ship" entity
+// for the "ship" entity and its various parts
 #include "Entities\Entity.h"
-
-// need a rendering component
 #include "Entities\Components\Renderer_Component.h"
+#include "Entities\Components\Physics_Components.h"
 
 
 class My_Game : public QObject
@@ -48,6 +47,7 @@ private:
    // keep the entities together for cache coherency
    Entities::Entity m_ship;
    Entities::Renderer_Component m_ship_renderer;
+   Entities::Physics_Components m_ship_physics;
 
 
    Rendering::Renderer m_renderer;

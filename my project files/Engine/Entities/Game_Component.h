@@ -12,6 +12,9 @@ namespace Entities
    class __declspec(dllexport) Game_Component
    {
    public:
+      virtual bool initialize() { return true; }
+      virtual bool shutdown() { return true; }
+
       // a pure virtual function that does nothing unless a derived class 
       // defines it
       virtual void update() {}

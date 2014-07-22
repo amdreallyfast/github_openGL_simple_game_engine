@@ -11,9 +11,20 @@
 
 namespace Entities
 {
-   bool Entity::initialize()
+   Entity::Entity()
    {
       m_num_current_components = 0;
+   }
+
+   bool Entity::initialize()
+   {
+      for (uint index = 0; index < m_num_current_components; index++)
+      {
+         if (!m_components[index]->initialize())
+         {
+            return false;
+         }
+      }
 
       return true;
    }
