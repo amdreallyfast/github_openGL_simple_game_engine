@@ -45,9 +45,9 @@ bool My_Game::initialize()
       m_ship_verts, m_NUM_SHIP_VERTS,
       m_ship_indices, m_NUM_SHIP_INDICES);
 
-   m_ship_instance = m_renderer.add_renderable(ship_geometry);
-
-   m_ship.add_component()
+   m_ship_renderable = m_renderer.add_renderable(ship_geometry);
+   m_ship_renderer.set_data(m_ship_renderable);
+   m_ship.add_component(&m_ship_renderer);
 
    return true;
 }
@@ -66,6 +66,7 @@ void My_Game::go()
 
 void My_Game::timer_update()
 {
+   m_ship.update();
    m_renderer.render_scene();
 }
 

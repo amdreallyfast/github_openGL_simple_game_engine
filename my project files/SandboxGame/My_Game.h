@@ -19,6 +19,10 @@ namespace Rendering { class Renderable; }
 // need a "ship" entity
 #include "Entities\Entity.h"
 
+// need a rendering component
+#include "Entities\Components\Renderer_Component.h"
+
+
 class My_Game : public QObject
 {
    // necessary declaration for the creation of a SLOT
@@ -41,11 +45,15 @@ public:
 private:
    QTimer m_qt_timer;
 
+   // keep the entities together for cache coherency
+   Entities::Entity m_ship;
+   Entities::Renderer_Component m_ship_renderer;
+
+
    Rendering::Renderer m_renderer;
-   Rendering::Renderable* m_ship_instance;
+   Rendering::Renderable* m_ship_renderable;
    Rendering::Renderable* m_lerp_instance;
 
-   Entities::Entity m_ship;
    static const uint m_NUM_SHIP_VERTS = 3;
    static const uint m_NUM_SHIP_INDICES = 3;
    Math::Vector2D m_ship_verts[m_NUM_SHIP_VERTS];

@@ -13,6 +13,7 @@ namespace Rendering
    class Renderable
    {
    public:
+      // the Renderer_Component class will need to update this on every frame
       Math::Matrix2D where;
 
    private:

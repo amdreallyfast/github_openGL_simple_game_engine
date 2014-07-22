@@ -21,7 +21,7 @@ Matrix2D Matrix2D::rotate(float angle_in_radians)
 }
 
 
-Matrix2D Matrix2D::translate(float x_delta, float y_delta)
+Matrix2D Matrix2D::translate(float new_x, float new_y)
 {
    // resulting matrix will look like this:
    //    | 1  0  x_delta |
@@ -31,8 +31,14 @@ Matrix2D Matrix2D::translate(float x_delta, float y_delta)
    // only fill in as much of the constructor as you need, then leave the 
    // rest default
    return Matrix2D(
-      1.0f, 0.0f, x_delta,
-      0.0f, 1.0f, y_delta);
+      1.0f, 0.0f, new_x,
+      0.0f, 1.0f, new_y);
+}
+
+Matrix2D Matrix2D::translate(const Vector2D& new_position)
+{
+   // chain into another inline
+   return translate(new_position.x, new_position.y);
 }
 
 

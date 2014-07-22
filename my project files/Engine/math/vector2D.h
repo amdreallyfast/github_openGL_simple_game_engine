@@ -5,7 +5,8 @@
 
 namespace Math
 {
-   struct Vector2D
+   // export this to dll because it is a member of the Entity class
+   struct __declspec(dllexport) Vector2D
    {
       // the X value
       float x;
