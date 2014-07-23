@@ -22,25 +22,29 @@ namespace Entities
 
    void Controller_Component::update()
    {
-      const float ANGULAR_ACCELERATION = 0.1f;
-      const float LINEAR_ACCELERATION = 0.2f;
+      const float ANGULAR_ACCELERATION = 0.05f;
+      const float LINEAR_ACCELERATION = 0.05f;
 
-      if (Key_Input::get_instance().actions_are_hot(Key_Action_Enums::ACCELERATE))
+      if (Key_Input::get_instance().actions_are_hot(Key_Action_Enums::ROTATE_RIGHT))
       {
-         m_easy_physics_ptr->angular_acceleration = ANGULAR_ACCELERATION;
+         m_easy_physics_ptr->angular_acceleration = -ANGULAR_ACCELERATION;
       }
       else if (Key_Input::get_instance().actions_are_hot(Key_Action_Enums::ROTATE_LEFT))
       {
-         m_easy_physics_ptr->angular_acceleration = -ANGULAR_ACCELERATION;
+         m_easy_physics_ptr->angular_acceleration = +ANGULAR_ACCELERATION;
       }
       else
       {
          m_easy_physics_ptr->angular_acceleration = 0;
       }
 
-      if (Key_Input::get_instance().actions_are_hot(Key_Action_Enums::ROTATE_RIGHT))
+      if (Key_Input::get_instance().actions_are_hot(Key_Action_Enums::ACCELERATE))
       {
          m_easy_physics_ptr->linear_acceleration = LINEAR_ACCELERATION;
+      }
+      else
+      {
+         m_easy_physics_ptr->linear_acceleration = 0;
       }
    }
 }

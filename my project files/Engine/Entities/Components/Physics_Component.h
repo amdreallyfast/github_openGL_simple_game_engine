@@ -19,7 +19,7 @@ namespace Entities
 
    private:
       // need to track velocity because acceleration is additive to velocity
-      float m_linear_velocity;
+      Math::Vector2D m_linear_velocity;
       float m_angular_velocity;
    };
 }

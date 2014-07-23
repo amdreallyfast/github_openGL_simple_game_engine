@@ -15,8 +15,6 @@ namespace Entities
    {
       linear_acceleration = 0;
       angular_acceleration = 0;
-
-      m_linear_velocity = 0;
       m_angular_velocity = 0;
 
       return true;
@@ -26,7 +24,7 @@ namespace Entities
    {
       // grab delta time from the clock to modify velocities
       
-      const float SHADY_MAGIC_DELTA_T = 0.03f;
+      const float SHADY_MAGIC_DELTA_T = 0.05f;
 
       // rotate the entity first
       m_angular_velocity += angular_acceleration * SHADY_MAGIC_DELTA_T;
@@ -37,7 +35,11 @@ namespace Entities
       Matrix2D rotation_mat = Matrix2D::rotate(m_containing_entity->orientation_radians);
       Vector2D direction_to_accel = rotation_mat * forward_for_my_ship;
 
-      m_linear_velocity = linear_acceleration * SHADY_MAGIC_DELTA_T;
-      m_containing_entity->position += direction_to_accel * (m_linear_velocity * SHADY_MAGIC_DELTA_T);
+      if (linear_acceleration > 0)
+      {
+         m_linear_velocity += direction_to_accel * (linear_acceleration * SHADY_MAGIC_DELTA_T);
+      }
+         
+      m_containing_entity->position += m_linear_velocity * SHADY_MAGIC_DELTA_T;
    }
 }
