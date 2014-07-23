@@ -55,11 +55,11 @@ bool My_Game::initialize()
    m_ship_renderable = m_renderer.add_renderable(ship_geometry);
    m_ship_renderer.set_data(m_ship_renderable);
 
-   // must initialize before adding the components
-   if (!m_ship.initialize()) { return false; }
+   // must add the components before initializing
    m_ship.add_component(&m_ship_renderer);
-   m_ship_physics.velocity.x = 0.01f;
    m_ship.add_component(&m_ship_physics);
+   m_ship.add_component(&m_ship_controller);
+   if (!m_ship.initialize()) { return false; }
 
    return true;
 }
@@ -84,7 +84,13 @@ void My_Game::go()
 
 void My_Game::timer_update()
 {
+   // update the controls
+   Key_Input::get_instance().update();
+
+   // update the entity components
    m_ship.update();
+
+   // render the scene with the new data
    m_renderer.render_scene();
 }
 

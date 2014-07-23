@@ -10,12 +10,14 @@ namespace Input
       // an empty constructor
    }
 
+
    Key_Input& Key_Input::get_instance()
    {
       static Key_Input instance;
       
       return instance;
    }
+
 
    bool Key_Input::initialize(I_Key_Mapper *key_mapper, int max_action_value)
    {
@@ -30,10 +32,12 @@ namespace Input
       return true;
    }
 
+
    bool Key_Input::shutdown()
    {
       return true;
    }
+
 
    void Key_Input::update()
    {
@@ -57,13 +61,7 @@ namespace Input
    }
 
 
-   int Key_Input::get_actions_this_frame() const
-   {
-      return m_actions_this_frame;
-   }
-
-
-   bool Key_Input::actions_hot_this_frame(int actions) const
+   bool Key_Input::actions_are_hot(int actions) const
    {
       // if not all the actions are hot this frame, then we return false, but
       // if all the actions and more keys are pressed at the same time, then we

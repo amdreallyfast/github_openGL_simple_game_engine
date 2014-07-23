@@ -11,9 +11,10 @@
 
 namespace Entities
 {
-   Entity::Entity()
+   Entity::Entity() :
+      m_num_current_components(0),
+      orientation_radians(0)
    {
-      m_num_current_components = 0;
    }
 
    bool Entity::initialize()
@@ -31,6 +32,14 @@ namespace Entities
 
    bool Entity::shutdown()
    {
+      for (uint index = 0; index < m_num_current_components; index++)
+      {
+         if (!m_components[index]->shutdown())
+         {
+            return false;
+         }
+      }
+
       return true;
    }
 

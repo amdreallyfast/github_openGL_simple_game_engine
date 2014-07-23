@@ -33,13 +33,13 @@
     <ClCompile Include="Entities\Components\Renderer_Component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entities\Components\Physics_Components.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Entities\Game_Component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Input\Key_Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Components\Physics_Component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,13 +80,13 @@
     <ClInclude Include="Entities\Components\Renderer_Component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entities\Components\Physics_Components.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Input\I_Key_Mapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Input\Key_Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Components\Physics_Component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

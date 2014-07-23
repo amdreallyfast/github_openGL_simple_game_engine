@@ -13,9 +13,14 @@ namespace Input
       bool initialize(I_Key_Mapper *key_mapper, int max_action_value);
       bool shutdown();
       void update();
-      
-      inline int get_actions_this_frame() const;
-      bool actions_hot_this_frame(int actions) const;
+
+      // define it here so that you don't have to make another .inl file
+      inline int get_actions_this_frame() const
+      {
+         return m_actions_this_frame;
+      }
+
+      bool actions_are_hot(int actions) const;
 
    private:
       Key_Input();

@@ -8,7 +8,7 @@ using Math::Vector2D;
 
 #include "math\constants.h"
 
-#ifdef RUN_VECTOR2D_TESTS
+#ifdef RUN_Vector2D_TESTS
 
 TEST(Vector2D, Constructor)
 {
