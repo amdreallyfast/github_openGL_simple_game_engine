@@ -81,6 +81,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Controller_Component.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="My_Game.cpp" />
     <ClCompile Include="My_Game_moc.cpp" />
@@ -89,6 +90,7 @@
     <ClCompile Include="Key_Mapper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Controller_Component.h" />
     <ClInclude Include="Key_Action_Enums.h" />
     <ClInclude Include="My_Game.h" />
     <ClInclude Include="my_GL_window.h" />

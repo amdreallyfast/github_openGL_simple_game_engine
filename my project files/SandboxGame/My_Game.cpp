@@ -9,9 +9,17 @@ using Rendering::Renderer;
 #include "Rendering\Geometry.h"
 using Rendering::Geometry;
 
+#include <Input\Key_Input.h>
+using Input::Key_Input;
+
+#include <Key_Mapper.h>
+using Input::Key_Mapper;
+#include <Key_Action_Enums.h>
+
 #include "Math\Vector2D.h"
 using Math::Vector2D;
 
+// for memcpy(...)
 #include <cstdlib>
 
 My_Game::My_Game()
@@ -33,10 +41,10 @@ My_Game::My_Game()
 
 bool My_Game::initialize()
 {
-   if (!m_renderer.initialize())
-   {
-      return false;
-   }
+   if (!m_renderer.initialize()) 
+   { return false; }
+   if (!Key_Input::get_instance().initialize(&m_key_mapper, Input::Key_Action_Enums::MAX)) 
+   { return false; }
 
    // hook up the timer to the "timer update" event
    connect(&m_qt_timer, SIGNAL(timeout()), this, SLOT(timer_update()));
@@ -58,7 +66,13 @@ bool My_Game::initialize()
 
 bool My_Game::shutdown()
 {
-   return m_renderer.shutdown();
+   bool good = true;
+
+   good &= m_ship.shutdown();
+   good &= Key_Input::get_instance().shutdown();
+   good &= m_renderer.shutdown();
+
+   return good;
 }
 
 void My_Game::go()

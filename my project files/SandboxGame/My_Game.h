@@ -21,6 +21,9 @@ namespace Rendering { class Renderable; }
 #include "Entities\Components\Renderer_Component.h"
 #include "Entities\Components\Physics_Components.h"
 
+// for control
+#include <Key_Mapper.h>
+
 
 class My_Game : public QObject
 {
@@ -49,6 +52,7 @@ private:
    Entities::Renderer_Component m_ship_renderer;
    Entities::Physics_Components m_ship_physics;
 
+   Input::Key_Mapper m_key_mapper;
 
    Rendering::Renderer m_renderer;
    Rendering::Renderable* m_ship_renderable;

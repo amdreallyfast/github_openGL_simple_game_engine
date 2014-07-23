@@ -5,6 +5,18 @@
 
 namespace Input
 {
+   Key_Input::Key_Input()
+   {
+      // an empty constructor
+   }
+
+   Key_Input& Key_Input::get_instance()
+   {
+      static Key_Input instance;
+      
+      return instance;
+   }
+
    bool Key_Input::initialize(I_Key_Mapper *key_mapper, int max_action_value)
    {
       if (0 == key_mapper)
