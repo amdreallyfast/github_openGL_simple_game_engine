@@ -30,13 +30,13 @@
     <ClCompile Include="Entities\Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entities\Game_Component.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Entities\Components\Renderer_Component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entities\Components\Physics_Components.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Game_Component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

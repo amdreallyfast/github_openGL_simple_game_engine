@@ -1,5 +1,5 @@
-#ifndef MY_GAME_H
-#define MY_GAME_H
+#ifndef SANDBOX_GAME_MY_GAME_H
+#define SANDBOX_GAME_MY_GAME_H
 
 // for the QObject macro
 #include <QtCore\QObject>
