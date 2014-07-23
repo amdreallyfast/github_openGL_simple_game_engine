@@ -9,7 +9,21 @@ namespace Timing
    // official clock of the game (as opposed to the profiler)
    class Game_Clock
    {
+   public:
+      static Game_Clock& get_instance();
 
+      bool initialize();
+      bool shutdown();
+
+      void new_frame();
+      float delta_time_last_frame() const;
+
+   private:
+      Game_Clock();
+      Game_Clock(const Game_Clock&);
+      Game_Clock& operator=(const Game_Clock&);
+
+      Clock m_clock;
    };
 }
 

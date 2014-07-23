@@ -30,7 +30,7 @@ TEST(Clock, Frame_Time_Measuring)
    // the fraction of the second that pased is ~1
    QTest::qSleep(1000);
    clock.new_frame();
-   float timed_time = clock.time_elapsed_last_frame();
+   float timed_time = clock.delta_time_last_frame();
    EXPECT_TRUE(0.9f < timed_time);
    EXPECT_TRUE(timed_time < 1.1f);
    
@@ -38,7 +38,7 @@ TEST(Clock, Frame_Time_Measuring)
    clock.new_frame();
    QTest::qSleep(500);
    clock.new_frame();
-   timed_time = clock.time_elapsed_last_frame();
+   timed_time = clock.delta_time_last_frame();
    EXPECT_TRUE(0.4f < timed_time);
    EXPECT_TRUE(timed_time < 0.6f);
 
@@ -61,7 +61,7 @@ TEST(Clock, Frame_Time_Measuring)
       clock.new_frame();
       QTest::qSleep(this_test_milliseconds);
       clock.new_frame();
-      float elapsed_seconds = clock.time_elapsed_last_frame();
+      float elapsed_seconds = clock.delta_time_last_frame();
       EXPECT_TRUE((this_test_seconds - THRESHOLD) < elapsed_seconds);
       EXPECT_TRUE((this_test_seconds + THRESHOLD) > elapsed_seconds);
    }
@@ -110,7 +110,7 @@ TEST(Clock, Frame_Time_and_Stopwatch_Together)
 
    // finally check the elpased frame time
    clock.new_frame();
-   float frame_time = clock.time_elapsed_last_frame();
+   float frame_time = clock.delta_time_last_frame();
    EXPECT_TRUE(1.4f < frame_time);
    EXPECT_TRUE(frame_time < 1.6f);
 }

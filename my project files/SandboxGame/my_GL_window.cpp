@@ -204,7 +204,7 @@ void my_GL_window::timer_update()
    // do pre-render calculations
    
    // update ship status
-   float delta_time_fractional_second = g_clock.time_elapsed_last_frame();
+   float delta_time_fractional_second = g_clock.delta_time_last_frame();
    rotate_ship(delta_time_fractional_second);
    update_velocity(delta_time_fractional_second);
    g_ship_position += (g_ship_velocity * delta_time_fractional_second);
@@ -281,7 +281,7 @@ void my_GL_window::lerp_the_lerper()
    static int dest_lerp_index = 1;
    static float alpha = 0;
 
-   alpha += g_clock.time_elapsed_last_frame();
+   alpha += g_clock.delta_time_last_frame();
    if (alpha >= 1.0f)
    {
       alpha = 0.0f;

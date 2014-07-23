@@ -41,7 +41,7 @@ namespace Timing
       m_last_frame_time_counter.QuadPart = now.QuadPart;
    }
 
-   float Clock::time_elapsed_last_frame() const
+   float Clock::delta_time_last_frame() const
    {
       return m_delta_time;
    }

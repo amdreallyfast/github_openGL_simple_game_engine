@@ -35,7 +35,6 @@ namespace Entities
       Matrix2D rotation_mat = Matrix2D::rotate(m_containing_entity->orientation_radians);
       Vector2D direction_to_accel = rotation_mat * forward_for_my_ship;
 
-y
       if (linear_acceleration > 0)
       {
          m_linear_velocity += direction_to_accel * (linear_acceleration * SHADY_MAGIC_DELTA_T);

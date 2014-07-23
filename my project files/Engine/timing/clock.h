@@ -23,14 +23,10 @@ namespace Timing
       bool initialize();
       bool shutdown();
 
-      void new_frame();
-
-      // elapsed time is in seconds
-      float time_elapsed_last_frame() const;
-
-      void stopwatch_start();
-
       // delta time is in seconds
+      void new_frame();
+      float delta_time_last_frame() const;
+      void stopwatch_start();
       float stopwatch_stop_and_return_delta_time() const;
 
    private:
