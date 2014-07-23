@@ -7,7 +7,6 @@ namespace Input
    class I_Key_Mapper
    {
    public:
-      virtual int get_action_for(int key) const = 0;
       virtual int get_key_for(int action) const = 0;
    };
 }

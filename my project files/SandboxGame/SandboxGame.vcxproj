@@ -53,7 +53,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>PROFILER_ON;WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;PROFILER_ON;WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\Qt\4.8.5\include;C:\open_gl_stuff;$(ProjectDir);$(ProjectDir)\..\Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -86,13 +86,13 @@
     <ClCompile Include="My_Game_moc.cpp" />
     <ClCompile Include="my_GL_window.cpp" />
     <ClCompile Include="my_GL_window_moc.cpp" />
-    <ClCompile Include="My_Key_Mapper.cpp" />
+    <ClCompile Include="Key_Mapper.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="My_Menu_Choice.h" />
+    <ClInclude Include="Key_Action_Enums.h" />
     <ClInclude Include="My_Game.h" />
     <ClInclude Include="my_GL_window.h" />
-    <ClInclude Include="My_Key_Mapper.h" />
+    <ClInclude Include="Key_Mapper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

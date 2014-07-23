@@ -30,7 +30,7 @@
     <ClCompile Include="My_Game_moc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="My_Key_Mapper.cpp">
+    <ClCompile Include="Key_Mapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,10 +41,10 @@
     <ClInclude Include="My_Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="My_Key_Mapper.h">
+    <ClInclude Include="Key_Action_Enums.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="My_Menu_Choice.h">
+    <ClInclude Include="Key_Mapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
