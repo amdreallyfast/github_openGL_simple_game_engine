@@ -80,6 +80,9 @@
     <ClInclude Include="Entities\Components\Physics_Components.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Input\I_Key_Mapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="math\Matrix2D.inl">
