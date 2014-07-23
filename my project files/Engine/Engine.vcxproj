@@ -20,6 +20,7 @@
     <ClCompile Include="Rendering\Renderer.cpp" />
     <ClCompile Include="timing\clock.cpp" />
     <ClCompile Include="junk_to_make_compiler_happy.cpp" />
+    <ClCompile Include="Timing\Game_Clock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DebugTools\Profiling\Profiler.h" />
@@ -37,6 +38,7 @@
     <ClInclude Include="Rendering\Geometry.h" />
     <ClInclude Include="Rendering\Renderable.h" />
     <ClInclude Include="timing\clock.h" />
+    <ClInclude Include="Timing\Game_Clock.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="math\Matrix2D.inl" />
