@@ -53,7 +53,10 @@ namespace Input
 
    bool Key_Input::actions_hot_this_frame(int actions) const
    {
-      return (0 != (m_actions_this_frame & actions));
+      // if not all the actions are hot this frame, then we return false, but
+      // if all the actions and more keys are pressed at the same time, then we
+      // return true (the & operation masks out excess)
+      return (actions == (m_actions_this_frame & actions));
    }
 
 }
