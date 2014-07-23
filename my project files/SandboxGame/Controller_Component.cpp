@@ -22,8 +22,8 @@ namespace Entities
 
    void Controller_Component::update()
    {
-      const float ANGULAR_ACCELERATION = 0.05f;
-      const float LINEAR_ACCELERATION = 0.05f;
+      const float ANGULAR_ACCELERATION = 0.5f;
+      const float LINEAR_ACCELERATION = 0.2f;
 
       if (Key_Input::get_instance().actions_are_hot(Key_Action_Enums::ROTATE_RIGHT))
       {

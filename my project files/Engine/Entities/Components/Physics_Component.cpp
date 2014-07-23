@@ -8,6 +8,9 @@ using Math::Matrix2D;
 #include <Math\Vector2D.h>
 using Math::Vector2D;
 
+// for the time part of acceleration and velocity calculations
+#include <Timing\Game_Clock.h>
+using Timing::Game_Clock;
 
 namespace Entities
 {
@@ -24,11 +27,11 @@ namespace Entities
    {
       // grab delta time from the clock to modify velocities
       
-      const float SHADY_MAGIC_DELTA_T = 0.05f;
+      float delta_time = Game_Clock::get_instance().delta_time_last_frame();
 
       // rotate the entity first
-      m_angular_velocity += angular_acceleration * SHADY_MAGIC_DELTA_T;
-      m_containing_entity->orientation_radians += m_angular_velocity * SHADY_MAGIC_DELTA_T;
+      m_angular_velocity += angular_acceleration * delta_time;
+      m_containing_entity->orientation_radians += m_angular_velocity * delta_time;
 
       // now move it in the new direction
       Vector2D forward_for_my_ship(0, 1);
@@ -37,9 +40,9 @@ namespace Entities
 
       if (linear_acceleration > 0)
       {
-         m_linear_velocity += direction_to_accel * (linear_acceleration * SHADY_MAGIC_DELTA_T);
+         m_linear_velocity += direction_to_accel * (linear_acceleration * delta_time);
       }
          
-      m_containing_entity->position += m_linear_velocity * SHADY_MAGIC_DELTA_T;
+      m_containing_entity->position += m_linear_velocity * delta_time;
    }
 }

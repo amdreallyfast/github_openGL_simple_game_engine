@@ -7,7 +7,7 @@ namespace Timing
 {
    // this is a wrapper for the generic engine clock, and it is the 
    // official clock of the game (as opposed to the profiler)
-   class Game_Clock
+   class __declspec(dllexport) Game_Clock
    {
    public:
       static Game_Clock& get_instance();
