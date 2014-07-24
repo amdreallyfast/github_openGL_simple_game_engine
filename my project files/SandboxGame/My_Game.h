@@ -33,9 +33,6 @@ class My_Game : public QObject
    Q_OBJECT
 
 public:
-   // for copying data into the My_Game object's memory
-   My_Game();
-
    // for setup
    bool initialize();
 
@@ -75,6 +72,8 @@ private slots:
    // rendered
    void timer_update();
 
+   // helps to clean up the initializeGL() function
+   bool initialize_ship();
 };
 
 

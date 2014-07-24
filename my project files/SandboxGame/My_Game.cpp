@@ -31,23 +31,6 @@ using Math::Vector2D;
 using Timing::Game_Clock;
 
 
-My_Game::My_Game()
-{
-   Vector2D local_ship_vert_data[] =
-   {
-      // as far as the compiler is concerned, these are adjacent pairs of floats
-      // in memory, so your vertex attribute and buffer data specifications are 
-      // the same as if you only entered float values here
-      Vector2D(+0.0f, +0.1f, 1.0f),
-      Vector2D(-0.1f, -0.1f, 1.0f),
-      Vector2D(+0.1f, -0.1f, 1.0f),
-   };
-   memcpy(m_ship_verts, local_ship_vert_data, sizeof(m_ship_verts));
-
-   ushort local_ship_index_data[] = { 0, 1, 2 };
-   memcpy(m_ship_indices, local_ship_index_data, sizeof(m_ship_indices));
-}
-
 bool My_Game::initialize()
 {
    if (!m_renderer.initialize()) 
@@ -56,41 +39,73 @@ bool My_Game::initialize()
    { return false; }
    if (!Game_Clock::get_instance().initialize())
    { return false; }
+   if (!initialize_ship()) 
+   { return false; }
 
    // hook up the timer to the "timer update" event
-   connect(&m_qt_timer, SIGNAL(timeout()), this, SLOT(timer_update()));
+   if (!connect(
+      &m_qt_timer, SIGNAL(timeout()), 
+      this, SLOT(timer_update())))
+   { return false; }
+
+
+   return true;
+}
+
+
+bool My_Game::initialize_ship()
+{
+   // make permanent copies of this stack data that will persist
+   // throughout the game
+   Vector2D local_ship_vert_data[] =
+   {
+      Vector2D(+0.0f, +0.1f, 1.0f),
+      Vector2D(-0.1f, -0.1f, 1.0f),
+      Vector2D(+0.1f, -0.1f, 1.0f),
+   };
+   memcpy(m_ship_verts, local_ship_vert_data, sizeof(m_ship_verts));
+
+   ushort local_ship_index_data[] = 
+   { 
+      0, 1, 2,
+   };
+   memcpy(m_ship_indices, local_ship_index_data, sizeof(m_ship_indices));
+
+
+   // add the components in the order that you want the simple update 
+   // array loop to update each individual one
+   m_ship.add_component(&m_ship_controller);
+   m_ship.add_component(&m_ship_physics);
 
    Geometry* ship_geometry = m_renderer.add_geometry(
       m_ship_verts, m_NUM_SHIP_VERTS,
       m_ship_indices, m_NUM_SHIP_INDICES);
    m_ship_renderable = m_renderer.add_renderable(ship_geometry);
    m_ship_renderer.set_data(m_ship_renderable);
-
-   // must add the components before initializing
-   // Note: I added them in this order so that the simple array
-   // loop that updates each one will update them in this order.
-   m_ship.add_component(&m_ship_controller);
-   m_ship.add_component(&m_ship_physics);
    m_ship.add_component(&m_ship_renderer);
-   if (!m_ship.initialize()) { return false; }
 
-   return true;
+   return m_ship.initialize();
 }
+
 
 bool My_Game::shutdown()
 {
    bool good = true;
 
-   // shut down the engine
-   good &= m_renderer.shutdown();
-   good &= Key_Input::get_instance().shutdown();
-   good &= Game_Clock::get_instance().shutdown();
+   // shut things down in the opposite order as initialization
 
-   // shot down entities and their components
+   // shut down entities and their components
    good &= m_ship.shutdown();
+
+   // shut down engine
+   good &= Game_Clock::get_instance().shutdown();
+   good &= Key_Input::get_instance().shutdown();
+   good &= m_renderer.shutdown();
+
 
    return good;
 }
+
 
 void My_Game::go()
 {
@@ -98,6 +113,7 @@ void My_Game::go()
    // Note: Argument values to the qt timer are in milliseconds.
    m_qt_timer.start(0);
 }
+
 
 void My_Game::timer_update()
 {
