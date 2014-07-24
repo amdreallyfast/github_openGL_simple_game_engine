@@ -21,6 +21,7 @@ namespace Rendering { class Renderable; }
 #include <Entities\Components\Renderer_Component.h>
 #include <Entities\Components\Physics_Component.h>
 #include "Controller_Component.h"
+#include <Entities\Components\Border_Handler_Component.h>
 
 // for control (the controller will check with the key mapper to find
 // out what to do next)
@@ -51,6 +52,7 @@ private:
    Entities::Renderer_Component m_ship_renderer;
    Entities::Physics_Component m_ship_physics;
    Entities::Controller_Component m_ship_controller;
+   Entities::Border_Handler_Component m_ship_border_handler;
 
    // an implementation of the I_Key_Mapper interface that is 
    // specific to this game

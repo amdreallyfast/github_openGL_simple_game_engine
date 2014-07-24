@@ -12,7 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DebugTools\Profiling\Profiler.cpp" />
-    <ClCompile Include="Entities\Components\Boundary_Handler_Component.cpp" />
+    <ClCompile Include="Entities\Components\Border_Handler_Component.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="Entities\Game_Component.cpp" />
     <ClCompile Include="Entities\Components\Renderer_Component.cpp" />
@@ -25,7 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DebugTools\Profiling\Profiler.h" />
-    <ClInclude Include="Entities\Components\Boundary_Handler_Component.h" />
+    <ClInclude Include="Entities\Components\Border_Handler_Component.h" />
     <ClInclude Include="Entities\Entity.h" />
     <ClInclude Include="Entities\Game_Component.h" />
     <ClInclude Include="Input\I_Key_Mapper.h" />

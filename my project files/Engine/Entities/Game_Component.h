@@ -25,7 +25,7 @@ namespace Entities
 
    protected:
       // derived classes will need access to this pointer
-      Entity *m_containing_entity;
+      Entity *m_containing_entity_ptr;
    };
 }
 

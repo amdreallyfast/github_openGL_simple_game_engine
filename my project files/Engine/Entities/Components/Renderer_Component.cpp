@@ -18,7 +18,7 @@ namespace Entities
    void Renderer_Component::update()
    {
       m_renderable_ptr->where = 
-         Matrix2D::translate(m_containing_entity->position) *
-         Matrix2D::rotate(m_containing_entity->orientation_radians);
+         Matrix2D::translate(m_containing_entity_ptr->position) *
+         Matrix2D::rotate(m_containing_entity_ptr->orientation_radians);
    }
 }

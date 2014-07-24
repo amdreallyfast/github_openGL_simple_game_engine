@@ -16,7 +16,7 @@ namespace Entities
 {
    bool Controller_Component::initialize()
    {
-      m_easy_physics_ptr = m_containing_entity->get_component<Physics_Component>();
+      m_easy_physics_ptr = m_containing_entity_ptr->get_component<Physics_Component>();
       return (m_easy_physics_ptr != 0);
    }
 

@@ -94,6 +94,9 @@ bool My_Game::initialize_ship()
    m_ship.add_component(&m_ship_controller);
    m_ship.add_component(&m_ship_physics);
 
+   m_ship_border_handler.set_data(m_border_verts, m_NUM_BORDER_VERTS);
+   m_ship.add_component(&m_ship_border_handler);
+
    Geometry *ship_geometry_ptr = m_renderer.add_geometry(
       m_ship_verts, m_NUM_SHIP_VERTS,
       m_ship_indices, m_NUM_SHIP_INDICES);
@@ -133,7 +136,7 @@ bool My_Game::send_boundary_data_to_renderer()
    memcpy(m_border_verts, local_border_vert_data, sizeof(m_border_verts));
    memcpy(m_border_indices, local_border_index_data, sizeof(m_border_indices));
 
-
+   // add the data pointers to the renderer
    Geometry *border_geometry_ptr = m_renderer.add_geometry(
       m_border_verts, m_NUM_BORDER_VERTS,
       m_border_indices, m_NUM_BORDER_INDICES, GL_LINES);

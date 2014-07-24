@@ -47,7 +47,7 @@ namespace Entities
    {
       assert(m_num_current_components != m_MAX_COMPONENTS);
       m_components[m_num_current_components++] = component;
-      component->m_containing_entity = this;
+      component->m_containing_entity_ptr = this;
    }
 
    void Entity::update()
