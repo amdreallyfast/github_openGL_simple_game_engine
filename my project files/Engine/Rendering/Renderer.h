@@ -3,6 +3,7 @@
 
 #include "QtOpenGL\qglwidget"
 
+#include <Math\matrix2D.h>
 namespace Math { struct Vector2D; }
 #include "Misc\Typedefs.h"
 
@@ -50,6 +51,10 @@ namespace Rendering
       void initializeGL();
 
    private:
+      // is for internal use only, but must be a method of this class
+      // in order to access width() and height() methods
+      Math::Matrix2D get_aspect_correction_matrix() const;
+
       // declare a pool of geometries
       static const uint m_MAX_GEOMETRIES = 10;
       uint m_num_current_geometries;

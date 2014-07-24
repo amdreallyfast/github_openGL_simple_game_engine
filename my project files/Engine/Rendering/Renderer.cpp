@@ -2,11 +2,14 @@
 #include <glew-1.10.0\include\GL\glew.h>
 
 #include "Renderer.h"
-
 #include <cassert>
 
 #include "Math\Vector2D.h"
 using Math::Vector2D;
+
+#include <Math\matrix2D.h>
+using Math::Matrix2D;
+
 
 namespace Rendering
 {
@@ -89,6 +92,20 @@ namespace Rendering
    }
 
 
+
+   Matrix2D Renderer::get_aspect_correction_matrix() const
+   {
+      float aspect_ratio = static_cast<float>(width()) / height();
+      if (aspect_ratio > 1.0f)
+      {
+         return Matrix2D::scale(1 / aspect_ratio, 1);
+      }
+      else
+      {
+         return Matrix2D::scale(1, aspect_ratio);
+      }
+   }
+
    void Renderer::paintGL()
    {
       // http://qt-project.org/doc/qt-4.8/qglwidget.html#paintGL
@@ -111,10 +128,11 @@ namespace Rendering
             sizeof(ushort) * r.what->num_indices, r.what->indices);
 
          // vertices
+         Matrix2D linear_transform = get_aspect_correction_matrix() * r.where;
          for (uint vert_index = 0; vert_index < r.what->num_verts; vert_index++)
          {
             // order of multiplication: matrix * vertex
-            transformed_verts[vert_index] = r.where * r.what->verts[vert_index];
+            transformed_verts[vert_index] = linear_transform * r.what->verts[vert_index];
          }
 
          glBufferSubData(GL_ARRAY_BUFFER, 0, 
