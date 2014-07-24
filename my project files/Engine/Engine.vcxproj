@@ -30,6 +30,7 @@
     <ClInclude Include="Input\Key_Input.h" />
     <ClInclude Include="math\Constants.h" />
     <ClInclude Include="math\Matrix2D.h" />
+    <ClInclude Include="Misc\Helper_Macros.h" />
     <ClInclude Include="Misc\Typedefs.h" />
     <ClInclude Include="math\Vector2D.h" />
     <ClInclude Include="Entities\Components\Renderer_Component.h" />

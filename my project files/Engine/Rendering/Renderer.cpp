@@ -52,6 +52,7 @@ namespace Rendering
       GLenum render_mode)
    {
       assert(m_num_current_geometries != m_MAX_GEOMETRIES);
+      assert(num_verts <= m_MAX_VERTS);
       Geometry& g = m_geometries[m_num_current_geometries++];
       g.verts = verts;
       g.num_verts = num_verts;

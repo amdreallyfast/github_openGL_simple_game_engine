@@ -95,6 +95,9 @@
     <ClInclude Include="Timing\Game_Clock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Misc\Helper_Macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="math\Matrix2D.inl">

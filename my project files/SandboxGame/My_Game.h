@@ -56,24 +56,29 @@ private:
    // specific to this game
    Input::Key_Mapper m_key_mapper;
 
-
    // the actual geometries will be stored in the renderer
    Rendering::Renderer m_renderer;
-   Rendering::Renderable* m_ship_renderable; //??need this??
-   Rendering::Renderable* m_lerp_instance;  // ??need this??
 
    static const uint m_NUM_SHIP_VERTS = 3;
    static const uint m_NUM_SHIP_INDICES = 3;
    Math::Vector2D m_ship_verts[m_NUM_SHIP_VERTS];
    ushort m_ship_indices[m_NUM_SHIP_INDICES];
 
+   static const uint m_NUM_BORDER_VERTS = 4;
+   static const uint m_NUM_BORDER_INDICES = 8;
+   Math::Vector2D m_border_verts[m_NUM_BORDER_VERTS];
+   ushort m_border_indices[m_NUM_BORDER_INDICES];
+
 private slots:
    // call once every time you want everything to update and a frame to be 
    // rendered
    void timer_update();
 
-   // helps to clean up the initializeGL() function
+   // for copying stack data into the renderer for persistant storage
    bool initialize_ship();
+
+   // only sends boundary data to be rendered and does no initialization
+   bool send_boundary_data_to_renderer();
 };
 
 
