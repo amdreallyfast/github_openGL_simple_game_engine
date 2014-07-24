@@ -5,12 +5,6 @@
 
 namespace Input
 {
-   Key_Input::Key_Input()
-   {
-      // an empty constructor
-   }
-
-
    Key_Input& Key_Input::get_instance()
    {
       static Key_Input instance;

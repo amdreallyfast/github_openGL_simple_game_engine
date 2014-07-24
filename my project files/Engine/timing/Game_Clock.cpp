@@ -3,12 +3,6 @@
 
 namespace Timing
 {
-   Game_Clock::Game_Clock()
-   {
-      // blank constructor; call the initializer function instead
-   }
-
-
    Game_Clock& Game_Clock::get_instance()
    {
       static Game_Clock instance;

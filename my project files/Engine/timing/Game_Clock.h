@@ -19,7 +19,9 @@ namespace Timing
       float delta_time_last_frame() const;
 
    private:
-      Game_Clock();
+      // make the default constructor empty and implicitly inline, and 
+      // don't define the other constructors
+      Game_Clock() {}
       Game_Clock(const Game_Clock&);
       Game_Clock& operator=(const Game_Clock&);
 

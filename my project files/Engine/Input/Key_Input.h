@@ -23,7 +23,9 @@ namespace Input
       bool actions_are_hot(int actions) const;
 
    private:
-      Key_Input();
+      // make the default constructor empty and implicitly inline, and 
+      // don't define the other constructors
+      Key_Input() {}
       Key_Input(const Key_Input&);
       Key_Input& operator=(const Key_Input&);
 
