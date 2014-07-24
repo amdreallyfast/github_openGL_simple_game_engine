@@ -45,6 +45,9 @@
     <ClCompile Include="Timing\Game_Clock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Entities\Components\Boundary_Handler_Component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="timing\clock.h">
@@ -96,6 +99,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Misc\Helper_Macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Components\Boundary_Handler_Component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
