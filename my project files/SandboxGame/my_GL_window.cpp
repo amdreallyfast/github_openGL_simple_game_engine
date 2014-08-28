@@ -93,7 +93,7 @@ void my_GL_window::initializeGL()
 
    // make the timer go as fast as it can
    // Note: Argument values to the qt timer are in milliseconds.
-   connect(&m_qt_timer, SIGNAL(timeout()), this, SLOT(timer_update()));
+   this->connect(&m_qt_timer, SIGNAL(timeout()), this, SLOT(timer_update()));
    m_qt_timer.start(0);
 }
 

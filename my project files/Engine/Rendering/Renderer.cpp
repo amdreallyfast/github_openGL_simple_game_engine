@@ -130,10 +130,11 @@ namespace Rendering
 
          // vertices
          Matrix2D linear_transform = get_aspect_correction_matrix() * r.where;
-         for (uint vert_index = 0; vert_index < r.what->num_verts; vert_index++)
+         for (uint vert_index = 0; vert_index < r.what->num_verts; vert_index += 1)
          {
             // order of multiplication: matrix * vertex
-            transformed_verts[vert_index] = linear_transform * r.what->verts[vert_index];
+            transformed_verts[vert_index] = linear_transform * r.what->verts[vert_index]; // transform positional data
+            //transformed_verts[vert_index + 1] = r.what->verts[vert_index + 1];            // leave color data intact
          }
 
          glBufferSubData(GL_ARRAY_BUFFER, 0, 
@@ -171,6 +172,9 @@ namespace Rendering
       glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_MAX_BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW);
 
       glEnableVertexAttribArray(0);
-      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);   // position
+      //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vector2D), 0);   // position
+      //glEnableVertexAttribArray(1);
+      //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vector2D), (void*)sizeof(Vector2D));
    }
 }

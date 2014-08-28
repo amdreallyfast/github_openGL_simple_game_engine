@@ -70,13 +70,17 @@ bool My_Game::initialize_ship()
    Vector2D local_ship_vert_data[] =
    {
       Vector2D(+0.0f, +0.1f, 1.0f),
+      //Vector2D(1.0f, 0.0f, 0.0f),
       Vector2D(-0.1f, -0.1f, 1.0f),
+      //Vector2D(1.0f, 0.0f, 0.0f),
       Vector2D(+0.1f, -0.1f, 1.0f),
+      //Vector2D(1.0f, 0.0f, 0.0f),
    };
 
    ushort local_ship_index_data[] =
    {
       0, 1, 2,
+      //0, 2, 4,
    };
 
    if (ARRAY_SIZE(local_ship_vert_data) != m_NUM_SHIP_VERTS)
@@ -114,9 +118,13 @@ bool My_Game::send_boundary_data_to_renderer()
    {
       // build a diamond shape
       Vector2D(+0.0f, +1.0f),    // center of top
+      //Vector2D(0.0f, 1.0f, 0.0f),
       Vector2D(-1.0f, -0.0f),    // center of left
+      //Vector2D(0.0f, 1.0f, 0.0f),
       Vector2D(+0.0f, -1.0f),    // center of bottom
+      //Vector2D(0.0f, 1.0f, 0.0f),
       Vector2D(+1.0f, +0.0f),    // center of right
+      //Vector2D(0.0f, 1.0f, 0.0f),
    };
 
    GLushort local_border_index_data[] =
@@ -125,6 +133,10 @@ bool My_Game::send_boundary_data_to_renderer()
       1, 2,
       2, 3,
       3, 0,
+      //0, 2,
+      //2, 4,
+      //4, 6,
+      //6, 0,
    };
 
    if (ARRAY_SIZE(local_border_vert_data) != m_NUM_BORDER_VERTS)
