@@ -19,6 +19,7 @@
     <ClCompile Include="Entities\Components\Physics_Component.cpp" />
     <ClCompile Include="Input\Key_Input.cpp" />
     <ClCompile Include="Rendering\Renderer.cpp" />
+    <ClCompile Include="Rendering\shader_handler.cpp" />
     <ClCompile Include="timing\clock.cpp" />
     <ClCompile Include="junk_to_make_compiler_happy.cpp" />
     <ClCompile Include="Timing\Game_Clock.cpp" />
@@ -40,12 +41,15 @@
     <ClInclude Include="Rendering\Renderer.h" />
     <ClInclude Include="Rendering\Geometry.h" />
     <ClInclude Include="Rendering\Renderable.h" />
+    <ClInclude Include="Rendering\shader_handler.h" />
     <ClInclude Include="timing\clock.h" />
     <ClInclude Include="Timing\Game_Clock.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="math\Matrix2D.inl" />
     <None Include="math\Vector2D.inl" />
+    <None Include="Rendering\fragment_shader.glsl" />
+    <None Include="Rendering\vertex_shader.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{04E2A542-BCFE-4A0E-B338-09E40C185E4E}</ProjectGuid>

@@ -22,7 +22,6 @@ namespace Rendering
       m_num_current_geometries = 0;
       m_num_current_renderables = 0;
 
-      
       // display the window
       this->show();
 
@@ -154,6 +153,12 @@ namespace Rendering
 
       GLenum status = glewInit();
       assert(status == 0);
+
+      // MUST be initialized after the gl context has been created
+      m_shader_handler.initialize(
+         "C:/Users/John/Documents/GitHub/github_openGL_simple_game_engine/my project files/Engine/Rendering/vertex_shader.glsl",
+         "C:/Users/John/Documents/GitHub/github_openGL_simple_game_engine/my project files/Engine/Rendering/fragment_shader.glsl");
+
 
       // clear the color buffer to be opaque (alpha = 1) and black
       glClearColor(0.0f, 0.0f, 0.0f, 1.0f);

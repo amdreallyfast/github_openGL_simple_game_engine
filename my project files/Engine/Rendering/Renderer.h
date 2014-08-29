@@ -6,6 +6,7 @@
 #include <Math\matrix2D.h>
 namespace Math { struct Vector2D; }
 #include "Misc\Typedefs.h"
+#include <Rendering\shader_handler.h>
 
 // include these because we need the size of the class for our pools
 // Note: Don't use their namespaces here because we don't want whoever includes
@@ -16,6 +17,10 @@ namespace Math { struct Vector2D; }
 
 namespace Rendering
 {
+   class A
+   {
+      GLuint x;
+   };
    class __declspec(dllexport) Renderer : public QGLWidget
    {
    public:
@@ -54,6 +59,9 @@ namespace Rendering
       // is for internal use only, but must be a method of this class
       // in order to access width() and height() methods
       Math::Matrix2D get_aspect_correction_matrix() const;
+
+      // each renderer will have its own shader program
+      shader_handler m_shader_handler;
 
       // declare a pool of geometries
       static const uint m_MAX_GEOMETRIES = 10;

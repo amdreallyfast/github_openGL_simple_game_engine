@@ -48,6 +48,9 @@
     <ClCompile Include="Entities\Components\Border_Handler_Component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Rendering\shader_handler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="timing\clock.h">
@@ -104,6 +107,9 @@
     <ClInclude Include="Entities\Components\Border_Handler_Component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Rendering\shader_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="math\Matrix2D.inl">
@@ -112,5 +118,7 @@
     <None Include="math\Vector2D.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="Rendering\vertex_shader.glsl" />
+    <None Include="Rendering\fragment_shader.glsl" />
   </ItemGroup>
 </Project>
