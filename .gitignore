@@ -11,6 +11,9 @@
 !*.txt
 !*.glsl
 
+# keep the demo file, which contains the project files plus the middleware folder
+!*.zip
+
 # we want to keep these around
 !.gitignore
 !.gitattributes
@@ -21,5 +24,6 @@
 !*.vcxproj
 !*.vcxproj.filters
 
-# now unignore all sub-folders
+# now unignore all sub-folders that are not the middleware folder
 !**/
+middleware/

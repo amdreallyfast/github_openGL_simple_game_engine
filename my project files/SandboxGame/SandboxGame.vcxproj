@@ -54,12 +54,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;PROFILER_ON;WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Qt\4.8.5\include;C:\open_gl_stuff;$(ProjectDir);$(ProjectDir)\..\Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\middleware;$(ProjectDir)\..\..\middleware\Qt\include;$(ProjectDir);$(ProjectDir)\..\Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Qt\4.8.5\lib;C:\open_gl_stuff\glew-1.10.0\lib\Release\Win32;$(ProjectDir)\..\Engine\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\middleware\Qt\lib;$(ProjectDir)\..\..\middleware\glew-1.10.0\lib\Release\Win32;$(ProjectDir)\..\Engine\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>QtGuid4.lib;QtCored4.lib;QtOpenGLd4.lib;glew32.lib;opengl32.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
