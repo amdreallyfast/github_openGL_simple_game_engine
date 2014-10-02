@@ -139,6 +139,6 @@ namespace Profiling
       // close the file 
       out_stream.close();
    }
-}
 
-#endif
+#endif   // PROFILER_ON
+}  
