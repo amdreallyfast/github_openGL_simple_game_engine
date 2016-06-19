@@ -107,7 +107,7 @@ namespace Profiling
       }
       out_stream << "\n";
 
-      // write the time data to the file column by column
+      // write the time data to the file row by row
       // Note: If we haven't wrapped around, start at 0 and go to the latest frame 
       // index.  If we have exceeded the max number of frame indexes (that is, 
       // wrapped around), then start at 0 and go until the max possible frame index.
